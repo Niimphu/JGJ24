@@ -1,13 +1,13 @@
 [gd_scene load_steps=4 format=3 uid="uid://ocl51whh0lym"]
 
-[ext_resource type="Script" path="res://Player/bullet.gd" id="1_4oqre"]
-[ext_resource type="Texture2D" uid="uid://st7kmlwiv88x" path="res://icon.svg" id="1_uotp5"]
+[ext_resource type="Texture2D" uid="uid://bcxte0yk7bv2m" path="res://icon.svg" id="1_uotp5"]
+[ext_resource type="Script" path="res://scenes/game/Player/bullet.gd" id="1_xge4w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1mfsw"]
 size = Vector2(35, 35)
 
 [node name="Bullet" type="Area2D"]
-script = ExtResource("1_4oqre")
+script = ExtResource("1_xge4w")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.3, 0.3)
