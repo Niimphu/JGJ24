@@ -1,0 +1,125 @@
+extends CharacterBody2D
+
+enum {
+	IDLE,
+	MOVE,
+	ROLL
+}
+
+@export var BulletManager: Node2D
+
+@onready var Animator := $AnimationPlayer
+@onready var Body := $Body
+@onready var Arm := $Gun
+
+@onready var bullet_scene := preload("bullet.tscn")
+@onready var dust_scene := preload("res://scenes/entities/roll_dust.tscn")
+
+
+const SPEED := 180
+const ROLL_MULT := 2.5
+const ROLL_FRICTION := 800
+var state := IDLE
+var direction := Vector2.ZERO
+var mouse_pos: Vector2
+
+# this is fine & whatever
+var roll_direction := Vector2.RIGHT
+
+
+func _ready():
+	Animator.animation_finished.connect(finished_animation)
+
+
+func _physics_process(delta: float) -> void:
+	mouse_pos = get_global_mouse_position()
+	get_input_direction()
+	
+	if Input.is_action_just_pressed("roll"):
+		roll_pressed()
+	
+	match state:
+		IDLE:
+			idle()
+		MOVE:
+			move()
+		ROLL:
+			roll(delta)
+	
+	if Input.is_action_just_pressed("fire"):
+		shoot()
+
+
+func idle() -> void:
+	move_arm()
+	if direction != Vector2.ZERO:
+		state = MOVE
+		Animator.play("run")
+
+
+func get_input_direction() -> void:
+	direction.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
+	direction.y = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
+	direction = direction.normalized()
+	
+	if direction != Vector2.ZERO: # set roll direction to last non-zero direction
+		roll_direction = direction
+
+
+func move() -> void:
+	move_arm()
+	velocity = direction * SPEED
+	move_and_slide()
+	if direction == Vector2.ZERO:
+		state = IDLE
+		Animator.play("idle")
+
+
+func roll_pressed() -> void:
+	state = ROLL
+	velocity = roll_direction * SPEED * ROLL_MULT
+	Animator.play("roll")
+	
+	var dust_instance := dust_scene.instantiate()
+	dust_instance.global_position = global_position
+	get_parent().add_child(dust_instance)
+
+
+func roll(delta) -> void:
+	if velocity.x > 0:
+		sprite_flip(false)
+	else:
+		sprite_flip(true)
+	velocity -= roll_direction * ROLL_FRICTION * delta
+	move_and_slide()
+
+
+func move_arm() -> void:
+	Arm.look_at(mouse_pos)
+	if mouse_pos.x > global_position.x:
+		sprite_flip(false)
+		Arm.offset.x = 5
+		Arm.position.x = -4
+	else:
+		sprite_flip(true)
+		Arm.offset.x = -5
+		Arm.position.x = 4
+		Arm.rotate(PI)
+
+
+func finished_animation(anim_name: String) -> void:
+	if anim_name == "roll":
+		state = IDLE
+		Animator.play("idle")
+
+
+func sprite_flip(flip: bool) -> void:
+	Body.flip_h = flip
+	Arm.flip_h = flip
+
+
+func shoot() -> void:
+	var bullet := bullet_scene.instantiate()
+	bullet.position = Arm.global_position + (mouse_pos - Arm.global_position).normalized() * 8.5
+	bullet.bullet_direction = (position - mouse_pos).normalized()
+	BulletManager.add_child(bullet)

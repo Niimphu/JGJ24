@@ -1,6 +1,6 @@
 extends Area2D
 
-var speed = 2500
+var speed = 1000
 
 var bullet_direction
 

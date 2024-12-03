@@ -1,0 +1,69 @@
+[gd_scene load_steps=11 format=3 uid="uid://c3wytnn3360ca"]
+
+[ext_resource type="Texture2D" uid="uid://cdeciqmfrdo5o" path="res://assets/images/Dust.png" id="1_6sjtp"]
+[ext_resource type="Script" path="res://scenes/entities/roll_dust.gd" id="2_dls3g"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_trqm7"]
+atlas = ExtResource("1_6sjtp")
+region = Rect2(0, 0, 17, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yv3h5"]
+atlas = ExtResource("1_6sjtp")
+region = Rect2(17, 0, 17, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_biw4q"]
+atlas = ExtResource("1_6sjtp")
+region = Rect2(34, 0, 17, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hy2ty"]
+atlas = ExtResource("1_6sjtp")
+region = Rect2(51, 0, 17, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x7a1v"]
+atlas = ExtResource("1_6sjtp")
+region = Rect2(68, 0, 17, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kjy60"]
+atlas = ExtResource("1_6sjtp")
+region = Rect2(85, 0, 17, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w1bxm"]
+atlas = ExtResource("1_6sjtp")
+region = Rect2(102, 0, 17, 13)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7wq2l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_trqm7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yv3h5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_biw4q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hy2ty")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x7a1v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kjy60")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w1bxm")
+}],
+"loop": false,
+"name": &"default",
+"speed": 12.0
+}]
+
+[node name="RollDust" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_7wq2l")
+autoplay = "default"
+frame = 6
+frame_progress = 1.0
+offset = Vector2(0, -3.44)
+script = ExtResource("2_dls3g")

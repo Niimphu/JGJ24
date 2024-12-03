@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://w736c3ga5g46"]
+
+[ext_resource type="PackedScene" uid="uid://cgwpb6lgfpnat" path="res://scenes/entities/player.tscn" id="1_3xgcr"]
+[ext_resource type="Texture2D" uid="uid://bcxte0yk7bv2m" path="res://icon.svg" id="1_7ymoj"]
+
+[node name="World" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(585, 315)
+scale = Vector2(9.46875, 3.1875)
+texture = ExtResource("1_7ymoj")
+
+[node name="Entities" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Player" parent="Entities" node_paths=PackedStringArray("BulletManager") instance=ExtResource("1_3xgcr")]
+BulletManager = NodePath("../../BulletManager")
+
+[node name="BulletManager" type="Node2D" parent="."]
