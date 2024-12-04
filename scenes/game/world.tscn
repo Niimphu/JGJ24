@@ -5,15 +5,26 @@
 
 [node name="World" type="Node2D"]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(585, 315)
-scale = Vector2(9.46875, 3.1875)
+[node name="TempBG" type="Sprite2D" parent="."]
+modulate = Color(0.61339, 0.61339, 0.61339, 1)
+position = Vector2(610, 304)
+scale = Vector2(9.46875, 4.75)
 texture = ExtResource("1_7ymoj")
+
+[node name="BulletManager" type="Node2D" parent="."]
 
 [node name="Entities" type="Node2D" parent="."]
 y_sort_enabled = true
 
 [node name="Player" parent="Entities" node_paths=PackedStringArray("BulletManager") instance=ExtResource("1_3xgcr")]
+position = Vector2(615, 257)
 BulletManager = NodePath("../../BulletManager")
 
-[node name="BulletManager" type="Node2D" parent="."]
+[node name="Camera2D2" type="Camera2D" parent="Entities/Player"]
+position = Vector2(0, -11.8921)
+zoom = Vector2(0.5, 0.5)
+process_callback = 0
+limit_left = 0
+limit_top = 0
+limit_right = 1200
+limit_bottom = 600

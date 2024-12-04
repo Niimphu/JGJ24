@@ -1,10 +1,19 @@
 extends Area2D
 
-var speed = 1000
+var speed := 1000
+var bullet_direction: Vector2
+var shoot := false
 
-var bullet_direction
+
+func set_direction(direction: Vector2) -> void:
+	await ready
+	bullet_direction = direction
+	shoot = true
+
 
 func _process(delta: float) -> void:
+	if !shoot:
+		return
 	position -= bullet_direction * speed * delta
 
 

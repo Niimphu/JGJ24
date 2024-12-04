@@ -9,8 +9,10 @@ enum {
 @export var BulletManager: Node2D
 
 @onready var Animator := $AnimationPlayer
+@onready var GunAnimator := $Gun/AnimationPlayer
 @onready var Body := $Body
 @onready var Arm := $Gun
+@onready var Jacket := $Jacket
 
 @onready var bullet_scene := preload("bullet.tscn")
 @onready var dust_scene := preload("res://scenes/entities/roll_dust.tscn")
@@ -48,6 +50,9 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("fire"):
 		shoot()
+	elif Input.is_action_just_pressed("reload"):
+		# handle reload
+		GunAnimator.play("reload")
 
 
 func idle() -> void:
@@ -90,6 +95,7 @@ func roll(delta) -> void:
 		sprite_flip(false)
 	else:
 		sprite_flip(true)
+	Jacket.visible = false
 	velocity -= roll_direction * ROLL_FRICTION * delta
 	move_and_slide()
 
@@ -98,17 +104,18 @@ func move_arm() -> void:
 	Arm.look_at(mouse_pos)
 	if mouse_pos.x > global_position.x:
 		sprite_flip(false)
-		Arm.offset.x = 5
-		Arm.position.x = -4
+		Arm.offset.x = 4.5
+		Arm.position.x = -6
 	else:
 		sprite_flip(true)
-		Arm.offset.x = -5
-		Arm.position.x = 4
+		Arm.offset.x = -4.5
+		Arm.position.x = 6
 		Arm.rotate(PI)
 
 
 func finished_animation(anim_name: String) -> void:
 	if anim_name == "roll":
+		Jacket.visible = true
 		state = IDLE
 		Animator.play("idle")
 
@@ -116,10 +123,16 @@ func finished_animation(anim_name: String) -> void:
 func sprite_flip(flip: bool) -> void:
 	Body.flip_h = flip
 	Arm.flip_h = flip
+	if flip:
+		Jacket.position.x = -4.8
+	else:
+		Jacket.position.x = -7.8
 
 
 func shoot() -> void:
 	var bullet := bullet_scene.instantiate()
 	bullet.position = Arm.global_position + (mouse_pos - Arm.global_position).normalized() * 8.5
-	bullet.bullet_direction = (position - mouse_pos).normalized()
+	bullet.set_direction((position - mouse_pos).normalized())
 	BulletManager.add_child(bullet)
+	
+	GunAnimator.play("shoot")

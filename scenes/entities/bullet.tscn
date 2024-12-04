@@ -1,10 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://ocl51whh0lym"]
+[gd_scene load_steps=6 format=3 uid="uid://ocl51whh0lym"]
 
 [ext_resource type="Script" path="res://scenes/entities/bullet.gd" id="1_xge4w"]
 [ext_resource type="Texture2D" uid="uid://bee1hcyd3bkot" path="res://assets/images/Bullet.png" id="2_xgkfh"]
+[ext_resource type="Script" path="res://scenes/entities/bullet_trail.gd" id="3_jd2ex"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_1mfsw"]
-size = Vector2(35, 35)
+[sub_resource type="CircleShape2D" id="CircleShape2D_nydbx"]
+radius = 2.0
+
+[sub_resource type="Curve" id="Curve_clybt"]
+_data = [Vector2(0.00495049, 0.021978), 0.0, 0.0, 0, 0, Vector2(0.990099, 0.978022), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [node name="Bullet" type="Area2D"]
 script = ExtResource("1_xge4w")
@@ -13,11 +18,17 @@ script = ExtResource("1_xge4w")
 texture = ExtResource("2_xgkfh")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-0.5, 0.5)
-shape = SubResource("RectangleShape2D_1mfsw")
+shape = SubResource("CircleShape2D_nydbx")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(-0.499999, 0.5)
 scale = Vector2(1.75, 1.75)
+
+[node name="BulletTrail" type="Line2D" parent="."]
+texture_filter = 2
+width = 1.0
+width_curve = SubResource("Curve_clybt")
+default_color = Color(0.95, 0.9025, 0, 1)
+script = ExtResource("3_jd2ex")
 
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
