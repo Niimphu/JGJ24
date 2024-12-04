@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://w736c3ga5g46"]
+[gd_scene load_steps=16 format=3 uid="uid://w736c3ga5g46"]
 
 [ext_resource type="PackedScene" uid="uid://cgwpb6lgfpnat" path="res://scenes/entities/player.tscn" id="1_3xgcr"]
 [ext_resource type="Texture2D" uid="uid://bcxte0yk7bv2m" path="res://icon.svg" id="1_7ymoj"]
 [ext_resource type="Texture2D" uid="uid://df24a41c4c40n" path="res://assets/images/TestWall2.png" id="2_6vfeh"]
 [ext_resource type="Texture2D" uid="uid://carlh6hp3gcc2" path="res://assets/images/Crosshair.png" id="3_2jga4"]
 [ext_resource type="Texture2D" uid="uid://bjj2kiuoqbki0" path="res://assets/images/Dummy.png" id="3_ejwru"]
+[ext_resource type="Script" path="res://scenes/entities/test_enemy.gd" id="3_gujii"]
 [ext_resource type="Script" path="res://scenes/game/crosshair.gd" id="3_stmrq"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_mrjqw"]
@@ -24,6 +25,9 @@ size = Vector2(62.7732, 5.56218)
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_31lw8"]
 radius = 2.2845
 height = 12.9434
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_obbwg"]
+size = Vector2(13, 13)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_f5gu8"]
 radius = 3.38644
@@ -71,8 +75,9 @@ shape = SubResource("RectangleShape2D_j8tcv")
 [node name="Enemies" type="Node2D" parent="Entities"]
 y_sort_enabled = true
 
-[node name="TestEnemy" type="CharacterBody2D" parent="Entities/Enemies"]
+[node name="TestEnemy" type="CharacterBody2D" parent="Entities/Enemies" groups=["Enemies"]]
 position = Vector2(40.48, -34.3101)
+script = ExtResource("3_gujii")
 
 [node name="Sprite2D" type="Sprite2D" parent="Entities/Enemies/TestEnemy"]
 position = Vector2(0, -5.051)
@@ -82,6 +87,35 @@ texture = ExtResource("1_7ymoj")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Enemies/TestEnemy"]
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_31lw8")
+
+[node name="EnemyHurtbox" type="Area2D" parent="Entities/Enemies/TestEnemy"]
+collision_layer = 32
+collision_mask = 13
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Enemies/TestEnemy/EnemyHurtbox"]
+position = Vector2(0.0200005, -5.1899)
+shape = SubResource("RectangleShape2D_obbwg")
+
+[node name="TestEnemy2" type="CharacterBody2D" parent="Entities/Enemies" groups=["Enemies"]]
+position = Vector2(83, -14)
+script = ExtResource("3_gujii")
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Enemies/TestEnemy2"]
+position = Vector2(0, -5.051)
+scale = Vector2(0.120728, 0.122139)
+texture = ExtResource("1_7ymoj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Enemies/TestEnemy2"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_31lw8")
+
+[node name="EnemyHurtbox" type="Area2D" parent="Entities/Enemies/TestEnemy2"]
+collision_layer = 32
+collision_mask = 13
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Enemies/TestEnemy2/EnemyHurtbox"]
+position = Vector2(0.0200005, -5.1899)
+shape = SubResource("RectangleShape2D_obbwg")
 
 [node name="Player" parent="Entities" node_paths=PackedStringArray("BulletManager") instance=ExtResource("1_3xgcr")]
 BulletManager = NodePath("../../BulletManager")
@@ -114,3 +148,6 @@ modulate = Color(0.215902, 0.215902, 0.215902, 1)
 show_behind_parent = true
 position = Vector2(0.5, 0.5)
 texture = ExtResource("3_2jga4")
+
+[connection signal="area_entered" from="Entities/Enemies/TestEnemy/EnemyHurtbox" to="Entities/Enemies/TestEnemy" method="_on_area_2d_area_entered"]
+[connection signal="area_entered" from="Entities/Enemies/TestEnemy2/EnemyHurtbox" to="Entities/Enemies/TestEnemy2" method="_on_area_2d_area_entered"]

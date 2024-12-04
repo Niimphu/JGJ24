@@ -12,6 +12,8 @@ _data = [Vector2(0.00495049, 0.021978), 0.0, 0.0, 0, 0, Vector2(0.990099, 0.9780
 point_count = 2
 
 [node name="Bullet" type="Area2D"]
+collision_layer = 8
+collision_mask = 33
 script = ExtResource("1_xge4w")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

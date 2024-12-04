@@ -4,6 +4,7 @@ var speed := 1000
 var bullet_direction: Vector2
 var shoot := false
 
+
 func set_direction(direction: Vector2) -> void:
 	await ready
 	bullet_direction = direction
