@@ -266,6 +266,7 @@ _data = {
 }
 
 [node name="Player" type="CharacterBody2D"]
+motion_mode = 1
 script = ExtResource("1_jpnwn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
