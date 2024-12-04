@@ -13,6 +13,7 @@ enum {
 @onready var Body := $Body
 @onready var Arm := $Gun
 @onready var Jacket := $Jacket
+@onready var Shadow := $Shadow
 
 @onready var bullet_scene := preload("bullet.tscn")
 @onready var dust_scene := preload("res://scenes/entities/roll_dust.tscn")
@@ -105,11 +106,11 @@ func move_arm() -> void:
 	if mouse_pos.x > global_position.x:
 		sprite_flip(false)
 		Arm.offset.x = 4.5
-		Arm.position.x = -6
+		Arm.position.x = -2.1
 	else:
 		sprite_flip(true)
+		Arm.position.x = 2.1
 		Arm.offset.x = -4.5
-		Arm.position.x = 6
 		Arm.rotate(PI)
 
 
@@ -124,9 +125,9 @@ func sprite_flip(flip: bool) -> void:
 	Body.flip_h = flip
 	Arm.flip_h = flip
 	if flip:
-		Jacket.position.x = -4.8
+		Body.position.x = -3.3
 	else:
-		Jacket.position.x = -7.8
+		Body.position.x = 5
 
 
 func shoot() -> void:

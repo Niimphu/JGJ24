@@ -1,13 +1,14 @@
-[gd_scene load_steps=24 format=3 uid="uid://cgwpb6lgfpnat"]
+[gd_scene load_steps=25 format=3 uid="uid://cgwpb6lgfpnat"]
 
 [ext_resource type="Script" path="res://scenes/entities/player.gd" id="1_jpnwn"]
 [ext_resource type="Texture2D" uid="uid://dhomffrdjpyiv" path="res://assets/images/HatsuneWick.png" id="2_1x5ry"]
 [ext_resource type="Texture2D" uid="uid://drp6r5akopqby" path="res://assets/images/HatsuneWickJacket.png" id="2_8sumu"]
+[ext_resource type="Texture2D" uid="uid://2r441fbxdbkp" path="res://assets/images/Shadow.png" id="2_063xa"]
 [ext_resource type="Texture2D" uid="uid://b8nhtrlllbosw" path="res://assets/images/HatsuneWickGun.png" id="3_bveos"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m6q6f"]
-radius = 2.0
-height = 4.87896
+radius = 3.53651
+height = 13.0232
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ked87"]
 atlas = ExtResource("2_8sumu")
@@ -66,23 +67,6 @@ animations = [{
 "speed": 8.0
 }]
 
-[sub_resource type="Animation" id="Animation_3dysw"]
-resource_name = "shoot"
-length = 0.15
-step = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.15),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 0]
-}
-
 [sub_resource type="Animation" id="Animation_t61je"]
 length = 0.001
 tracks/0/type = "value"
@@ -113,6 +97,23 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [6, 7, 8, 9, 10, 6]
+}
+
+[sub_resource type="Animation" id="Animation_3dysw"]
+resource_name = "shoot"
+length = 0.15
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_l15wj"]
@@ -268,27 +269,31 @@ _data = {
 script = ExtResource("1_jpnwn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -0.0496063)
+position = Vector2(0.0100327, 0.0670777)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_m6q6f")
 
+[node name="Shadow" type="Sprite2D" parent="."]
+position = Vector2(0.00943756, 0.061945)
+texture = ExtResource("2_063xa")
+
 [node name="Jacket" type="AnimatedSprite2D" parent="."]
-position = Vector2(-7.15512, -11.1161)
+position = Vector2(-8, -11.397)
 sprite_frames = SubResource("SpriteFrames_d2ouk")
 autoplay = "default"
 frame_progress = 0.423184
 
 [node name="Body" type="Sprite2D" parent="."]
-position = Vector2(1.52423, -11.6111)
+position = Vector2(5, -11.892)
 texture = ExtResource("2_1x5ry")
 offset = Vector2(-0.63, 0)
 hframes = 12
 vframes = 4
 
 [node name="Gun" type="Sprite2D" parent="."]
-position = Vector2(-6.11274, -11.9682)
+position = Vector2(-2.1, -12.9)
 texture = ExtResource("3_bveos")
-offset = Vector2(4.5, 6.5)
+offset = Vector2(4, 6)
 hframes = 6
 vframes = 2
 
