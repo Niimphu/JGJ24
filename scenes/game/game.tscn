@@ -1,0 +1,201 @@
+[gd_scene load_steps=18 format=3 uid="uid://w736c3ga5g46"]
+
+[ext_resource type="Texture2D" uid="uid://bcxte0yk7bv2m" path="res://icon.svg" id="1_15yqf"]
+[ext_resource type="Script" path="res://scenes/game/game.gd" id="1_crdur"]
+[ext_resource type="Texture2D" uid="uid://df24a41c4c40n" path="res://assets/images/TestWall2.png" id="2_w6x2l"]
+[ext_resource type="PackedScene" uid="uid://cgwpb6lgfpnat" path="res://scenes/entities/player.tscn" id="3_4nq4m"]
+[ext_resource type="Texture2D" uid="uid://bjj2kiuoqbki0" path="res://assets/images/Dummy.png" id="4_v43ea"]
+[ext_resource type="Texture2D" uid="uid://carlh6hp3gcc2" path="res://assets/images/Crosshair.png" id="5_wq68m"]
+[ext_resource type="Script" path="res://scenes/game/crosshair.gd" id="6_wc28w"]
+[ext_resource type="Theme" uid="uid://bux7k08p0mmee" path="res://scenes/game.tres" id="8_8fc0e"]
+[ext_resource type="Texture2D" uid="uid://bg5nebaq30wv6" path="res://assets/images/Ammo.png" id="8_17bs5"]
+[ext_resource type="Texture2D" uid="uid://c8qt7kccusryk" path="res://assets/images/BigCoin.png" id="9_dy81b"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_mrjqw"]
+normal = Vector2(-0.00330861, 0.999995)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_vr6le"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_dg3de"]
+normal = Vector2(0.999999, 0.00140469)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_dtels"]
+normal = Vector2(-0.999999, 0.00101604)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j8tcv"]
+size = Vector2(62.7732, 5.56218)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_31lw8"]
+radius = 2.2845
+height = 12.9434
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f5gu8"]
+radius = 3.38644
+
+[node name="Game" type="Node2D" node_paths=PackedStringArray("CoinCount")]
+script = ExtResource("1_crdur")
+CoinCount = NodePath("CanvasLayer/UI/MarginContainer/HBoxContainer/CoinCount")
+
+[node name="TempBG" type="Sprite2D" parent="."]
+modulate = Color(0.61339, 0.61339, 0.61339, 1)
+scale = Vector2(9.46875, 4.75)
+texture = ExtResource("1_15yqf")
+
+[node name="BulletManager" type="Node2D" parent="."]
+
+[node name="WorldBoundary" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBoundary"]
+position = Vector2(0.583679, -273.831)
+shape = SubResource("WorldBoundaryShape2D_mrjqw")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="WorldBoundary"]
+position = Vector2(0.350861, 285.885)
+shape = SubResource("WorldBoundaryShape2D_vr6le")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="WorldBoundary"]
+position = Vector2(-568.45, -0.0517654)
+shape = SubResource("WorldBoundaryShape2D_dg3de")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="WorldBoundary"]
+position = Vector2(570.264, -0.251038)
+shape = SubResource("WorldBoundaryShape2D_dtels")
+
+[node name="Entities" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Entities"]
+position = Vector2(-47.2785, -19.3352)
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/StaticBody2D"]
+texture = ExtResource("2_w6x2l")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/StaticBody2D"]
+position = Vector2(0.088398, 5.99193)
+shape = SubResource("RectangleShape2D_j8tcv")
+
+[node name="Enemies" type="Node2D" parent="Entities"]
+y_sort_enabled = true
+
+[node name="TestEnemy" type="CharacterBody2D" parent="Entities/Enemies"]
+position = Vector2(40.48, -34.3101)
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Enemies/TestEnemy"]
+position = Vector2(0, -5.051)
+scale = Vector2(0.120728, 0.122139)
+texture = ExtResource("1_15yqf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Enemies/TestEnemy"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_31lw8")
+
+[node name="Player" parent="Entities" node_paths=PackedStringArray("BulletManager", "Game", "AmmoCount") instance=ExtResource("3_4nq4m")]
+BulletManager = NodePath("../../BulletManager")
+Game = NodePath("../..")
+AmmoCount = NodePath("../../CanvasLayer/UI/Control/MarginContainer/Ammo")
+
+[node name="Camera2D2" type="Camera2D" parent="Entities/Player"]
+position = Vector2(0, -11.8921)
+process_callback = 0
+limit_left = -606
+limit_top = -304
+limit_right = 606
+limit_bottom = 304
+
+[node name="Dummy" type="StaticBody2D" parent="Entities"]
+position = Vector2(110.299, -3.26502)
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Dummy"]
+position = Vector2(0.117989, -18.8775)
+texture = ExtResource("4_v43ea")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Dummy"]
+position = Vector2(0, 2.71364)
+shape = SubResource("CircleShape2D_f5gu8")
+
+[node name="Crosshair" type="Sprite2D" parent="."]
+texture = ExtResource("5_wq68m")
+script = ExtResource("6_wc28w")
+
+[node name="Shadow" type="Sprite2D" parent="Crosshair"]
+modulate = Color(0.215902, 0.215902, 0.215902, 1)
+show_behind_parent = true
+position = Vector2(0.5, 0.5)
+texture = ExtResource("5_wq68m")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" type="Control" parent="CanvasLayer"]
+custom_minimum_size = Vector2(480, 270)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 480.0
+offset_bottom = 270.0
+theme = ExtResource("8_8fc0e")
+
+[node name="Control" type="Control" parent="CanvasLayer/UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/UI/Control"]
+layout_mode = 2
+offset_left = -0.0936432
+offset_top = 251.122
+offset_right = 67.9064
+offset_bottom = 270.122
+color = Color(0.15232, 0.1408, 0.16, 0.784314)
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/UI/Control"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -20.0
+offset_right = 112.0
+grow_vertical = 0
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="Ammo" type="TextureProgressBar" parent="CanvasLayer/UI/Control/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+max_value = 10.0
+value = 6.0
+texture_progress = ExtResource("8_17bs5")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/UI/MarginContainer"]
+custom_minimum_size = Vector2(37, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="CoinIcon" type="TextureRect" parent="CanvasLayer/UI/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture = ExtResource("9_dy81b")
+stretch_mode = 4
+
+[node name="CoinCount" type="Label" parent="CanvasLayer/UI/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "0"

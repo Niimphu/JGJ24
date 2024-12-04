@@ -7,6 +7,8 @@ enum {
 }
 
 @export var BulletManager: Node2D
+@export var Game: Node2D
+@export var AmmoCount: Control
 
 @onready var Animator := $AnimationPlayer
 @onready var GunAnimator := $Gun/AnimationPlayer
@@ -14,21 +16,23 @@ enum {
 @onready var Arm := $Gun
 @onready var Jacket := $Jacket
 @onready var Shadow := $Shadow
+@onready var Collider := $CollisionShape2D
 
 @onready var bullet_scene := preload("bullet.tscn")
 @onready var dust_scene := preload("res://scenes/entities/roll_dust.tscn")
 
 
 const SPEED := 180
-const ROLL_MULT := 2.5
-const ROLL_FRICTION := 800
+const ROLL_MULT := 3.5
+const ROLL_FRICTION := 1200
 var state := IDLE
 var direction := Vector2.ZERO
 var mouse_pos: Vector2
 var roll_cd: bool = true
-var stored_ammo = 10
-var ammo_in_chamber = 6
-var ammo_needed = 0
+var reloading := false
+
+var max_ammo := 6
+var current_ammo := 6
 
 # this is fine & whatever
 var roll_direction := Vector2.RIGHT
@@ -42,10 +46,10 @@ func _physics_process(delta: float) -> void:
 	mouse_pos = get_global_mouse_position()
 	get_input_direction()
 	
-	if Input.is_action_just_pressed("roll") and roll_cd:
+	if Input.is_action_just_pressed("roll") and roll_cd and Game.update_coins(-3, popup_pos()):
 		roll_cd = false
 		roll_pressed()
-		await get_tree().create_timer(0.5).timeout
+		await get_tree().create_timer(0.6).timeout
 		roll_cd = true
 	
 	match state:
@@ -78,7 +82,7 @@ func get_input_direction() -> void:
 	direction.y = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
 	direction = direction.normalized()
 	
-	if direction != Vector2.ZERO: # set roll direction to last non-zero direction
+	if direction != Vector2.ZERO and state != ROLL: # set roll direction to last non-zero direction
 		roll_direction = direction
 
 
@@ -107,7 +111,8 @@ func roll(delta) -> void:
 	else:
 		sprite_flip(true)
 	Jacket.visible = false
-	velocity -= roll_direction * ROLL_FRICTION * delta
+	#turn off hurtbox for i frames
+	velocity = velocity.move_toward(Vector2.ZERO, ROLL_FRICTION * delta)
 	move_and_slide()
 
 
@@ -128,6 +133,7 @@ func finished_animation(anim_name: String) -> void:
 	if anim_name == "roll":
 		Jacket.visible = true
 		state = IDLE
+		#turn hurbox back on
 		Animator.play("idle")
 
 
@@ -141,24 +147,32 @@ func sprite_flip(flip: bool) -> void:
 
 
 func shoot() -> void:
-	if ammo_in_chamber > 0:
-		ammo_in_chamber -= 1
-		var bullet := bullet_scene.instantiate()
-		bullet.position = Arm.global_position + (mouse_pos - Arm.global_position).normalized() * 8.5
-		bullet.set_direction((position - mouse_pos).normalized())
-		BulletManager.add_child(bullet)
-		GunAnimator.play("shoot")
+	if current_ammo == 0:
+		return
+	
+	reloading = false
+	current_ammo -= 1
+	AmmoCount.value = current_ammo
+	
+	var bullet := bullet_scene.instantiate()
+	bullet.position = Arm.global_position + (mouse_pos - Arm.global_position).normalized() * 8.5
+	bullet.set_direction((position - mouse_pos).normalized())
+	BulletManager.add_child(bullet)
+	GunAnimator.play("shoot")
 
 
 func reload() -> void:
-	if stored_ammo > 0:
-		ammo_needed = 6 - ammo_in_chamber
-		if stored_ammo >= ammo_needed:
-			stored_ammo -= ammo_needed
-			ammo_in_chamber = 6
-		elif ammo_needed >= stored_ammo:
-			ammo_in_chamber += stored_ammo
-			stored_ammo = 0
-			GunAnimator.play("reload")
-		print(ammo_in_chamber)
-		print(stored_ammo)
+	reloading = true
+	while reloading:
+		if current_ammo >= max_ammo or Game.update_coins(-2, popup_pos()) == false:
+			reloading = false
+			return
+		
+		GunAnimator.play("reload")
+		await get_tree().create_timer(0.4).timeout
+		current_ammo += 1
+		AmmoCount.value = current_ammo
+
+
+func popup_pos() -> Vector2:
+	return global_position + Vector2(4, -25)
