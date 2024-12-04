@@ -23,7 +23,7 @@ enum {
 
 
 const SPEED := 180
-const ROLL_MULT := 3.5
+const ROLL_MULT := 3.2
 const ROLL_FRICTION := 1200
 var state := IDLE
 var direction := Vector2.ZERO

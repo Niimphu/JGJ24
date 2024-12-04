@@ -8,7 +8,6 @@ var id := 1
 var hit_count = 0
 
 func _physics_process(_delta):
-	print(Navigator.get_next_path_position())
 	var direction: Vector2 = to_local(Navigator.get_next_path_position()).normalized()
 	velocity = direction * speed
 	move_and_slide()
@@ -22,5 +21,5 @@ func find_path() -> void:
 	Navigator.target_position = player.global_position
 
 
-func _on_area_2d_area_entered(area: Area2D) -> void:
+func _on_area_2d_area_entered(_area: Area2D) -> void:
 	queue_free()

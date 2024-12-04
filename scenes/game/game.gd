@@ -20,7 +20,6 @@ func update_coins(amount: int, location: Vector2) -> bool:
 
 
 func popup(amount: int, location: Vector2) -> void:
-	print(amount, " ", location)
 	var popup_instance := popup_scene.instantiate()
 	add_child(popup_instance)
 	popup_instance.global_position = location
