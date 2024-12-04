@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://w736c3ga5g46"]
+[gd_scene load_steps=5 format=3 uid="uid://w736c3ga5g46"]
 
 [ext_resource type="PackedScene" uid="uid://cgwpb6lgfpnat" path="res://scenes/entities/player.tscn" id="1_3xgcr"]
 [ext_resource type="Texture2D" uid="uid://bcxte0yk7bv2m" path="res://icon.svg" id="1_7ymoj"]
+[ext_resource type="Texture2D" uid="uid://carlh6hp3gcc2" path="res://assets/images/Crosshair.png" id="3_2jga4"]
+[ext_resource type="Script" path="res://scenes/game/crosshair.gd" id="3_stmrq"]
 
 [node name="World" type="Node2D"]
 
@@ -22,9 +24,18 @@ BulletManager = NodePath("../../BulletManager")
 
 [node name="Camera2D2" type="Camera2D" parent="Entities/Player"]
 position = Vector2(0, -11.8921)
-zoom = Vector2(0.5, 0.5)
 process_callback = 0
 limit_left = 0
 limit_top = 0
 limit_right = 1200
 limit_bottom = 600
+
+[node name="Crosshair" type="Sprite2D" parent="."]
+texture = ExtResource("3_2jga4")
+script = ExtResource("3_stmrq")
+
+[node name="Shadow" type="Sprite2D" parent="Crosshair"]
+modulate = Color(0.215902, 0.215902, 0.215902, 1)
+show_behind_parent = true
+position = Vector2(0.5, 0.5)
+texture = ExtResource("3_2jga4")
