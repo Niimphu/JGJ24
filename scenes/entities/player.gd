@@ -51,16 +51,19 @@ func _physics_process(delta: float) -> void:
 	match state:
 		IDLE:
 			idle()
+			gun_input()
 		MOVE:
 			move()
+			gun_input()
 		ROLL:
 			roll(delta)
-	
-	if state != ROLL:
-		if Input.is_action_just_pressed("fire"):
-			shoot()
-		elif Input.is_action_just_pressed("reload"):
-			reload()
+
+
+func gun_input() -> void:
+	if Input.is_action_just_pressed("fire"):
+		shoot()
+	elif Input.is_action_just_pressed("reload"):
+		reload()
 
 
 func idle() -> void:
