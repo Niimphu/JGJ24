@@ -25,6 +25,10 @@ const ROLL_FRICTION := 800
 var state := IDLE
 var direction := Vector2.ZERO
 var mouse_pos: Vector2
+var roll_cd: bool = true
+var stored_ammo = 10
+var ammo_in_chamber = 6
+var ammo_needed = 0
 
 # this is fine & whatever
 var roll_direction := Vector2.RIGHT
@@ -38,8 +42,11 @@ func _physics_process(delta: float) -> void:
 	mouse_pos = get_global_mouse_position()
 	get_input_direction()
 	
-	if Input.is_action_just_pressed("roll"):
+	if Input.is_action_just_pressed("roll") and roll_cd:
+		roll_cd = false
 		roll_pressed()
+		await get_tree().create_timer(0.5).timeout
+		roll_cd = true
 	
 	match state:
 		IDLE:
@@ -49,11 +56,11 @@ func _physics_process(delta: float) -> void:
 		ROLL:
 			roll(delta)
 	
-	if Input.is_action_just_pressed("fire"):
-		shoot()
-	elif Input.is_action_just_pressed("reload"):
-		# handle reload
-		GunAnimator.play("reload")
+	if state != ROLL:
+		if Input.is_action_just_pressed("fire"):
+			shoot()
+		elif Input.is_action_just_pressed("reload"):
+			reload()
 
 
 func idle() -> void:
@@ -131,9 +138,24 @@ func sprite_flip(flip: bool) -> void:
 
 
 func shoot() -> void:
-	var bullet := bullet_scene.instantiate()
-	bullet.position = Arm.global_position + (mouse_pos - Arm.global_position).normalized() * 8.5
-	bullet.set_direction((position - mouse_pos).normalized())
-	BulletManager.add_child(bullet)
-	
-	GunAnimator.play("shoot")
+	if ammo_in_chamber > 0:
+		ammo_in_chamber -= 1
+		var bullet := bullet_scene.instantiate()
+		bullet.position = Arm.global_position + (mouse_pos - Arm.global_position).normalized() * 8.5
+		bullet.set_direction((position - mouse_pos).normalized())
+		BulletManager.add_child(bullet)
+		GunAnimator.play("shoot")
+
+
+func reload() -> void:
+	if stored_ammo > 0:
+		ammo_needed = 6 - ammo_in_chamber
+		if stored_ammo >= ammo_needed:
+			stored_ammo -= ammo_needed
+			ammo_in_chamber = 6
+		elif ammo_needed >= stored_ammo:
+			ammo_in_chamber += stored_ammo
+			stored_ammo = 0
+			GunAnimator.play("reload")
+		print(ammo_in_chamber)
+		print(stored_ammo)
