@@ -48,6 +48,7 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("roll") and roll_cd and Game.update_coins(-3, popup_pos()):
 		roll_cd = false
+		reloading = false
 		roll_pressed()
 		await get_tree().create_timer(0.6).timeout
 		roll_cd = true
@@ -162,16 +163,26 @@ func shoot() -> void:
 
 
 func reload() -> void:
+	if state == ROLL:
+		return
 	reloading = true
-	while reloading:
-		if current_ammo >= max_ammo or Game.update_coins(-2, popup_pos()) == false:
-			reloading = false
-			return
-		
-		GunAnimator.play("reload")
-		await get_tree().create_timer(0.4).timeout
-		current_ammo += 1
-		AmmoCount.value = current_ammo
+	reload_bullet()
+
+
+func reload_bullet() -> void:
+	if current_ammo >= max_ammo:
+		reloading = false
+		return
+	
+	GunAnimator.play("reload")
+	await get_tree().create_timer(0.4).timeout
+	if state == ROLL or Game.update_coins(-2, popup_pos()) == false:
+		reloading = false
+		return
+	current_ammo += 1
+	AmmoCount.value = current_ammo
+	if reloading:
+		reload_bullet()
 
 
 func popup_pos() -> Vector2:

@@ -1,7 +1,7 @@
 [gd_scene load_steps=21 format=3 uid="uid://w736c3ga5g46"]
 
-[ext_resource type="Texture2D" uid="uid://bcxte0yk7bv2m" path="res://icon.svg" id="1_15yqf"]
 [ext_resource type="Script" path="res://scenes/game/game.gd" id="1_crdur"]
+[ext_resource type="Texture2D" uid="uid://dwd5xb0es073l" path="res://assets/images/TempBG.png" id="2_76leo"]
 [ext_resource type="Texture2D" uid="uid://df24a41c4c40n" path="res://assets/images/TestWall2.png" id="2_w6x2l"]
 [ext_resource type="PackedScene" uid="uid://cgwpb6lgfpnat" path="res://scenes/entities/player.tscn" id="3_4nq4m"]
 [ext_resource type="Texture2D" uid="uid://rjpc4qubo5rr" path="res://assets/images/TestWall.png" id="4_b160q"]
@@ -43,10 +43,8 @@ script = ExtResource("1_crdur")
 CoinCount = NodePath("CanvasLayer/UI/MarginContainer/HBoxContainer/CoinCount")
 
 [node name="TempBG" type="Sprite2D" parent="."]
-visible = false
-modulate = Color(0.61339, 0.61339, 0.61339, 1)
-scale = Vector2(9.46875, 4.75)
-texture = ExtResource("1_15yqf")
+modulate = Color(0.886262, 0.886261, 0.886262, 1)
+texture = ExtResource("2_76leo")
 
 [node name="WorldBoundary" type="StaticBody2D" parent="."]
 
