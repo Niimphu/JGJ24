@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://w736c3ga5g46"]
+[gd_scene load_steps=27 format=3 uid="uid://w736c3ga5g46"]
 
 [ext_resource type="Script" path="res://scenes/game/game.gd" id="1_crdur"]
 [ext_resource type="Texture2D" uid="uid://dwd5xb0es073l" path="res://assets/images/TempBG.png" id="2_76leo"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bjj2kiuoqbki0" path="res://assets/images/Dummy.png" id="4_v43ea"]
 [ext_resource type="Texture2D" uid="uid://carlh6hp3gcc2" path="res://assets/images/Crosshair.png" id="5_wq68m"]
 [ext_resource type="Script" path="res://scenes/game/crosshair.gd" id="6_wc28w"]
+[ext_resource type="PackedScene" uid="uid://daf1yf1dtjyyj" path="res://scenes/entities/terrain_hurtbox.tscn" id="6_wnkty"]
 [ext_resource type="Theme" uid="uid://bux7k08p0mmee" path="res://scenes/game.tres" id="8_8fc0e"]
 [ext_resource type="Texture2D" uid="uid://bg5nebaq30wv6" path="res://assets/images/Ammo.png" id="8_17bs5"]
 [ext_resource type="Texture2D" uid="uid://c8qt7kccusryk" path="res://assets/images/BigCoin.png" id="9_dy81b"]
@@ -32,11 +33,27 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-541.685, -263.288, 535
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j8tcv"]
 size = Vector2(62.7732, 5.56218)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gqesd"]
+size = Vector2(64, 18)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fp8ih"]
 size = Vector2(17.3725, 43.5106)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_juuvj"]
+size = Vector2(18.3885, 49)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t68hm"]
+size = Vector2(65, 18)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1qgbn"]
+size = Vector2(18, 48)
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_f5gu8"]
 radius = 3.38644
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mqslt"]
+radius = 9.0
+height = 28.0
 
 [node name="Game" type="Node2D" node_paths=PackedStringArray("CoinCount")]
 script = ExtResource("1_crdur")
@@ -109,6 +126,12 @@ shape = SubResource("RectangleShape2D_j8tcv")
 position = Vector2(1.875, 10.375)
 vertices = PackedVector2Array(-32, -6, 28, -6, 28, -4, -32, -4)
 
+[node name="TerrainHurtbox" parent="Entities/NavigationRegion2D/StaticBody2D" instance=ExtResource("6_wnkty")]
+
+[node name="CollisionShape2D" parent="Entities/NavigationRegion2D/StaticBody2D/TerrainHurtbox" index="0"]
+position = Vector2(0.2785, 0.335199)
+shape = SubResource("RectangleShape2D_gqesd")
+
 [node name="StaticBody2D2" type="StaticBody2D" parent="Entities/NavigationRegion2D"]
 position = Vector2(51.3885, -46.7303)
 
@@ -124,6 +147,12 @@ shape = SubResource("RectangleShape2D_fp8ih")
 position = Vector2(2.29544, 22.1476)
 vertices = PackedVector2Array(-9.99255, -30.0062, 6.52525, -30.0062, 6.17129, 13.412, -10.1105, 12.94)
 
+[node name="TerrainHurtbox" parent="Entities/NavigationRegion2D/StaticBody2D2" instance=ExtResource("6_wnkty")]
+
+[node name="CollisionShape2D" parent="Entities/NavigationRegion2D/StaticBody2D2/TerrainHurtbox" index="0"]
+position = Vector2(0.805752, 12.2303)
+shape = SubResource("RectangleShape2D_juuvj")
+
 [node name="StaticBody2D3" type="StaticBody2D" parent="Entities/NavigationRegion2D"]
 position = Vector2(76.0085, -49.887)
 
@@ -137,6 +166,12 @@ shape = SubResource("RectangleShape2D_j8tcv")
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="Entities/NavigationRegion2D/StaticBody2D3"]
 position = Vector2(1.875, 10.375)
 vertices = PackedVector2Array(-32, -6, 28, -6, 28, -4, -32, -4)
+
+[node name="TerrainHurtbox" parent="Entities/NavigationRegion2D/StaticBody2D3" instance=ExtResource("6_wnkty")]
+
+[node name="CollisionShape2D" parent="Entities/NavigationRegion2D/StaticBody2D3/TerrainHurtbox" index="0"]
+position = Vector2(-0.508499, -0.112999)
+shape = SubResource("RectangleShape2D_t68hm")
 
 [node name="StaticBody2D4" type="StaticBody2D" parent="Entities/NavigationRegion2D"]
 position = Vector2(-0.0519104, -82.5305)
@@ -153,6 +188,12 @@ shape = SubResource("RectangleShape2D_fp8ih")
 position = Vector2(2.08523, 20.676)
 vertices = PackedVector2Array(-9.99255, -30.0062, 6.52525, -30.0062, 6.17129, 13.412, -10.1105, 12.94)
 
+[node name="TerrainHurtbox" parent="Entities/NavigationRegion2D/StaticBody2D4" instance=ExtResource("6_wnkty")]
+
+[node name="CollisionShape2D" parent="Entities/NavigationRegion2D/StaticBody2D4/TerrainHurtbox" index="0"]
+position = Vector2(0.0519104, 10.5305)
+shape = SubResource("RectangleShape2D_1qgbn")
+
 [node name="Dummy" type="StaticBody2D" parent="Entities"]
 position = Vector2(110.299, -3.26502)
 
@@ -163,6 +204,14 @@ texture = ExtResource("4_v43ea")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Dummy"]
 position = Vector2(0, 2.71364)
 shape = SubResource("CircleShape2D_f5gu8")
+
+[node name="Area2D" type="Area2D" parent="Entities/Dummy"]
+collision_layer = 32
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Dummy/Area2D"]
+position = Vector2(-0.299004, -29.735)
+shape = SubResource("CapsuleShape2D_mqslt")
 
 [node name="BulletManager" type="Node2D" parent="."]
 
@@ -252,3 +301,8 @@ stretch_mode = 4
 layout_mode = 2
 size_flags_horizontal = 0
 text = "0"
+
+[editable path="Entities/NavigationRegion2D/StaticBody2D/TerrainHurtbox"]
+[editable path="Entities/NavigationRegion2D/StaticBody2D2/TerrainHurtbox"]
+[editable path="Entities/NavigationRegion2D/StaticBody2D3/TerrainHurtbox"]
+[editable path="Entities/NavigationRegion2D/StaticBody2D4/TerrainHurtbox"]
