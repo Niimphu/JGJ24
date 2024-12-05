@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://daf1yf1dtjyyj"]
+
+[node name="TerrainHurtbox" type="Area2D"]
+collision_layer = 128
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
