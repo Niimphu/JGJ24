@@ -7,6 +7,15 @@ var id := 1
 @onready var Navigator := $NavigationAgent2D
 var hit_count = 0
 
+func _ready():
+	set_process(false)
+
+
+func begin(player_node: CharacterBody2D):
+	player = player_node
+	set_process(true)
+
+
 func _physics_process(_delta):
 	var direction: Vector2 = to_local(Navigator.get_next_path_position()).normalized()
 	velocity = direction * speed

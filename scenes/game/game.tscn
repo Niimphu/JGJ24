@@ -4,8 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://dwd5xb0es073l" path="res://assets/images/TempBG.png" id="2_76leo"]
 [ext_resource type="Texture2D" uid="uid://df24a41c4c40n" path="res://assets/images/TestWall2.png" id="2_w6x2l"]
 [ext_resource type="PackedScene" uid="uid://cgwpb6lgfpnat" path="res://scenes/entities/player.tscn" id="3_4nq4m"]
+[ext_resource type="Script" path="res://scenes/game/wave_manager.gd" id="3_gjyh1"]
 [ext_resource type="Texture2D" uid="uid://rjpc4qubo5rr" path="res://assets/images/TestWall.png" id="4_b160q"]
-[ext_resource type="PackedScene" uid="uid://lo6v7voiebej" path="res://scenes/entities/test_enemy.tscn" id="4_gjnqo"]
 [ext_resource type="Texture2D" uid="uid://bjj2kiuoqbki0" path="res://assets/images/Dummy.png" id="4_v43ea"]
 [ext_resource type="Texture2D" uid="uid://carlh6hp3gcc2" path="res://assets/images/Crosshair.png" id="5_wq68m"]
 [ext_resource type="Script" path="res://scenes/game/crosshair.gd" id="6_wc28w"]
@@ -25,9 +25,9 @@ normal = Vector2(0.999999, 0.00140469)
 normal = Vector2(-0.999999, 0.00101604)
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_xsa1y"]
-vertices = PackedVector2Array(-552.477, 245.828, -5.79688, -0.5625, 33.3203, -1.47656, 70.7031, -1.47656, 523.172, 256.93, 19.0469, -38.7578, 19.0469, -102.273, 33.3203, -64.9922, 525.891, -251.891, 117.477, -31.1172, 117.477, -56.6797, -5.79688, -26.1328, -18.3281, -38.7578, -88.5781, -26.1328, 70.7031, -56.6797, 70.7031, -64.9922, 70.7031, -31.1172, -18.3281, -102.273, -532.094, -253.273, -88.5781, -0.5625)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(5, 6, 7, 2), PackedInt32Array(8, 4, 9, 10), PackedInt32Array(5, 2, 1, 11), PackedInt32Array(12, 5, 11, 13), PackedInt32Array(10, 14, 15), PackedInt32Array(3, 16, 9, 4), PackedInt32Array(17, 12, 13, 18), PackedInt32Array(15, 7, 6), PackedInt32Array(19, 1, 0), PackedInt32Array(19, 0, 18, 13), PackedInt32Array(17, 18, 8, 6), PackedInt32Array(6, 8, 10, 15)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-541.685, -263.288, 535.946, -261.874, 533.118, 267.042, -562.898, 255.728)])
+vertices = PackedVector2Array(-542.18, 291.57, -5.79688, -0.5625, 33.3203, -1.47656, 70.7031, -1.47656, 539.758, 291.656, 19.0469, -38.7578, 32.5313, -40.2422, 33.3203, -40.2422, -5.79688, -26.1328, 540.352, -289.711, 115.297, -40.2422, 115.297, -65.7969, 19.0469, -102.273, 32.5313, -65.7969, -18.3281, -38.7578, -88.5781, -26.1328, 70.7031, -40.2422, -18.3281, -102.273, -538.852, -290.172, -88.5781, -0.5625)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(5, 6, 7, 2, 1, 8), PackedInt32Array(9, 4, 10, 11), PackedInt32Array(6, 5, 12, 13), PackedInt32Array(14, 5, 8, 15), PackedInt32Array(3, 16, 10, 4), PackedInt32Array(17, 14, 15, 18), PackedInt32Array(19, 1, 0), PackedInt32Array(19, 0, 18, 15), PackedInt32Array(17, 18, 9, 12), PackedInt32Array(12, 9, 11, 13)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-548.797, -300.179, 550.364, -299.708, 549.75, 301.671, -552.243, 301.57)])
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j8tcv"]
 size = Vector2(62.7732, 5.56218)
@@ -38,8 +38,9 @@ size = Vector2(17.3725, 43.5106)
 [sub_resource type="CircleShape2D" id="CircleShape2D_f5gu8"]
 radius = 3.38644
 
-[node name="Game" type="Node2D" node_paths=PackedStringArray("CoinCount")]
+[node name="Game" type="Node2D" node_paths=PackedStringArray("WaveManager", "CoinCount")]
 script = ExtResource("1_crdur")
+WaveManager = NodePath("WaveManager")
 CoinCount = NodePath("CanvasLayer/UI/MarginContainer/HBoxContainer/CoinCount")
 
 [node name="TempBG" type="Sprite2D" parent="."]
@@ -49,7 +50,7 @@ texture = ExtResource("2_76leo")
 [node name="WorldBoundary" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBoundary"]
-position = Vector2(0.583679, -273.831)
+position = Vector2(-0.416321, -281.831)
 shape = SubResource("WorldBoundaryShape2D_mrjqw")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="WorldBoundary"]
@@ -57,26 +58,86 @@ position = Vector2(0.350861, 285.885)
 shape = SubResource("WorldBoundaryShape2D_vr6le")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="WorldBoundary"]
-position = Vector2(-568.45, -0.0517654)
+position = Vector2(-540.732, -1.31171)
 shape = SubResource("WorldBoundaryShape2D_dg3de")
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="WorldBoundary"]
-position = Vector2(570.264, -0.251038)
+position = Vector2(537.506, -4.03079)
 shape = SubResource("WorldBoundaryShape2D_dtels")
+
+[node name="WaveManager" type="Node2D" parent="." node_paths=PackedStringArray("EnemiesFolder", "Player")]
+script = ExtResource("3_gjyh1")
+EnemiesFolder = NodePath("../Entities/Enemies")
+Player = NodePath("../Entities/Player")
+
+[node name="SpawnPoint" type="Node2D" parent="WaveManager"]
+position = Vector2(-490.212, -247.388)
+
+[node name="SpawnPoint2" type="Node2D" parent="WaveManager"]
+position = Vector2(-338.547, -248.58)
+
+[node name="SpawnPoint3" type="Node2D" parent="WaveManager"]
+position = Vector2(-177.347, -253.858)
+
+[node name="SpawnPoint4" type="Node2D" parent="WaveManager"]
+position = Vector2(-7.80463, -254.811)
+
+[node name="SpawnPoint5" type="Node2D" parent="WaveManager"]
+position = Vector2(134.262, -248.106)
+
+[node name="SpawnPoint6" type="Node2D" parent="WaveManager"]
+position = Vector2(287.157, -253.592)
+
+[node name="SpawnPoint7" type="Node2D" parent="WaveManager"]
+position = Vector2(418.366, -251.14)
+
+[node name="SpawnPoint8" type="Node2D" parent="WaveManager"]
+position = Vector2(458.042, -122.217)
+
+[node name="SpawnPoint9" type="Node2D" parent="WaveManager"]
+position = Vector2(453.415, -4.46388)
+
+[node name="SpawnPoint10" type="Node2D" parent="WaveManager"]
+position = Vector2(453.483, 103.724)
+
+[node name="SpawnPoint11" type="Node2D" parent="WaveManager"]
+position = Vector2(447.49, 198.117)
+
+[node name="SpawnPoint12" type="Node2D" parent="WaveManager"]
+position = Vector2(371.077, 226.585)
+
+[node name="SpawnPoint13" type="Node2D" parent="WaveManager"]
+position = Vector2(201.768, 223.589)
+
+[node name="SpawnPoint14" type="Node2D" parent="WaveManager"]
+position = Vector2(72.9134, 223.589)
+
+[node name="SpawnPoint15" type="Node2D" parent="WaveManager"]
+position = Vector2(-39.4597, 228.083)
+
+[node name="SpawnPoint16" type="Node2D" parent="WaveManager"]
+position = Vector2(-166.816, 225.087)
+
+[node name="SpawnPoint17" type="Node2D" parent="WaveManager"]
+position = Vector2(-298.667, 222.09)
+
+[node name="SpawnPoint18" type="Node2D" parent="WaveManager"]
+position = Vector2(-417.033, 226.585)
+
+[node name="SpawnPoint19" type="Node2D" parent="WaveManager"]
+position = Vector2(-452.992, 139.683)
+
+[node name="SpawnPoint20" type="Node2D" parent="WaveManager"]
+position = Vector2(-470.972, 0.340805)
+
+[node name="SpawnPoint21" type="Node2D" parent="WaveManager"]
+position = Vector2(-479.962, -106.039)
 
 [node name="Entities" type="Node2D" parent="."]
 y_sort_enabled = true
 
 [node name="Enemies" type="Node2D" parent="Entities"]
 y_sort_enabled = true
-
-[node name="TestEnemy" parent="Entities/Enemies" node_paths=PackedStringArray("player") instance=ExtResource("4_gjnqo")]
-position = Vector2(111.808, -102.899)
-player = NodePath("../../Player")
-
-[node name="TestEnemy2" parent="Entities/Enemies" node_paths=PackedStringArray("player") instance=ExtResource("4_gjnqo")]
-position = Vector2(-175.062, -69.9355)
-player = NodePath("../../Player")
 
 [node name="Player" parent="Entities" node_paths=PackedStringArray("BulletManager", "Game", "AmmoCount") instance=ExtResource("3_4nq4m")]
 BulletManager = NodePath("../../BulletManager")
@@ -90,6 +151,8 @@ limit_left = -606
 limit_top = -304
 limit_right = 606
 limit_bottom = 304
+position_smoothing_enabled = true
+position_smoothing_speed = 20.0
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="Entities"]
 y_sort_enabled = true
@@ -125,7 +188,7 @@ position = Vector2(2.29544, 22.1476)
 vertices = PackedVector2Array(-9.99255, -30.0062, 6.52525, -30.0062, 6.17129, 13.412, -10.1105, 12.94)
 
 [node name="StaticBody2D3" type="StaticBody2D" parent="Entities/NavigationRegion2D"]
-position = Vector2(76.0085, -49.887)
+position = Vector2(73.8258, -59.0146)
 
 [node name="Sprite2D" type="Sprite2D" parent="Entities/NavigationRegion2D/StaticBody2D3"]
 texture = ExtResource("2_w6x2l")
