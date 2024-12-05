@@ -157,7 +157,7 @@ func shoot() -> void:
 	
 	var bullet := bullet_scene.instantiate()
 	bullet.position = Arm.global_position + (mouse_pos - Arm.global_position).normalized() * 8.5
-	bullet.set_direction((position - mouse_pos).normalized())
+	bullet.set_parameters((position - mouse_pos).normalized())
 	BulletManager.add_child(bullet)
 	bullet.connect("two_enemies_hit", Callable(self, "_on_two_enemies_hit")) #check if signal has been emitted to update max_ammo
 	GunAnimator.play("shoot")

@@ -51,11 +51,11 @@ size = Vector2(18, 48)
 [sub_resource type="CircleShape2D" id="CircleShape2D_f5gu8"]
 radius = 3.38644
 
-[node name="Game" type="Node2D" node_paths=PackedStringArray("WaveManager", "CoinCount")]
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mqslt"]
 radius = 9.0
 height = 28.0
 
+[node name="Game" type="Node2D" node_paths=PackedStringArray("WaveManager", "CoinCount")]
 script = ExtResource("1_crdur")
 WaveManager = NodePath("WaveManager")
 CoinCount = NodePath("CanvasLayer/UI/MarginContainer/HBoxContainer/CoinCount")

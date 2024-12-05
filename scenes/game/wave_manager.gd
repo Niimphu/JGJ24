@@ -18,10 +18,12 @@ extends Node2D
 	]
 ]
 
-var burst_delay := 5 # time between bursts during wave
+var enemies_spawned := 0
+var burst_delay := 4 # time between bursts during wave
 
 
 func spawn_wave(wave_number: int):
+	enemies_spawned = 0
 	for burst in waves[wave_number]:
 		spawn_burst(burst)
 		await get_tree().create_timer(burst_delay).timeout
@@ -31,20 +33,23 @@ func spawn_burst(burst: Dictionary):
 	var valid_spawns := get_furthest_points(10)
 	
 	for i in range(burst["count"]):
-		var enemy = burst["type"].instantiate()
-		# Add the enemy to the scene at some spawn location
-		add_child(enemy)
-		enemy.global_position = valid_spawns[randi() % 6]
-		enemy.begin(Player)
+		spawn_enemy(burst["type"], valid_spawns)
 		await get_tree().create_timer(0.15).timeout
-	
+		
 	if burst.has("type2"):
 		for i in range(burst["count2"]):
-			var enemy = burst["type2"].instance()
-			add_child(enemy)
-			enemy.global_position = valid_spawns[randi() % 6]
-			enemy.begin(Player)
+			spawn_enemy(burst["type2"], valid_spawns)
 			await get_tree().create_timer(0.15).timeout
+
+
+func spawn_enemy(enemy: PackedScene, valid_spawns: Array) -> void:
+	var new_enemy = enemy.instantiate()
+	var spawn_point := randi() % valid_spawns.size()
+	add_child(new_enemy)
+	new_enemy.global_position = valid_spawns[spawn_point]
+	valid_spawns.erase(spawn_point)
+	new_enemy.begin(Player, enemies_spawned % 5)
+	enemies_spawned += 1
 
 
 func get_furthest_points(num_points: int) -> Array:
