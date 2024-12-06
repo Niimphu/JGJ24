@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://cgwpb6lgfpnat"]
+[gd_scene load_steps=31 format=3 uid="uid://cgwpb6lgfpnat"]
 
 [ext_resource type="Script" path="res://scenes/entities/player.gd" id="1_jpnwn"]
 [ext_resource type="Texture2D" uid="uid://dhomffrdjpyiv" path="res://assets/images/HatsuneWick.png" id="2_1x5ry"]
@@ -8,6 +8,8 @@
 [ext_resource type="AudioStream" uid="uid://cjljn5fm6ggqb" path="res://assets/sounds/shoot2.wav" id="3_8n1mq"]
 [ext_resource type="Texture2D" uid="uid://b8nhtrlllbosw" path="res://assets/images/HatsuneWickGun.png" id="3_bveos"]
 [ext_resource type="AudioStream" uid="uid://c7rjmjyym572f" path="res://assets/sounds/click (1).wav" id="4_75d8s"]
+[ext_resource type="AudioStream" uid="uid://doln6513qaro" path="res://assets/sounds/reload.wav" id="5_s0uf5"]
+[ext_resource type="AudioStream" uid="uid://2fpurky0xkj5" path="res://assets/sounds/fullreload.wav" id="6_lg8fc"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m6q6f"]
 radius = 3.53651
@@ -312,7 +314,15 @@ bus = &"SFX"
 stream = ExtResource("4_75d8s")
 bus = &"SFX"
 
-[node name="Shoot3" type="AudioStreamPlayer" parent="Sound"]
+[node name="Reload" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("5_s0uf5")
+pitch_scale = 0.6
+bus = &"SFX"
+
+[node name="FullReload" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("6_lg8fc")
+pitch_scale = 2.0
+bus = &"SFX"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.0100327, 0.0670777)
@@ -347,6 +357,12 @@ vframes = 2
 libraries = {
 "": SubResource("AnimationLibrary_l15wj")
 }
+
+[node name="Reload" type="Timer" parent="Gun"]
+wait_time = 0.4
+
+[node name="FullReload" type="Timer" parent="Gun"]
+wait_time = 1.6
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

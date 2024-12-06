@@ -11,7 +11,7 @@ extends Node2D
 
 @onready var final_wave: int = WaveManager.waves.size()
 ##Change for starting coin value
-@export var coins := 50
+@export var coins := 25
 var current_wave := 0
 var current_wave_enemy_count := 0
 var wave_spawning := false
@@ -24,7 +24,7 @@ func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	UpgradeManager.upgrade_selected.connect(spawn_next_wave)
 	WaveManager.wave_complete.connect(wave_complete)
-	UpgradeMenu.visible = false
+	UpgradeMenu.undisplay()
 	spawn_next_wave()
 
 
@@ -40,16 +40,17 @@ func spawn_next_wave():
 func wave_complete() -> void:
 	current_wave += 1
 	if current_wave == final_wave:
-		# ggs
+		print("gg")
 		pass
 	else:
-		await get_tree().create_timer(0.5).timeout
-		UpgradeMenu.visible = true
+		await get_tree().create_timer(2).timeout
+		UpgradeMenu.display()
 		pause()
 
 
-func update_coins(amount: int, location: Vector2) -> bool:
+func update_coins(amount: int, location: Vector2, is_damage: bool = false) -> bool:
 	if coins + amount < 0:
+		popup(0, location)
 		return false #emit death signal
 	coins += amount
 	CoinCount.text = str(coins)
@@ -59,14 +60,19 @@ func update_coins(amount: int, location: Vector2) -> bool:
 
 func popup(amount: int, location: Vector2) -> void:
 	var popup_instance := popup_scene.instantiate()
-	add_child(popup_instance)
-	popup_instance.global_position = location
-	popup_instance.pop(amount)
+	if get_tree().paused:
+		UpgradeMenu.add_child(popup_instance)
+		popup_instance.global_position = UpgradeMenu.get_local_mouse_position()
+	else:
+		add_child(popup_instance)
+		popup_instance.global_position = location
+	popup_instance.pop("Can't afford!" if amount == 0 else str(amount), amount > 0)
 
 
 func pause() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	get_tree().paused = true
+	Player.reloading = false
 	Player.set_process(false)
 
 
@@ -74,6 +80,7 @@ func resume() -> void:
 	get_tree().paused = false
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	Player.resume()
-	
+
+
 func _on_enemy_died(amount: int, location: Vector2): #works but does not visually affect counter until roll used
 	update_coins(amount, location)

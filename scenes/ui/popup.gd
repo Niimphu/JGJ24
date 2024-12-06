@@ -8,13 +8,13 @@ func _ready():
 	Animator.animation_finished.connect(destroy)
 
 
-func pop(amount: int):
-	if amount < 0:
-		Text.text = str(amount)
-		Animator.play("lose")
-	else:
-		Text.text = "+" + str(amount)
+func pop(amount: String, gain: bool):
+	if gain:
+		Text.text = "+" + amount
 		Animator.play("gain")
+	else:
+		Text.text = amount
+		Animator.play("lose")
 	
 	var tween := get_tree().create_tween()
 	tween.tween_property(self, "position", position + Vector2(1, -8), 1)

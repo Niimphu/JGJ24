@@ -8,14 +8,18 @@ extends Node2D
 
 @onready var waves = [
 	[ # Wave 1
+		{ "type": test_enemy, "count": 2 },
+		{ "type": test_enemy, "count": 3 },
 		{ "type": test_enemy, "count": 4 }
 	],
 	[ # Wave 2
 		{ "type": test_enemy, "count": 3 },
+		{ "type": test_enemy, "count": 5 },
 		{ "type": test_enemy, "count": 7 }
 		#{ "type": test_enemy, "count": 2, "type2": EnemyC, "count2": 1 }
 	],
 	[ # Wave 3
+		{ "type": test_enemy, "count": 5 },
 		{ "type": test_enemy, "count": 5 },
 		{ "type": test_enemy, "count": 5 },
 		{ "type": test_enemy, "count": 5 },

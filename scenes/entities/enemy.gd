@@ -69,6 +69,7 @@ func _on_area_2d_area_entered(_area: Area2D) -> void:
 
 func death_animation():
 	speed = 0
+	EventBus.enemy_died.emit(value, global_position + height)
 	Animator.play("death")
 
 
@@ -76,5 +77,4 @@ func death_animation():
 func finished_animation(anim_name: String) -> void:
 	if anim_name == "death":
 		died.emit()
-		EventBus.enemy_died.emit(value, global_position + height)
 		queue_free()

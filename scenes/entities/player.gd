@@ -18,15 +18,17 @@ enum {
 @onready var Shadow := $Shadow
 @onready var Collider := $CollisionShape2D
 @onready var Sound := $Sound
-@onready var Hurtbox = $PlayerHurtbox
+@onready var Hurtbox := $PlayerHurtbox
+@onready var ReloadTimer := $Gun/Reload
+@onready var FullReloadTimer := $Gun/FullReload
 
 @onready var bullet_scene := preload("bullet.tscn")
 @onready var dust_scene := preload("res://scenes/entities/roll_dust.tscn")
 
 
-const SPEED := 160
-const ROLL_MULT := 3.2
-const ROLL_FRICTION := 1200
+const ROLL_MULT := 3
+const ROLL_FRICTION := 800
+var speed := 120
 var state := IDLE
 var direction := Vector2.ZERO
 var mouse_pos: Vector2
@@ -35,11 +37,15 @@ var reloading := false
 
 var max_ammo := 6
 var current_ammo := 6
+var reload_cost := -2
+var roll_cost := -3
+var piercing_level := 2
 
 # this is fine & whatever
 var roll_direction := Vector2.RIGHT
 var muzzle_pos := Vector2.ZERO
 var resuming := false
+var fully_reloadable := false
 
 
 func _ready():
@@ -59,7 +65,7 @@ func _physics_process(delta: float) -> void:
 	get_input_direction()
 	muzzle_pos = Arm.global_position + (mouse_pos - Arm.global_position).normalized() * 8.5
 	
-	if Input.is_action_just_pressed("roll") and roll_cd and Game.update_coins(-3, popup_pos()):
+	if Input.is_action_just_pressed("roll") and roll_cd and Game.update_coins(roll_cost, popup_pos()):
 		roll_cd = false
 		reloading = false
 		roll_pressed()
@@ -81,7 +87,10 @@ func gun_input() -> void:
 	if Input.is_action_just_pressed("fire"):
 		shoot()
 	elif Input.is_action_just_pressed("reload"):
-		reload()
+		if current_ammo == 0:
+			reload(fully_reloadable)
+		else:
+			reload()
 
 
 func idle() -> void:
@@ -102,7 +111,7 @@ func get_input_direction() -> void:
 
 func move() -> void:
 	move_arm()
-	velocity = direction * SPEED
+	velocity = direction * speed
 	move_and_slide()
 	if direction == Vector2.ZERO:
 		state = IDLE
@@ -111,7 +120,7 @@ func move() -> void:
 
 func roll_pressed() -> void:
 	state = ROLL
-	velocity = roll_direction * SPEED * ROLL_MULT
+	velocity = roll_direction * speed * ROLL_MULT
 	Animator.play("roll")
 	
 	var dust_instance := dust_scene.instantiate()
@@ -166,51 +175,81 @@ func shoot() -> void:
 		return
 	
 	reloading = false
+	if ReloadTimer.time_left < 0.2 and !ReloadTimer.is_stopped():
+		await ReloadTimer.timeout
+	elif FullReloadTimer.time_left < 0.2 and !FullReloadTimer.is_stopped():
+		await FullReloadTimer.timeout
 	Sound.shoot()
 	current_ammo -= 1
 	AmmoCount.value = current_ammo
 	
 	var bullet := bullet_scene.instantiate()
 	bullet.position = muzzle_pos
-	bullet.set_parameters((position - mouse_pos).normalized())
+	bullet.set_parameters((position - mouse_pos).normalized(), piercing_level)
 	BulletManager.add_child(bullet)
 	bullet.connect("two_enemies_hit", Callable(self, "_on_two_enemies_hit")) #check if signal has been emitted to update max_ammo
 	GunAnimator.play("shoot")
 
 
 func _on_two_enemies_hit():
+	return
 	current_ammo += 1
 	AmmoCount.value = current_ammo
 
 
-func reload() -> void:
+func reload(full := false) -> void:
 	if state == ROLL or reloading:
 		return
 	reloading = true
-	reload_bullet()
+	if full:
+		full_reload()
+	else:
+		reload_bullet()
+
+
+func full_reload() -> void:
+	if current_ammo >= max_ammo:
+		reloading = false
+		return
+	
+	GunAnimator.play("reload", 0.5)
+	Sound.full_reload()
+	if state == ROLL or Game.update_coins(max_ammo * reload_cost, popup_pos()) == false:
+		reloading = false
+		return
+	
+	current_ammo = max_ammo
+	AmmoCount.value = current_ammo
+	FullReloadTimer.start()
+	await FullReloadTimer.timeout
+	reloading = false
 
 
 func reload_bullet() -> void:
-	if current_ammo >= max_ammo or resuming:
+	if current_ammo >= max_ammo or not is_processing():
 		reloading = false
 		return
 	
 	GunAnimator.play("reload")
-	await get_tree().create_timer(0.4).timeout
-	if state == ROLL or Game.update_coins(-2, popup_pos()) == false:
+	Sound.reload()
+	if state == ROLL or Game.update_coins(reload_cost, popup_pos()) == false:
 		reloading = false
 		return
 	current_ammo += 1
 	AmmoCount.value = current_ammo
+	
+	ReloadTimer.start()
+	await ReloadTimer.timeout
 	if reloading:
 		reload_bullet()
 
 
 func popup_pos() -> Vector2:
-	return global_position + Vector2(4, -25)
+	return global_position + Vector2(randi() % 15 - 6, -25)
 
 
 func resume() -> void:
 	resuming = true
-	reload()
+	state = IDLE
 	set_process(true)
+	reload(true)
