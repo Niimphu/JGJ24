@@ -16,6 +16,8 @@ var hit_count := 0
 
 var player: Node2D
 
+signal died
+
 func _ready():
 	set_process(false)
 	HurtBox.area_entered.connect(_on_area_2d_area_entered)
@@ -68,4 +70,5 @@ func death_animation():
 
 func finished_animation(anim_name: String) -> void:
 	if anim_name == "death":
+		died.emit()
 		queue_free()
