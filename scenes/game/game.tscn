@@ -316,6 +316,18 @@ polygon = PackedVector2Array(96.1888, -159.727, 144.12, -159.517, 147.063, -137.
 [node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo"]
 polygon = PackedVector2Array(-449.706, -171.363, -449.817, -178.713, -436.473, -179.737, -434.617, -196.496, -430.122, -199.867, -398.283, -199.774, -395.755, -193.781, -398.845, -188.349, -428.811, -187.787, -429.438, -170.806)
 
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo"]
+polygon = PackedVector2Array(97, 168, 110, 168, 110, 160, 97, 160)
+
+[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo"]
+polygon = PackedVector2Array(145, 160, 158, 160, 158, 168, 145, 168)
+
+[node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo"]
+polygon = PackedVector2Array(193, 168, 206, 168, 206, 160, 193, 160)
+
+[node name="CollisionPolygon2D9" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo"]
+polygon = PackedVector2Array(222, 182, 209, 182, 204, 178, 204, 171, 210, 166, 213, 165, 222, 165, 227, 167, 229, 169, 229, 178)
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/NavigationRegion2D/TerrainInfo"]
 position = Vector2(-464.488, 83.8679)
 shape = SubResource("RectangleShape2D_p7agq")

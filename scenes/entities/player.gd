@@ -45,10 +45,8 @@ var resuming := false
 func _ready():
 	Hurtbox.area_entered.connect(_on_hurtbox_entered)
 	Animator.animation_finished.connect(finished_animation)
+	#EventBus.player_death.connect(player_died)
 
-func _on_hurtbox_entered(area: Area2D) -> void:
-	#play animation
-	pass
 
 func _physics_process(delta: float) -> void:
 	if resuming:
@@ -209,6 +207,8 @@ func reload_bullet() -> void:
 func popup_pos() -> Vector2:
 	return global_position + Vector2(4, -25)
 
+func _on_hurtbox_entered(area: Area2D) -> void:
+	pass   #could add grace period i-frames or knockback
 
 func resume() -> void:
 	resuming = true

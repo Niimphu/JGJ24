@@ -5,6 +5,7 @@ var id := 1
 
 @onready var Navigator := $NavigationAgent2D
 @onready var HurtBox := $Hurtbox
+@onready var Hitbox := $Hitbox
 @onready var Animator := $AnimationPlayer
 @onready var Sprite := $Body
 
@@ -13,7 +14,9 @@ var hit_count := 0
 @export var armour := 1
 ## Number of bullets needed to kill this enemy
 @export var health := 1
-##
+## Number of coins to subtract from player on hit
+@export var damage := 10
+## Coins to assign to the player on enemy death
 @export var value := 1
 ##
 @export var height := Vector2(0, -20)
@@ -24,7 +27,8 @@ signal died
 
 func _ready():
 	set_process(false)
-	HurtBox.area_entered.connect(_on_area_2d_area_entered)
+	HurtBox.area_entered.connect(_on_hurtbox_entered)
+	Hitbox.area_entered.connect(_on_hitbox_entered)
 	Animator.animation_finished.connect(finished_animation)
 	Navigator.velocity_computed.connect(safe_velocity_computed)
 
@@ -61,16 +65,9 @@ func safe_velocity_computed(safe_velocity) -> void:
 	move_and_slide()
 
 
-func _on_area_2d_area_entered(_area: Area2D) -> void:
-	health -= 1
-	if health == 0:
-		death_animation()
-
-
 func death_animation():
 	speed = 0
 	Animator.play("death")
-
 
 
 func finished_animation(anim_name: String) -> void:
@@ -78,3 +75,11 @@ func finished_animation(anim_name: String) -> void:
 		died.emit()
 		EventBus.enemy_died.emit(value, global_position + height)
 		queue_free()
+
+func _on_hurtbox_entered(_area: Area2D) -> void:
+	health -= 1
+	if health == 0:
+		death_animation()
+
+func _on_hitbox_entered(_area: Area2D) -> void:
+	EventBus.player_hit.emit(-damage, global_position + height)

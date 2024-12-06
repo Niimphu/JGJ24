@@ -21,6 +21,7 @@ var add_coin := false
 func _ready():
 	CoinCount.text = str(coins)
 	EventBus.enemy_died.connect(_on_enemy_died)
+	EventBus.player_hit.connect(_on_player_hit)
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	UpgradeManager.upgrade_selected.connect(spawn_next_wave)
 	WaveManager.wave_complete.connect(wave_complete)
@@ -49,7 +50,8 @@ func wave_complete() -> void:
 
 func update_coins(amount: int, location: Vector2) -> bool:
 	if coins + amount < 0:
-		return false #emit death signal
+		#EventBus.player_death.emit()
+		return false
 	coins += amount
 	CoinCount.text = str(coins)
 	popup(amount, location)
@@ -76,3 +78,6 @@ func resume() -> void:
 	
 func _on_enemy_died(amount: int, location: Vector2): #works but does not visually affect counter until roll used
 	update_coins(amount, location)
+	
+func _on_player_hit(damage: int, location: Vector2):
+	update_coins(damage, location)
