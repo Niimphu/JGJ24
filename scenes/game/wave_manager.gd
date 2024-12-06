@@ -45,7 +45,7 @@ func spawn_burst(burst: Dictionary):
 func spawn_enemy(enemy: PackedScene, valid_spawns: Array) -> void:
 	var new_enemy = enemy.instantiate()
 	var spawn_point := randi() % valid_spawns.size()
-	add_child(new_enemy)
+	EnemiesFolder.add_child(new_enemy)
 	new_enemy.global_position = valid_spawns[spawn_point]
 	valid_spawns.erase(spawn_point)
 	new_enemy.begin(Player, enemies_spawned % 5)
