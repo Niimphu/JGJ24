@@ -71,4 +71,5 @@ func death_animation():
 func finished_animation(anim_name: String) -> void:
 	if anim_name == "death":
 		died.emit()
+		EventBus.enemy_died.emit()
 		queue_free()

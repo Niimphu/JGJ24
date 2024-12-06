@@ -280,7 +280,6 @@ tile_set = SubResource("TileSet_vq1ef")
 script = ExtResource("5_6ec6m")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="Entities"]
-visible = false
 y_sort_enabled = true
 navigation_polygon = SubResource("NavigationPolygon_xsa1y")
 
@@ -330,7 +329,192 @@ shape = SubResource("CapsuleShape2D_aydql")
 [node name="CollisionShape2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox" index="0"]
 position = Vector2(0.2785, 0.335199)
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+[node name="Pillar" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(-7, -1)
+scale = Vector2(0.979976, 1.03221)
+polygon = PackedVector2Array(-159.188, 140.475, -170.412, 140.475, -168.372, 104.63, -165.31, 99.7859, -164.29, 99.7859, -161.229, 104.63)
+
+[node name="Pillar2" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+polygon = PackedVector2Array(-291, 144, -302, 144, -300, 107, -297, 102, -296, 102, -293, 107)
+
+[node name="Pillar3" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+polygon = PackedVector2Array(-355, 144, -366, 144, -364, 107, -361, 102, -360, 102, -357, 107)
+
+[node name="Pillar4" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+polygon = PackedVector2Array(-355, 30, -366, 30, -364, -7, -361, -12, -360, -12, -357, -7)
+
+[node name="Pillar5" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(256, 0)
+polygon = PackedVector2Array(-355, 30, -366, 30, -364, -7, -361, -12, -360, -12, -357, -7)
+
+[node name="Pillar6" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(256, 114)
+polygon = PackedVector2Array(-355, 30, -366, 30, -364, -7, -361, -12, -360, -12, -357, -7)
+
+[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+polygon = PackedVector2Array(-163, 140, -109, 140, -109, 133, -163, 133)
+
+[node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(-192, 0)
+polygon = PackedVector2Array(-163, 140, -109, 140, -109, 133, -163, 133)
+
+[node name="CollisionPolygon2D9" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+polygon = PackedVector2Array(-364, 30, -364, 106, -357, 106, -357, 30)
+
+[node name="CollisionPolygon2D10" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(256, 0)
+polygon = PackedVector2Array(-364, 30, -364, 106, -357, 106, -357, 30)
+
+[node name="CollisionPolygon2D11" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+polygon = PackedVector2Array(-355, 18, -111, 19, -111, 26, -355, 26)
+
+[node name="WideGrave" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+polygon = PackedVector2Array(-450, -171, -429, -171, -429, -179, -431, -179, -431, -189, -434, -192, -445, -192, -448, -189, -448, -179, -450, -179)
+
+[node name="WideGrave2" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(0, 243)
+polygon = PackedVector2Array(-450, -171, -429, -171, -429, -179, -431, -179, -431, -189, -434, -192, -445, -192, -448, -189, -448, -179, -450, -179)
+
+[node name="WideGrave3" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(576, 35)
+polygon = PackedVector2Array(-450, -171, -429, -171, -429, -179, -431, -179, -431, -189, -434, -192, -445, -192, -448, -189, -448, -179, -450, -179)
+
+[node name="WideGrave4" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(816, 34)
+polygon = PackedVector2Array(-450, -171, -429, -171, -429, -179, -431, -179, -431, -189, -434, -192, -445, -192, -448, -189, -448, -179, -450, -179)
+
+[node name="WideGrave5" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(704, 68)
+polygon = PackedVector2Array(-450, -171, -429, -171, -429, -179, -431, -179, -431, -189, -434, -192, -445, -192, -448, -189, -448, -179, -450, -179)
+
+[node name="WideGrave6" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(816, 307)
+polygon = PackedVector2Array(-450, -171, -429, -171, -429, -179, -431, -179, -431, -189, -434, -192, -445, -192, -448, -189, -448, -179, -450, -179)
+
+[node name="WideGrave7" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(832, 323)
+polygon = PackedVector2Array(-450, -171, -429, -171, -429, -179, -431, -179, -431, -189, -434, -192, -445, -192, -448, -189, -448, -179, -450, -179)
+
+[node name="WideGrave8" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(912, 320)
+polygon = PackedVector2Array(-450, -171, -429, -171, -429, -179, -431, -179, -431, -189, -434, -192, -445, -192, -448, -189, -448, -179, -450, -179)
+
+[node name="SlimGrave" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+polygon = PackedVector2Array(113, -152, 126, -152, 126, -160, 125, -160, 125, -171, 123, -173, 116, -173, 114, -170, 114, -160, 113, -160)
+
+[node name="SlimGrave2" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(336, 288)
+polygon = PackedVector2Array(113, -152, 126, -152, 126, -160, 125, -160, 125, -171, 123, -173, 116, -173, 114, -170, 114, -160, 113, -160)
+
+[node name="SlimGrave3" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(320, 288)
+polygon = PackedVector2Array(113, -152, 126, -152, 126, -160, 125, -160, 125, -171, 123, -173, 116, -173, 114, -170, 114, -160, 113, -160)
+
+[node name="SlimGrave4" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(272, 288)
+polygon = PackedVector2Array(113, -152, 126, -152, 126, -160, 125, -160, 125, -171, 123, -173, 116, -173, 114, -170, 114, -160, 113, -160)
+
+[node name="SlimGrave5" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(240, 272)
+polygon = PackedVector2Array(113, -152, 126, -152, 126, -160, 125, -160, 125, -171, 123, -173, 116, -173, 114, -170, 114, -160, 113, -160)
+
+[node name="SlimGrave6" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(80, 320)
+polygon = PackedVector2Array(113, -152, 126, -152, 126, -160, 125, -160, 125, -171, 123, -173, 116, -173, 114, -170, 114, -160, 113, -160)
+
+[node name="SlimGrave7" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(32, 320)
+polygon = PackedVector2Array(113, -152, 126, -152, 126, -160, 125, -160, 125, -171, 123, -173, 116, -173, 114, -170, 114, -160, 113, -160)
+
+[node name="SlimGrave8" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(-16, 320)
+polygon = PackedVector2Array(113, -152, 126, -152, 126, -160, 125, -160, 125, -171, 123, -173, 116, -173, 114, -170, 114, -160, 113, -160)
+
+[node name="SlimGrave9" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(-576, 240)
+polygon = PackedVector2Array(113, -152, 126, -152, 126, -160, 125, -160, 125, -171, 123, -173, 116, -173, 114, -170, 114, -160, 113, -160)
+
+[node name="SlimGrave10" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(-592, 240)
+polygon = PackedVector2Array(113, -152, 126, -152, 126, -160, 125, -160, 125, -171, 123, -173, 116, -173, 114, -170, 114, -160, 113, -160)
+
+[node name="Cross" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+polygon = PackedVector2Array(-240, -120, -224, -120, -224, -128, -230, -128, -230, -139, -224, -139, -224, -144, -230, -144, -230, -150, -234, -150, -234, -144, -240, -144, -240, -139, -234, -139, -234, -128, -240, -128)
+
+[node name="Cross2" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(-32, -16)
+polygon = PackedVector2Array(-240, -120, -224, -120, -224, -128, -230, -128, -230, -139, -224, -139, -224, -144, -230, -144, -230, -150, -234, -150, -234, -144, -240, -144, -240, -139, -234, -139, -234, -128, -240, -128)
+
+[node name="Cross3" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(-16, -16)
+polygon = PackedVector2Array(-240, -120, -224, -120, -224, -128, -230, -128, -230, -139, -224, -139, -224, -144, -230, -144, -230, -150, -234, -150, -234, -144, -240, -144, -240, -139, -234, -139, -234, -128, -240, -128)
+
+[node name="Cross4" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(0, -32)
+polygon = PackedVector2Array(-240, -120, -224, -120, -224, -128, -230, -128, -230, -139, -224, -139, -224, -144, -230, -144, -230, -150, -234, -150, -234, -144, -240, -144, -240, -139, -234, -139, -234, -128, -240, -128)
+
+[node name="Cross5" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(16, -16)
+polygon = PackedVector2Array(-240, -120, -224, -120, -224, -128, -230, -128, -230, -139, -224, -139, -224, -144, -230, -144, -230, -150, -234, -150, -234, -144, -240, -144, -240, -139, -234, -139, -234, -128, -240, -128)
+
+[node name="Cross6" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(32, -16)
+polygon = PackedVector2Array(-240, -120, -224, -120, -224, -128, -230, -128, -230, -139, -224, -139, -224, -144, -230, -144, -230, -150, -234, -150, -234, -144, -240, -144, -240, -139, -234, -139, -234, -128, -240, -128)
+
+[node name="Cross7" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(48, 0)
+polygon = PackedVector2Array(-240, -120, -224, -120, -224, -128, -230, -128, -230, -139, -224, -139, -224, -144, -230, -144, -230, -150, -234, -150, -234, -144, -240, -144, -240, -139, -234, -139, -234, -128, -240, -128)
+
+[node name="Cross8" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(64, -16)
+polygon = PackedVector2Array(-240, -120, -224, -120, -224, -128, -230, -128, -230, -139, -224, -139, -224, -144, -230, -144, -230, -150, -234, -150, -234, -144, -240, -144, -240, -139, -234, -139, -234, -128, -240, -128)
+
+[node name="Cross9" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(48, -32)
+polygon = PackedVector2Array(-240, -120, -224, -120, -224, -128, -230, -128, -230, -139, -224, -139, -224, -144, -230, -144, -230, -150, -234, -150, -234, -144, -240, -144, -240, -139, -234, -139, -234, -128, -240, -128)
+
+[node name="Cross10" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(80, -16)
+polygon = PackedVector2Array(-240, -120, -224, -120, -224, -128, -230, -128, -230, -139, -224, -139, -224, -144, -230, -144, -230, -150, -234, -150, -234, -144, -240, -144, -240, -139, -234, -139, -234, -128, -240, -128)
+
+[node name="Cross11" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(336, -32)
+polygon = PackedVector2Array(-240, -120, -224, -120, -224, -128, -230, -128, -230, -139, -224, -139, -224, -144, -230, -144, -230, -150, -234, -150, -234, -144, -240, -144, -240, -139, -234, -139, -234, -128, -240, -128)
+
+[node name="Cross12" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(368, -32)
+polygon = PackedVector2Array(-240, -120, -224, -120, -224, -128, -230, -128, -230, -139, -224, -139, -224, -144, -230, -144, -230, -150, -234, -150, -234, -144, -240, -144, -240, -139, -234, -139, -234, -128, -240, -128)
+
+[node name="Cross13" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(480, 16)
+polygon = PackedVector2Array(-240, -120, -224, -120, -224, -128, -230, -128, -230, -139, -224, -139, -224, -144, -230, -144, -230, -150, -234, -150, -234, -144, -240, -144, -240, -139, -234, -139, -234, -128, -240, -128)
+
+[node name="Cross14" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(592, 256)
+polygon = PackedVector2Array(-240, -120, -224, -120, -224, -128, -230, -128, -230, -139, -224, -139, -224, -144, -230, -144, -230, -150, -234, -150, -234, -144, -240, -144, -240, -139, -234, -139, -234, -128, -240, -128)
+
+[node name="Cross15" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(640, 272)
+polygon = PackedVector2Array(-240, -120, -224, -120, -224, -128, -230, -128, -230, -139, -224, -139, -224, -144, -230, -144, -230, -150, -234, -150, -234, -144, -240, -144, -240, -139, -234, -139, -234, -128, -240, -128)
+
+[node name="Cross16" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(656, 256)
+polygon = PackedVector2Array(-240, -120, -224, -120, -224, -128, -230, -128, -230, -139, -224, -139, -224, -144, -230, -144, -230, -150, -234, -150, -234, -144, -240, -144, -240, -139, -234, -139, -234, -128, -240, -128)
+
+[node name="SingleTire" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+polygon = PackedVector2Array(398, -122, 405, -126, 405, -135, 398, -139, 389, -139, 380, -133, 380, -126, 385, -122)
+
+[node name="SingleTire2" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(-177, 305)
+polygon = PackedVector2Array(398, -122, 405, -126, 405, -135, 398, -139, 389, -139, 380, -133, 380, -126, 385, -122)
+
+[node name="SingleTire3" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(-801, -65)
+polygon = PackedVector2Array(398, -122, 405, -126, 405, -135, 398, -139, 389, -139, 380, -133, 380, -126, 385, -122)
+
+[node name="SingleTire4" type="CollisionPolygon2D" parent="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
+position = Vector2(-816, -64)
+polygon = PackedVector2Array(398, -122, 405, -126, 405, -135, 398, -139, 389, -139, 380, -133, 380, -126, 385, -122)
 
 [node name="BulletManager" type="Node2D" parent="."]
 
