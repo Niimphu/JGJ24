@@ -11,7 +11,7 @@ extends Node2D
 
 @onready var final_wave: int = WaveManager.waves.size()
 ##Change for starting coin value
-@export var coins := 36
+@export var coins := 50
 var current_wave := 0
 var current_wave_enemy_count := 0
 var wave_spawning := false
@@ -22,6 +22,7 @@ func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	UpgradeManager.upgrade_selected.connect(spawn_next_wave)
 	WaveManager.wave_complete.connect(wave_complete)
+	UpgradeMenu.visible = false
 	spawn_next_wave()
 
 

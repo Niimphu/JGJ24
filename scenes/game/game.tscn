@@ -605,7 +605,7 @@ theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/UI/MarginContainer"]
-custom_minimum_size = Vector2(37, 0)
+custom_minimum_size = Vector2(68.165, 0)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
@@ -613,18 +613,19 @@ size_flags_vertical = 0
 [node name="CoinIcon" type="TextureRect" parent="CanvasLayer/UI/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
-size_flags_vertical = 4
+size_flags_vertical = 0
 texture = ExtResource("9_dy81b")
 stretch_mode = 4
 
 [node name="CoinCount" type="Label" parent="CanvasLayer/UI/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 20
 text = "0"
+vertical_alignment = 1
 
 [node name="UpgradeMenu" type="Control" parent="CanvasLayer"]
 process_mode = 2
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -672,11 +673,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 12
-text = "New Upgrade
-Ya ya ye ya ya
-70 bucks
-"
+text = "Upgrade"
 autowrap_mode = 2
 
 [node name="GetMoney" type="Control" parent="CanvasLayer/UpgradeMenu/MarginContainer/HBoxContainer"]
@@ -691,6 +688,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "+5 Coins"
+text = "+50 coins"
+autowrap_mode = 2
 
 [editable path="Entities/NavigationRegion2D/TerrainInfo/TerrainHurtbox"]
