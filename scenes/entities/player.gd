@@ -8,7 +8,7 @@ enum {
 
 @export var BulletManager: Node2D
 @export var Game: Node2D
-@export var AmmoCount: Control
+@export var AmmoCount: TextureProgressBar
 
 @onready var Animator := $AnimationPlayer
 @onready var GunAnimator := $Gun/AnimationPlayer
@@ -17,6 +17,7 @@ enum {
 @onready var Jacket := $Jacket
 @onready var Shadow := $Shadow
 @onready var Collider := $CollisionShape2D
+@onready var Sound := $Sound
 
 @onready var bullet_scene := preload("bullet.tscn")
 @onready var dust_scene := preload("res://scenes/entities/roll_dust.tscn")
@@ -36,6 +37,8 @@ var current_ammo := 6
 
 # this is fine & whatever
 var roll_direction := Vector2.RIGHT
+var muzzle_pos := Vector2.ZERO
+var resuming := false
 
 
 func _ready():
@@ -43,8 +46,13 @@ func _ready():
 
 
 func _physics_process(delta: float) -> void:
+	if resuming:
+		resuming = false
+		return
+	
 	mouse_pos = get_global_mouse_position()
 	get_input_direction()
+	muzzle_pos = Arm.global_position + (mouse_pos - Arm.global_position).normalized() * 8.5
 	
 	if Input.is_action_just_pressed("roll") and roll_cd and Game.update_coins(-3, popup_pos()):
 		roll_cd = false
@@ -149,14 +157,16 @@ func sprite_flip(flip: bool) -> void:
 
 func shoot() -> void:
 	if current_ammo == 0:
+		Sound.empty()
 		return
 	
 	reloading = false
+	Sound.shoot()
 	current_ammo -= 1
 	AmmoCount.value = current_ammo
 	
 	var bullet := bullet_scene.instantiate()
-	bullet.position = Arm.global_position + (mouse_pos - Arm.global_position).normalized() * 8.5
+	bullet.position = muzzle_pos
 	bullet.set_parameters((position - mouse_pos).normalized())
 	BulletManager.add_child(bullet)
 	bullet.connect("two_enemies_hit", Callable(self, "_on_two_enemies_hit")) #check if signal has been emitted to update max_ammo
@@ -164,18 +174,19 @@ func shoot() -> void:
 
 
 func _on_two_enemies_hit():
-		current_ammo += 1
+	current_ammo += 1
+	AmmoCount.value = current_ammo
 
 
 func reload() -> void:
-	if state == ROLL:
+	if state == ROLL or reloading:
 		return
 	reloading = true
 	reload_bullet()
 
 
 func reload_bullet() -> void:
-	if current_ammo >= max_ammo:
+	if current_ammo >= max_ammo or resuming:
 		reloading = false
 		return
 	
@@ -192,3 +203,9 @@ func reload_bullet() -> void:
 
 func popup_pos() -> Vector2:
 	return global_position + Vector2(4, -25)
+
+
+func resume() -> void:
+	resuming = true
+	reload()
+	set_process(true)

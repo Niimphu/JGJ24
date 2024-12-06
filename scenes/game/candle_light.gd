@@ -16,6 +16,6 @@ func _on_timer_timeout():
 	
 	var size_2: = default_size2 + randi() % 14 - 7
 	var tween3 := get_tree().create_tween()
-	tween3.tween_property(Light2, "height", size_1, 0.2)
+	tween3.tween_property(Light2, "height", size_2, 0.2)
 	var tween4 := get_tree().create_tween()
-	tween4.tween_property(Light2, "width", size_1, 0.2)
+	tween4.tween_property(Light2, "width", size_2, 0.2)

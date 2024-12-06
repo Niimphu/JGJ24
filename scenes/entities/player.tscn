@@ -1,10 +1,13 @@
-[gd_scene load_steps=26 format=3 uid="uid://cgwpb6lgfpnat"]
+[gd_scene load_steps=29 format=3 uid="uid://cgwpb6lgfpnat"]
 
 [ext_resource type="Script" path="res://scenes/entities/player.gd" id="1_jpnwn"]
 [ext_resource type="Texture2D" uid="uid://dhomffrdjpyiv" path="res://assets/images/HatsuneWick.png" id="2_1x5ry"]
 [ext_resource type="Texture2D" uid="uid://drp6r5akopqby" path="res://assets/images/HatsuneWickJacket.png" id="2_8sumu"]
 [ext_resource type="Texture2D" uid="uid://2r441fbxdbkp" path="res://assets/images/Shadow.png" id="2_063xa"]
+[ext_resource type="Script" path="res://scenes/entities/player_sound.gd" id="2_jn3ri"]
+[ext_resource type="AudioStream" uid="uid://cjljn5fm6ggqb" path="res://assets/sounds/shoot2.wav" id="3_8n1mq"]
 [ext_resource type="Texture2D" uid="uid://b8nhtrlllbosw" path="res://assets/images/HatsuneWickGun.png" id="3_bveos"]
+[ext_resource type="AudioStream" uid="uid://c7rjmjyym572f" path="res://assets/sounds/click (1).wav" id="4_75d8s"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m6q6f"]
 radius = 3.53651
@@ -273,6 +276,19 @@ height = 16.0
 collision_layer = 2
 motion_mode = 1
 script = ExtResource("1_jpnwn")
+
+[node name="Sound" type="Node2D" parent="."]
+script = ExtResource("2_jn3ri")
+
+[node name="Shoot" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("3_8n1mq")
+bus = &"SFX"
+
+[node name="Empty" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("4_75d8s")
+bus = &"SFX"
+
+[node name="Shoot3" type="AudioStreamPlayer" parent="Sound"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.0100327, 0.0670777)
