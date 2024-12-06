@@ -112,3 +112,11 @@ shape = SubResource("RectangleShape2D_7a8j7")
 libraries = {
 "": SubResource("AnimationLibrary_4ap1t")
 }
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 4
+
+[node name="HitboxShape" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0.191149, -6.86955)
+shape = SubResource("RectangleShape2D_7a8j7")

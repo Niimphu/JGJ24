@@ -1,3 +1,3 @@
 extends Node
 
-signal enemy_died
+signal enemy_died(amount: int, location: Vector2)
