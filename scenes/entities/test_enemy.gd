@@ -30,7 +30,7 @@ func begin(player_node: CharacterBody2D, new_id: int):
 	find_path()
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	var direction: Vector2 = to_local(Navigator.get_next_path_position()).normalized()
 	var intended_velocity: Vector2 = direction * speed
 	
