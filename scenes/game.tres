@@ -1,8 +1,17 @@
-[gd_resource type="Theme" load_steps=5 format=3 uid="uid://bux7k08p0mmee"]
+[gd_resource type="Theme" load_steps=8 format=3 uid="uid://bux7k08p0mmee"]
 
 [ext_resource type="FontFile" uid="uid://dlrdeurfh4w0p" path="res://assets/Minecraft.ttf" id="1_gkpd5"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_st22f"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_81tku"]
+bg_color = Color(0.0562916, 0.0562916, 0.0562916, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v4yh2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s5ikl"]
+bg_color = Color(0.389287, 0.389287, 0.389286, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mbx4k"]
+bg_color = Color(0.111197, 0.111197, 0.111197, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bl6rl"]
 
@@ -10,6 +19,10 @@
 
 [resource]
 default_font = ExtResource("1_gkpd5")
-Button/styles/focus = SubResource("StyleBoxEmpty_st22f")
+Button/colors/font_disabled_color = Color(0.886262, 0.886261, 0.886262, 1)
+Button/styles/disabled = SubResource("StyleBoxFlat_81tku")
+Button/styles/focus = SubResource("StyleBoxEmpty_v4yh2")
+Button/styles/hover = SubResource("StyleBoxFlat_s5ikl")
+Button/styles/normal = SubResource("StyleBoxFlat_mbx4k")
 HSeparator/styles/separator = SubResource("StyleBoxEmpty_bl6rl")
 VSeparator/styles/separator = SubResource("StyleBoxEmpty_i8cl3")

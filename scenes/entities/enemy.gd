@@ -67,13 +67,13 @@ func safe_velocity_computed(safe_velocity) -> void:
 
 func death_animation():
 	speed = 0
+	EventBus.enemy_died.emit(value, global_position + height)
 	Animator.play("death")
 
 
 func finished_animation(anim_name: String) -> void:
 	if anim_name == "death":
 		died.emit()
-		EventBus.enemy_died.emit(value, global_position + height)
 		queue_free()
 
 func _on_hurtbox_entered(_area: Area2D) -> void:
