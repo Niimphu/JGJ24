@@ -22,7 +22,7 @@ enum {
 @onready var dust_scene := preload("res://scenes/entities/roll_dust.tscn")
 
 
-const SPEED := 180
+const SPEED := 160
 const ROLL_MULT := 3.2
 const ROLL_FRICTION := 1200
 var state := IDLE
