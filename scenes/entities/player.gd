@@ -18,6 +18,7 @@ enum {
 @onready var Shadow := $Shadow
 @onready var Collider := $CollisionShape2D
 @onready var Sound := $Sound
+@onready var Hurtbox = $PlayerHurtbox
 
 @onready var bullet_scene := preload("bullet.tscn")
 @onready var dust_scene := preload("res://scenes/entities/roll_dust.tscn")
@@ -42,8 +43,12 @@ var resuming := false
 
 
 func _ready():
+	Hurtbox.area_entered.connect(_on_hurtbox_entered)
 	Animator.animation_finished.connect(finished_animation)
 
+func _on_hurtbox_entered(area: Area2D) -> void:
+	#play animation
+	pass
 
 func _physics_process(delta: float) -> void:
 	if resuming:

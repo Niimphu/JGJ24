@@ -15,10 +15,12 @@ extends Node2D
 var current_wave := 0
 var current_wave_enemy_count := 0
 var wave_spawning := false
+var add_coin := false
 
 
 func _ready():
 	CoinCount.text = str(coins)
+	EventBus.enemy_died.connect(_on_enemy_died)
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	UpgradeManager.upgrade_selected.connect(spawn_next_wave)
 	WaveManager.wave_complete.connect(wave_complete)
@@ -48,7 +50,7 @@ func wave_complete() -> void:
 
 func update_coins(amount: int, location: Vector2) -> bool:
 	if coins + amount < 0:
-		return false
+		return false #emit death signal
 	coins += amount
 	CoinCount.text = str(coins)
 	popup(amount, location)
@@ -72,3 +74,6 @@ func resume() -> void:
 	get_tree().paused = false
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	Player.resume()
+	
+func _on_enemy_died(amount: int, location: Vector2): #works but does not visually affect counter until roll used
+	update_coins(amount, location)

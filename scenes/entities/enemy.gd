@@ -13,6 +13,10 @@ var hit_count := 0
 @export var armour := 1
 ## Number of bullets needed to kill this enemy
 @export var health := 1
+##
+@export var value := 1
+##
+@export var height := Vector2(0, -20)
 
 var player: Node2D
 
@@ -68,8 +72,9 @@ func death_animation():
 	Animator.play("death")
 
 
+
 func finished_animation(anim_name: String) -> void:
 	if anim_name == "death":
 		died.emit()
-		EventBus.enemy_died.emit()
+		EventBus.enemy_died.emit(value, global_position + height)
 		queue_free()
