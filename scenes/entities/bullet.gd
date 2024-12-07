@@ -4,8 +4,10 @@ var speed := 850
 var bullet_direction: Vector2
 var shoot := false
 var count := 0
-var enemies_hit := 0
+var hit_count := 0
 var piercing_level := 2
+var enemies_hit: Array
+var multiplier:= 1
 
 
 func _ready():
@@ -33,7 +35,10 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 func _on_area_entered(area: Area2D):
 	if area.name == "TerrainHurtbox":
 		queue_free()
+	elif enemies_hit.has(area):
+		return
 	else:
-		enemies_hit += 1
-		if enemies_hit >= piercing_level:
+		enemies_hit.append(area)
+		hit_count += 1
+		if hit_count >= piercing_level:
 			queue_free()

@@ -206,7 +206,7 @@ func full_reload() -> void:
 	
 	GunAnimator.play("reload", 0.5)
 	Sound.full_reload()
-	if state == ROLL or Game.update_coins(max_ammo * reload_cost, popup_pos()) == false:
+	if state == ROLL or Game.update_coins((max_ammo - current_ammo) * reload_cost, popup_pos()) == false:
 		reloading = false
 		return
 	

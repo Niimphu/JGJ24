@@ -17,7 +17,7 @@ func pop(amount: String, gain: bool):
 		Animator.play("lose")
 	
 	var tween := get_tree().create_tween()
-	tween.tween_property(self, "position", position + Vector2(1, -8), 1)
+	tween.tween_property(self, "position", position + Vector2(1, -8), 0.7)
 
 
 func destroy(_anim_name):

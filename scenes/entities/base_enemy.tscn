@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://lo6v7voiebej"]
+[gd_scene load_steps=6 format=3 uid="uid://lo6v7voiebej"]
 
 [ext_resource type="Script" path="res://scenes/entities/enemy.gd" id="1_cxify"]
 [ext_resource type="Texture2D" uid="uid://2r441fbxdbkp" path="res://assets/images/Shadow.png" id="2_1rki4"]
@@ -11,68 +11,6 @@ height = 12.9434
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7a8j7"]
 size = Vector2(16.0919, 15.9805)
 
-[sub_resource type="Animation" id="Animation_0ghna"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-
-[sub_resource type="Animation" id="Animation_okinc"]
-resource_name = "death"
-length = 0.5
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, -1.5708]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_4ap1t"]
-_data = {
-"RESET": SubResource("Animation_0ghna"),
-"death": SubResource("Animation_okinc")
-}
-
 [node name="TestEnemy" type="CharacterBody2D"]
 collision_layer = 16
 motion_mode = 1
@@ -80,6 +18,7 @@ wall_min_slide_angle = 0.0
 script = ExtResource("1_cxify")
 
 [node name="Shadow" type="Sprite2D" parent="."]
+z_index = -1
 texture = ExtResource("2_1rki4")
 
 [node name="Body" type="Sprite2D" parent="."]
@@ -107,11 +46,6 @@ collision_mask = 8
 [node name="HurtboxShape" type="CollisionShape2D" parent="Hurtbox"]
 position = Vector2(0.188196, -0.0139568)
 shape = SubResource("RectangleShape2D_7a8j7")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_4ap1t")
-}
 
 [node name="Hitbox" type="Area2D" parent="."]
 collision_layer = 64

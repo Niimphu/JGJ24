@@ -3,27 +3,27 @@ extends Node2D
 @export var EnemiesFolder: Node2D
 @export var Player: Node2D
 
-@onready var test_enemy := preload("res://scenes/entities/base_enemy.tscn")
+@onready var Bat := preload("res://scenes/entities/eye_bat.tscn")
 @onready var spawn_points := get_children().map(func(point: Node2D): return point.global_position)
 
 @onready var waves = [
 	[ # Wave 1
-		{ "type": test_enemy, "count": 2 },
-		{ "type": test_enemy, "count": 3 },
-		{ "type": test_enemy, "count": 4 }
+		{ "type": Bat, "count": 2 },
+		{ "type": Bat, "count": 3 },
+		{ "type": Bat, "count": 4 }
 	],
 	[ # Wave 2
-		{ "type": test_enemy, "count": 3 },
-		{ "type": test_enemy, "count": 5 },
-		{ "type": test_enemy, "count": 7 }
-		#{ "type": test_enemy, "count": 2, "type2": EnemyC, "count2": 1 }
+		{ "type": Bat, "count": 3 },
+		{ "type": Bat, "count": 5 },
+		{ "type": Bat, "count": 7 }
+		#{ "type": Bat, "count": 2, "type2": EnemyC, "count2": 1 }
 	],
 	[ # Wave 3
-		{ "type": test_enemy, "count": 5 },
-		{ "type": test_enemy, "count": 5 },
-		{ "type": test_enemy, "count": 5 },
-		{ "type": test_enemy, "count": 5 },
-		{ "type": test_enemy, "count": 5 }
+		{ "type": Bat, "count": 5 },
+		{ "type": Bat, "count": 5 },
+		{ "type": Bat, "count": 5 },
+		{ "type": Bat, "count": 5 },
+		{ "type": Bat, "count": 5 }
 	]
 ]
 
