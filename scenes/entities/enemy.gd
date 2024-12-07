@@ -138,7 +138,7 @@ func death(bullet: Area2D):
 	direction = global_position - Player.global_position # set knockback direction
 	HurtBox.set_deferred("monitorable", false)
 	HurtBox.set_deferred("monitoring", false)
-	
+	EventBus.up_mult.emit()
 	EventBus.enemy_died.emit(value * bullet.multiplier, global_position + height)
 	Animator.play("death")
 

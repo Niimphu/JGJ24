@@ -7,12 +7,13 @@ var count := 0
 var hit_count := 0
 var piercing_level := 2
 var enemies_hit: Array
-var multiplier:= 1
+var multiplier:= 0
 
 
 func _ready():
 	#connect("area_entered", Callable(self, "_on_area_entered"))
 	area_entered.connect(_on_area_entered)
+	EventBus.up_mult.connect(_up_mult)
 
 
 func set_parameters(direction: Vector2, piercing: int = 2) -> void:
@@ -42,3 +43,8 @@ func _on_area_entered(area: Area2D):
 		hit_count += 1
 		if hit_count >= piercing_level:
 			queue_free()
+
+
+func _up_mult():
+	multiplier += 1
+	

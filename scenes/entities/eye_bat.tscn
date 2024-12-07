@@ -9,8 +9,8 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_78dst"]
 radius = 19.4589
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_5338i"]
-radius = 28.2241
+[sub_resource type="CircleShape2D" id="CircleShape2D_d8rod"]
+radius = 29.2746
 
 [sub_resource type="Animation" id="Animation_wodbu"]
 length = 0.001
@@ -257,9 +257,10 @@ position = Vector2(-0.195473, -33.643)
 position = Vector2(-0.010214, -1.00608)
 shape = SubResource("CircleShape2D_78dst")
 
-[node name="HitboxShape" parent="Hitbox" index="0"]
-position = Vector2(-0.477773, -31.84)
-shape = SubResource("CircleShape2D_5338i")
+[node name="HitboxShape" type="CollisionShape2D" parent="Hitbox" index="0"]
+position = Vector2(0, -34)
+shape = SubResource("CircleShape2D_d8rod")
+disabled = true
 
 [node name="BatAttack" type="Node2D" parent="." index="6"]
 script = ExtResource("3_l3q75")

@@ -9,7 +9,7 @@ radius = 1.7963
 height = 9.04612
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7a8j7"]
-size = Vector2(16.0919, 15.9805)
+size = Vector2(17.0459, 32.9902)
 
 [node name="TestEnemy" type="CharacterBody2D"]
 collision_layer = 16
@@ -49,11 +49,6 @@ shape = SubResource("RectangleShape2D_7a8j7")
 [node name="Hitbox" type="Area2D" parent="."]
 collision_layer = 64
 collision_mask = 4
-
-[node name="HitboxShape" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(0.191149, -6.86955)
-shape = SubResource("RectangleShape2D_7a8j7")
-disabled = true
 
 [node name="Ray" type="RayCast2D" parent="."]
 collision_mask = 3
