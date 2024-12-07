@@ -20,13 +20,18 @@ var add_coin := false
 
 func _ready():
 	CoinCount.text = str(coins)
+	
 	EventBus.enemy_died.connect(_on_enemy_died)
 	EventBus.player_hit.connect(_on_player_hit)
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+	
 	UpgradeManager.upgrade_selected.connect(spawn_next_wave)
 	WaveManager.wave_complete.connect(wave_complete)
+	
 	UpgradeMenu.undisplay()
-	spawn_next_wave()
+	UpgradeMenu.visible = false
+	WaveManager.spawn_wave(current_wave)
+	wave_spawning = true
 
 
 func spawn_next_wave():

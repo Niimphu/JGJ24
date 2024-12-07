@@ -25,7 +25,9 @@ enum {
 @onready var Ouch := $Ouch
 
 @onready var bullet_scene := preload("bullet.tscn")
+@onready var coin_scene := preload("res://scenes/entities/coin.tscn")
 @onready var dust_scene := preload("res://scenes/entities/roll_dust.tscn")
+@onready var popup_scene := preload("res://scenes/ui/popup.tscn")
 
 
 const ROLL_MULT := 3.5
@@ -42,6 +44,7 @@ var current_ammo := 6
 var reload_cost := -2
 var roll_cost := -3
 var piercing_level := 2
+var ability_coin_count := 4
 
 # this is fine & whatever
 var roll_direction := Vector2.RIGHT
@@ -54,6 +57,7 @@ func _ready():
 	Hurtbox.area_entered.connect(_on_hurtbox_entered)
 	Animator.animation_finished.connect(finished_animation)
 	Ouch.animation_finished.connect(hurtbox_on)
+	set_process(true)
 	#EventBus.player_death.connect(player_died)
 
 
@@ -92,6 +96,8 @@ func gun_input() -> void:
 			reload(fully_reloadable)
 		else:
 			reload()
+	elif Input.is_action_just_pressed("ability"):
+		throw_coins()
 
 
 func idle() -> void:
@@ -171,6 +177,7 @@ func sprite_flip(flip: bool) -> void:
 func shoot() -> void:
 	if current_ammo == 0:
 		Sound.empty()
+		popup("No ammo!")
 		return
 	
 	reloading = false
@@ -184,9 +191,16 @@ func shoot() -> void:
 	
 	var bullet := bullet_scene.instantiate()
 	bullet.position = muzzle_pos
-	bullet.set_parameters((position - mouse_pos).normalized(), piercing_level)
+	bullet.set_parameters((muzzle_pos - mouse_pos).normalized(), piercing_level)
 	BulletManager.add_child(bullet)
 	GunAnimator.play("shoot")
+
+
+func throw_coins() -> void:
+	if !Game.update_coins(-ability_coin_count, popup_pos()):
+		print("wa wa")
+	
+
 
 
 func reload(full := false) -> void:
@@ -204,7 +218,7 @@ func full_reload() -> void:
 		reloading = false
 		return
 	
-	GunAnimator.play("reload", 0.5)
+	GunAnimator.play("full_reload")
 	Sound.full_reload()
 	if state == ROLL or Game.update_coins((max_ammo - current_ammo) * reload_cost, popup_pos()) == false:
 		reloading = false
@@ -258,4 +272,16 @@ func resume() -> void:
 	resuming = true
 	state = IDLE
 	set_process(true)
+	if current_ammo < max_ammo:
+		popup("Reloading")
+	await get_tree().create_timer(0.1).timeout
+	Animator.play("idle")
+	await get_tree().create_timer(0.6).timeout
 	reload(true)
+
+
+func popup(message: String) -> void:
+	var popup_instance := popup_scene.instantiate()
+	Game.add_child(popup_instance)
+	popup_instance.global_position = popup_pos()
+	popup_instance.pop(message, false)

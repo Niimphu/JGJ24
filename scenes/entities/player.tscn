@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://cgwpb6lgfpnat"]
+[gd_scene load_steps=37 format=3 uid="uid://cgwpb6lgfpnat"]
 
 [ext_resource type="Script" path="res://scenes/entities/player.gd" id="1_jpnwn"]
 [ext_resource type="Texture2D" uid="uid://dhomffrdjpyiv" path="res://assets/images/HatsuneWick.png" id="2_1x5ry"]
@@ -89,6 +89,23 @@ tracks/0/keys = {
 "values": [0]
 }
 
+[sub_resource type="Animation" id="Animation_wgskm"]
+resource_name = "full_reload"
+length = 1.6
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6, 0.9, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [7, 8, 9, 10, 6]
+}
+
 [sub_resource type="Animation" id="Animation_vst3i"]
 resource_name = "reload"
 length = 0.18
@@ -126,6 +143,7 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_l15wj"]
 _data = {
 "RESET": SubResource("Animation_t61je"),
+"full_reload": SubResource("Animation_wgskm"),
 "reload": SubResource("Animation_vst3i"),
 "shoot": SubResource("Animation_3dysw")
 }
@@ -434,7 +452,8 @@ bus = &"SFX"
 
 [node name="FullReload" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("6_lg8fc")
-pitch_scale = 2.0
+volume_db = -5.0
+pitch_scale = 1.14
 bus = &"SFX"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
