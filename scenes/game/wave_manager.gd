@@ -4,12 +4,14 @@ extends Node2D
 @export var Player: Node2D
 
 @onready var Bat := preload("res://scenes/entities/eye_bat.tscn")
+@onready var Imp := preload("res://scenes/entities/imp_inherited.tscn")
+
 
 @onready var spawn_points := get_children().map(func(point: Node2D): return point.global_position)
 
 @onready var waves = [
 	[ # Wave 1
-		{ "type": Bat, "count": 2 },
+		{ "type": Imp, "count": 2 },
 		{ "type": Bat, "count": 3 },
 		{ "type": Bat, "count": 4 }
 	],

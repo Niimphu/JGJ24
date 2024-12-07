@@ -2,6 +2,7 @@ extends Control
 
 @onready var Animator := $AnimationPlayer
 @onready var Text := $Label
+@onready var Kaching := $Kaching
 
 
 func _ready():
@@ -10,14 +11,12 @@ func _ready():
 
 func pop(amount: String, gain: bool):
 	if gain:
+		Kaching.pitch_scale += clamp((int(amount) - 1) * 0.025, 0, 1.5)
 		Text.text = "+" + amount
 		Animator.play("gain")
 	else:
 		Text.text = amount
 		Animator.play("lose")
-	
-	var tween := get_tree().create_tween()
-	tween.tween_property(self, "position", position + Vector2(1, -8), 0.7)
 
 
 func destroy(_anim_name):

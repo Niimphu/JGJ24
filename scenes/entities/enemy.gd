@@ -46,7 +46,7 @@ signal died
 
 func _ready():
 	attack_range *= attack_range
-	set_process(false)
+	set_physics_process(false)
 	await get_tree().physics_frame
 	HurtBox.area_entered.connect(_on_hurtbox_entered)
 	Hitbox.area_entered.connect(_on_hitbox_entered)
@@ -58,8 +58,8 @@ func begin(player_node: CharacterBody2D, new_id: int):
 	Player = player_node
 	id = new_id
 	await get_tree().physics_frame
-	set_process(true)
-	find_path()
+	set_physics_process(true)
+	call_deferred("find_path")
 
 
 func _physics_process(_delta):
@@ -144,7 +144,7 @@ func death(killer: Area2D):
 		direction = global_position - killer.global_position
 	HurtBox.set_deferred("monitorable", false)
 	HurtBox.set_deferred("monitoring", false)
-	
+	EventBus.up_mult.emit()
 	EventBus.enemy_died.emit(value * killer.multiplier, global_position + height)
 	Animator.play("death")
 
