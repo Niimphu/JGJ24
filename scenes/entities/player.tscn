@@ -504,7 +504,6 @@ autoplay = "idle"
 
 [node name="Step" type="AudioStreamPlayer" parent="AnimationPlayer"]
 stream = ExtResource("11_u1akm")
-volume_db = 5.0
 bus = &"SFX"
 
 [node name="Roll" type="AudioStreamPlayer" parent="AnimationPlayer"]

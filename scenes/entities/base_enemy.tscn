@@ -50,11 +50,6 @@ shape = SubResource("RectangleShape2D_7a8j7")
 collision_layer = 64
 collision_mask = 4
 
-[node name="HitboxShape" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(0.191149, -6.86955)
-shape = SubResource("RectangleShape2D_7a8j7")
-disabled = true
-
 [node name="Ray" type="RayCast2D" parent="."]
 collision_mask = 3
 
