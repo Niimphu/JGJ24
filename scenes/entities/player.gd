@@ -26,6 +26,7 @@ enum {
 
 @onready var bullet_scene := preload("bullet.tscn")
 @onready var dust_scene := preload("res://scenes/entities/roll_dust.tscn")
+@onready var popup_scene := preload("res://scenes/ui/popup.tscn")
 
 
 const ROLL_MULT := 3.5
@@ -54,6 +55,7 @@ func _ready():
 	Hurtbox.area_entered.connect(_on_hurtbox_entered)
 	Animator.animation_finished.connect(finished_animation)
 	Ouch.animation_finished.connect(hurtbox_on)
+	set_process(true)
 	#EventBus.player_death.connect(player_died)
 
 
@@ -171,6 +173,7 @@ func sprite_flip(flip: bool) -> void:
 func shoot() -> void:
 	if current_ammo == 0:
 		Sound.empty()
+		popup("No ammo!")
 		return
 	
 	reloading = false
@@ -204,7 +207,7 @@ func full_reload() -> void:
 		reloading = false
 		return
 	
-	GunAnimator.play("reload", 0.5)
+	GunAnimator.play("full_reload")
 	Sound.full_reload()
 	if state == ROLL or Game.update_coins((max_ammo - current_ammo) * reload_cost, popup_pos()) == false:
 		reloading = false
@@ -258,4 +261,16 @@ func resume() -> void:
 	resuming = true
 	state = IDLE
 	set_process(true)
+	if current_ammo < max_ammo:
+		popup("Reloading")
+	await get_tree().create_timer(0.1).timeout
+	Animator.play("idle")
+	await get_tree().create_timer(0.6).timeout
 	reload(true)
+
+
+func popup(message: String) -> void:
+	var popup_instance := popup_scene.instantiate()
+	Game.add_child(popup_instance)
+	popup_instance.global_position = popup_pos()
+	popup_instance.pop(message, false)
