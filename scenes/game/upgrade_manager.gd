@@ -118,7 +118,7 @@ func pointer_bullets():
 
 
 func speeding():
-	Player.speed *= 1.3
+	Player.speedup(1.3)
 	Player.roll_cost -= 2
 
 

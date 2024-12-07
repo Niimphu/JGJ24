@@ -19,8 +19,10 @@ enum {
 @onready var Collider := $CollisionShape2D
 @onready var Sound := $Sound
 @onready var Hurtbox := $PlayerHurtbox
+@onready var HurtboxShape := $PlayerHurtbox/CollisionShape2D
 @onready var ReloadTimer := $Gun/Reload
 @onready var FullReloadTimer := $Gun/FullReload
+@onready var Ouch := $Ouch
 
 @onready var bullet_scene := preload("bullet.tscn")
 @onready var dust_scene := preload("res://scenes/entities/roll_dust.tscn")
@@ -28,7 +30,7 @@ enum {
 
 const ROLL_MULT := 3.5
 const ROLL_FRICTION := 800
-var speed := 120
+var speed := 120.0
 var state := IDLE
 var direction := Vector2.ZERO
 var mouse_pos: Vector2
@@ -51,6 +53,7 @@ var fully_reloadable := false
 func _ready():
 	Hurtbox.area_entered.connect(_on_hurtbox_entered)
 	Animator.animation_finished.connect(finished_animation)
+	Ouch.animation_finished.connect(hurtbox_on)
 	#EventBus.player_death.connect(player_died)
 
 
@@ -171,9 +174,9 @@ func shoot() -> void:
 		return
 	
 	reloading = false
-	if ReloadTimer.time_left < 0.2 and !ReloadTimer.is_stopped():
+	if !ReloadTimer.is_stopped() and ReloadTimer.time_left < 0.1:
 		await ReloadTimer.timeout
-	elif FullReloadTimer.time_left < 0.2 and !FullReloadTimer.is_stopped():
+	elif !FullReloadTimer.is_stopped() and FullReloadTimer.time_left < 0.1:
 		await FullReloadTimer.timeout
 	Sound.shoot()
 	current_ammo -= 1
@@ -184,7 +187,6 @@ func shoot() -> void:
 	bullet.set_parameters((position - mouse_pos).normalized(), piercing_level)
 	BulletManager.add_child(bullet)
 	GunAnimator.play("shoot")
-
 
 
 func reload(full := false) -> void:
@@ -239,7 +241,17 @@ func popup_pos() -> Vector2:
 
 
 func _on_hurtbox_entered(_area: Area2D) -> void:
-	pass   #could add grace period i-frames or knockback
+	HurtboxShape.set_deferred("disabled", true)
+	Ouch.play("ouch")
+
+
+func hurtbox_on(_anim_name: String) -> void:
+	HurtboxShape.disabled = false
+
+
+func speedup(multiplier: float) -> void:
+	speed *= multiplier
+	Animator.speed_scale *= multiplier
 
 
 func resume() -> void:

@@ -34,7 +34,6 @@ func spawn_next_wave():
 	UpgradeMenu.visible = false
 	current_wave_enemy_count = 0
 	wave_spawning = true
-	await get_tree().create_timer(2).timeout
 	WaveManager.spawn_wave(current_wave)
 
 
@@ -44,9 +43,9 @@ func wave_complete() -> void:
 		print("gg")
 		pass
 	else:
-		await get_tree().create_timer(2).timeout
-		UpgradeMenu.display()
+		await get_tree().create_timer(1).timeout
 		pause()
+		UpgradeMenu.display()
 
 
 func update_coins(amount: int, location: Vector2, is_damage: bool = false) -> bool:

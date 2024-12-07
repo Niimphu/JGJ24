@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://cgwpb6lgfpnat"]
+[gd_scene load_steps=36 format=3 uid="uid://cgwpb6lgfpnat"]
 
 [ext_resource type="Script" path="res://scenes/entities/player.gd" id="1_jpnwn"]
 [ext_resource type="Texture2D" uid="uid://dhomffrdjpyiv" path="res://assets/images/HatsuneWick.png" id="2_1x5ry"]
@@ -10,6 +10,8 @@
 [ext_resource type="AudioStream" uid="uid://c7rjmjyym572f" path="res://assets/sounds/click (1).wav" id="4_75d8s"]
 [ext_resource type="AudioStream" uid="uid://doln6513qaro" path="res://assets/sounds/reload.wav" id="5_s0uf5"]
 [ext_resource type="AudioStream" uid="uid://2fpurky0xkj5" path="res://assets/sounds/fullreload.wav" id="6_lg8fc"]
+[ext_resource type="AudioStream" uid="uid://bstegxpvvcph1" path="res://assets/sounds/step.wav" id="11_u1akm"]
+[ext_resource type="AudioStream" uid="uid://cehmqj0srpb" path="res://assets/sounds/roll.wav" id="12_6oe3g"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m6q6f"]
 radius = 3.53651
@@ -190,6 +192,30 @@ tracks/4/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AnimationPlayer/Step:playing")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("AnimationPlayer/Roll:playing")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_t2nq5"]
 resource_name = "death"
@@ -290,6 +316,18 @@ tracks/2/keys = {
 "update": 1,
 "values": [true, false]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimationPlayer/Roll:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.08),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_fidf7"]
 resource_name = "run"
@@ -308,6 +346,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [12, 13, 14, 15, 16, 17, 18, 19]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimationPlayer/Step:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, true]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jwsmn"]
 _data = {
@@ -316,6 +366,44 @@ _data = {
 "idle": SubResource("Animation_ma6d4"),
 "roll": SubResource("Animation_c3s2t"),
 "run": SubResource("Animation_fidf7")
+}
+
+[sub_resource type="Animation" id="Animation_1g3rr"]
+resource_name = "ouch"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_hqasp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fbrr3"]
+_data = {
+"RESET": SubResource("Animation_hqasp"),
+"ouch": SubResource("Animation_1g3rr")
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kor3d"]
@@ -393,6 +481,19 @@ libraries = {
 "": SubResource("AnimationLibrary_jwsmn")
 }
 autoplay = "idle"
+
+[node name="Step" type="AudioStreamPlayer" parent="AnimationPlayer"]
+stream = ExtResource("11_u1akm")
+
+[node name="Roll" type="AudioStreamPlayer" parent="AnimationPlayer"]
+stream = ExtResource("12_6oe3g")
+volume_db = -5.0
+
+[node name="Ouch" type="AnimationPlayer" parent="."]
+process_mode = 3
+libraries = {
+"": SubResource("AnimationLibrary_fbrr3")
+}
 
 [node name="PlayerHurtbox" type="Area2D" parent="."]
 collision_layer = 4

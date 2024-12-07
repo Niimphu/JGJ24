@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://lo6v7voiebej"]
+[gd_scene load_steps=6 format=3 uid="uid://lo6v7voiebej"]
 
 [ext_resource type="Script" path="res://scenes/entities/enemy.gd" id="1_cxify"]
 [ext_resource type="Texture2D" uid="uid://2r441fbxdbkp" path="res://assets/images/Shadow.png" id="2_1rki4"]
+[ext_resource type="AudioStream" uid="uid://da0n05bvsg7yv" path="res://assets/sounds/disappear.wav" id="3_wtaf3"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_31lw8"]
 radius = 1.7963
@@ -32,6 +33,7 @@ shape = SubResource("CapsuleShape2D_31lw8")
 path_desired_distance = 4.0
 target_desired_distance = 4.0
 avoidance_enabled = true
+radius = 20.0
 neighbor_distance = 200.0
 max_neighbors = 5
 
@@ -55,3 +57,7 @@ disabled = true
 
 [node name="Ray" type="RayCast2D" parent="."]
 collision_mask = 3
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_wtaf3")
+volume_db = 7.0

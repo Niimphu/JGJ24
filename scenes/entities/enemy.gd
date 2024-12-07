@@ -8,6 +8,7 @@ var id := 1
 @onready var Hitbox := $Hitbox
 @onready var Sprite := $Body
 @onready var Ray := $Ray
+@onready var DeathSound := $DeathSound
 
 var hit_count := 0
 @export_group("Stats")
@@ -28,6 +29,7 @@ var hit_count := 0
 ## You can guess what this does
 @export var attack_through_walls := false
 @export var knockback_speed := 20
+## How close the player should be before attacking
 @export var attack_range := 25
 
 @export_group("Nodes")
