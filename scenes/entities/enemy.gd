@@ -47,6 +47,7 @@ signal died
 func _ready():
 	attack_range *= attack_range
 	set_process(false)
+	await get_tree().physics_frame
 	HurtBox.area_entered.connect(_on_hurtbox_entered)
 	Hitbox.area_entered.connect(_on_hitbox_entered)
 	Animator.animation_finished.connect(finished_animation)
@@ -56,6 +57,7 @@ func _ready():
 func begin(player_node: CharacterBody2D, new_id: int):
 	Player = player_node
 	id = new_id
+	await get_tree().physics_frame
 	set_process(true)
 	find_path()
 
@@ -109,6 +111,7 @@ func attack() -> void:
 	state = ATTACK
 	Attacker.attack()
 
+
 func die() -> void:
 	velocity = knockback_speed * direction
 	knockback_speed /= 2
@@ -133,13 +136,16 @@ func safe_velocity_computed(safe_velocity) -> void:
 	move_and_slide()
 
 
-func death(bullet: Area2D):
+func death(killer: Area2D):
 	state = DIE
-	direction = global_position - Player.global_position # set knockback direction
+	if killer.name == "Bullet":
+		direction = global_position - Player.global_position # set knockback direction
+	else:
+		direction = global_position - killer.global_position
 	HurtBox.set_deferred("monitorable", false)
 	HurtBox.set_deferred("monitoring", false)
 	
-	EventBus.enemy_died.emit(value * bullet.multiplier, global_position + height)
+	EventBus.enemy_died.emit(value * killer.multiplier, global_position + height)
 	Animator.play("death")
 
 

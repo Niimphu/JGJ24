@@ -9,6 +9,7 @@ enum {
 @export var BulletManager: Node2D
 @export var Game: Node2D
 @export var AmmoCount: TextureProgressBar
+@export var Entities: Node2D
 
 @onready var Animator := $AnimationPlayer
 @onready var GunAnimator := $Gun/AnimationPlayer
@@ -38,18 +39,19 @@ var direction := Vector2.ZERO
 var mouse_pos: Vector2
 var roll_cd: bool = true
 var reloading := false
+var coin_origin := Vector2(0, -18)
 
 var max_ammo := 6
 var current_ammo := 6
 var reload_cost := -2
 var roll_cost := -3
 var piercing_level := 2
-var ability_coin_count := 4
+var coin_throw_count := 3
+var ability_cost := 3
 
 # this is fine & whatever
 var roll_direction := Vector2.RIGHT
 var muzzle_pos := Vector2.ZERO
-var resuming := false
 var fully_reloadable := false
 
 
@@ -61,11 +63,7 @@ func _ready():
 	#EventBus.player_death.connect(player_died)
 
 
-func _physics_process(delta: float) -> void:
-	if resuming:
-		resuming = false
-		return
-	
+func _physics_process(delta: float) -> void:	
 	mouse_pos = get_global_mouse_position()
 	get_input_direction()
 	muzzle_pos = Arm.global_position + (mouse_pos - Arm.global_position).normalized() * 8.5
@@ -197,10 +195,13 @@ func shoot() -> void:
 
 
 func throw_coins() -> void:
-	if !Game.update_coins(-ability_coin_count, popup_pos()):
-		print("wa wa")
-	
-
+	if !Game.update_coins(-ability_cost, popup_pos()):
+		return
+	for i in coin_throw_count:
+		var coin := coin_scene.instantiate()
+		coin.global_position = global_position + coin_origin
+		Entities.add_child(coin)
+		coin.set_parameters(mouse_pos, i)
 
 
 func reload(full := false) -> void:
@@ -251,7 +252,7 @@ func reload_bullet() -> void:
 
 
 func popup_pos() -> Vector2:
-	return global_position + Vector2(randi() % 15 - 6, -25)
+	return global_position + Vector2(RNG.random_int(15) - 6, -25)
 
 
 func _on_hurtbox_entered(_area: Area2D) -> void:
@@ -269,7 +270,7 @@ func speedup(multiplier: float) -> void:
 
 
 func resume() -> void:
-	resuming = true
+	await get_tree().physics_frame
 	state = IDLE
 	set_process(true)
 	if current_ammo < max_ammo:

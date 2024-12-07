@@ -1,36 +1,26 @@
-[gd_scene load_steps=8 format=3 uid="uid://bjq7ldanh8mt5"]
+[gd_scene load_steps=13 format=3 uid="uid://bjq7ldanh8mt5"]
 
 [ext_resource type="Texture2D" uid="uid://ysmwvl21t6aq" path="res://assets/images/Coin.png" id="1_0bqvw"]
 [ext_resource type="Script" path="res://scenes/entities/coin.gd" id="1_fkree"]
 [ext_resource type="Texture2D" uid="uid://vefmib8h7axf" path="res://assets/images/CoinShadow.png" id="2_5g5qp"]
+[ext_resource type="Script" path="res://scenes/entities/coin_explosion.gd" id="4_6b06s"]
+[ext_resource type="Texture2D" uid="uid://dvqohhaaa4gdk" path="res://assets/images/CoinExplosion.png" id="5_viq43"]
+[ext_resource type="AudioStream" uid="uid://bslnl2omhcatg" path="res://assets/sounds/boom.wav" id="6_sk0nl"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6vkv4"]
-radius = 2.642
-height = 7.64377
+radius = 5.25851
+height = 15.8685
 
-[sub_resource type="Animation" id="Animation_2x3cv"]
-resource_name = "fly"
-length = 1.1
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CollisionShape2D:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(0, -5), Vector2(0, -12), Vector2(0, -23), Vector2(0, -30), Vector2(0, -31.5), Vector2(0, -32), Vector2(0, -32), Vector2(0, -31.5), Vector2(0, -30), Vector2(0, -23), Vector2(0, -12), Vector2(0, -3)]
-}
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vnweq"]
+radius = 22.25
+height = 92.0
 
 [sub_resource type="Animation" id="Animation_cb4t4"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CollisionShape2D:position")
+tracks/0/path = NodePath("Coin:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -39,25 +29,212 @@ tracks/0/keys = {
 "update": 0,
 "values": [Vector2(0, -5)]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Hitbox/Sprite2D:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Hitbox/Sprite2D:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Coin/CoinSprite:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Hitbox/CollisionShape2D:disabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Hitbox/AudioStreamPlayer2D:playing")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_2x3cv"]
+resource_name = "fly"
+length = 1.3
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Coin:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.5, 0.6, 0.7, 0.8, 1, 1.1, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -5), Vector2(0, -10), Vector2(0, -12), Vector2(0, -13), Vector2(0, -13), Vector2(0, -12), Vector2(0, -10), Vector2(0, -3), Vector2(0, -3.5), Vector2(0, -3)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.1, 1.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_1sk8w"]
+resource_name = "boom"
+length = 0.6
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Hitbox/Sprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hitbox/Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Coin/CoinSprite:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Hitbox/CollisionShape2D:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Hitbox/AudioStreamPlayer2D:playing")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qkvvm"]
 _data = {
 "RESET": SubResource("Animation_cb4t4"),
+"boom": SubResource("Animation_1sk8w"),
 "fly": SubResource("Animation_2x3cv")
 }
 
 [node name="Coin" type="Area2D"]
+collision_layer = 32
+collision_mask = 8
 script = ExtResource("1_fkree")
 
 [node name="Shadow" type="Sprite2D" parent="."]
 texture = ExtResource("2_5g5qp")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Coin" type="CollisionShape2D" parent="."]
 position = Vector2(0, -5)
 shape = SubResource("CapsuleShape2D_6vkv4")
 
-[node name="CoinSprite" type="Sprite2D" parent="CollisionShape2D"]
+[node name="CoinSprite" type="Sprite2D" parent="Coin"]
 texture = ExtResource("1_0bqvw")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 32
+script = ExtResource("4_6b06s")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_vnweq")
+disabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Hitbox"]
+visible = false
+texture = ExtResource("5_viq43")
+hframes = 6
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Hitbox"]
+stream = ExtResource("6_sk0nl")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
