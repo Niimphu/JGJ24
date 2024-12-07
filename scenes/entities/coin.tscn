@@ -1,0 +1,66 @@
+[gd_scene load_steps=8 format=3 uid="uid://bjq7ldanh8mt5"]
+
+[ext_resource type="Texture2D" uid="uid://ysmwvl21t6aq" path="res://assets/images/Coin.png" id="1_0bqvw"]
+[ext_resource type="Script" path="res://scenes/entities/coin.gd" id="1_fkree"]
+[ext_resource type="Texture2D" uid="uid://vefmib8h7axf" path="res://assets/images/CoinShadow.png" id="2_5g5qp"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6vkv4"]
+radius = 2.642
+height = 7.64377
+
+[sub_resource type="Animation" id="Animation_2x3cv"]
+resource_name = "fly"
+length = 1.1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -5), Vector2(0, -12), Vector2(0, -23), Vector2(0, -30), Vector2(0, -31.5), Vector2(0, -32), Vector2(0, -32), Vector2(0, -31.5), Vector2(0, -30), Vector2(0, -23), Vector2(0, -12), Vector2(0, -3)]
+}
+
+[sub_resource type="Animation" id="Animation_cb4t4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -5)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qkvvm"]
+_data = {
+"RESET": SubResource("Animation_cb4t4"),
+"fly": SubResource("Animation_2x3cv")
+}
+
+[node name="Coin" type="Area2D"]
+script = ExtResource("1_fkree")
+
+[node name="Shadow" type="Sprite2D" parent="."]
+texture = ExtResource("2_5g5qp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -5)
+shape = SubResource("CapsuleShape2D_6vkv4")
+
+[node name="CoinSprite" type="Sprite2D" parent="CollisionShape2D"]
+texture = ExtResource("1_0bqvw")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_qkvvm")
+}
+autoplay = "fly"

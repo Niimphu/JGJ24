@@ -25,6 +25,7 @@ enum {
 @onready var Ouch := $Ouch
 
 @onready var bullet_scene := preload("bullet.tscn")
+@onready var coin_scene := preload("res://scenes/entities/coin.tscn")
 @onready var dust_scene := preload("res://scenes/entities/roll_dust.tscn")
 @onready var popup_scene := preload("res://scenes/ui/popup.tscn")
 
@@ -43,6 +44,7 @@ var current_ammo := 6
 var reload_cost := -2
 var roll_cost := -3
 var piercing_level := 2
+var ability_coin_count := 4
 
 # this is fine & whatever
 var roll_direction := Vector2.RIGHT
@@ -94,6 +96,8 @@ func gun_input() -> void:
 			reload(fully_reloadable)
 		else:
 			reload()
+	elif Input.is_action_just_pressed("ability"):
+		throw_coins()
 
 
 func idle() -> void:
@@ -187,9 +191,16 @@ func shoot() -> void:
 	
 	var bullet := bullet_scene.instantiate()
 	bullet.position = muzzle_pos
-	bullet.set_parameters((position - mouse_pos).normalized(), piercing_level)
+	bullet.set_parameters((muzzle_pos - mouse_pos).normalized(), piercing_level)
 	BulletManager.add_child(bullet)
 	GunAnimator.play("shoot")
+
+
+func throw_coins() -> void:
+	if !Game.update_coins(-ability_coin_count, popup_pos()):
+		print("wa wa")
+	
+
 
 
 func reload(full := false) -> void:
