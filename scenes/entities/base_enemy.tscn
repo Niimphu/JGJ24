@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://lo6v7voiebej"]
+[gd_scene load_steps=5 format=3 uid="uid://lo6v7voiebej"]
 
 [ext_resource type="Script" path="res://scenes/entities/enemy.gd" id="1_cxify"]
 [ext_resource type="Texture2D" uid="uid://2r441fbxdbkp" path="res://assets/images/Shadow.png" id="2_1rki4"]
-[ext_resource type="Texture2D" uid="uid://bcxte0yk7bv2m" path="res://icon.svg" id="3_j43up"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_31lw8"]
 radius = 2.2845
@@ -23,8 +22,6 @@ texture = ExtResource("2_1rki4")
 
 [node name="Body" type="Sprite2D" parent="."]
 position = Vector2(0.0029526, -6.85559)
-scale = Vector2(0.120728, 0.122139)
-texture = ExtResource("3_j43up")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.0230618, -0.233801)

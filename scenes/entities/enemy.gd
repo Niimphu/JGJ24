@@ -88,7 +88,7 @@ func die() -> void:
 
 
 func flip_sprite():
-	if velocity.x > 0:
+	if direction.x > 0:
 		Sprite.flip_h = false
 	else:
 		Sprite.flip_h = true
