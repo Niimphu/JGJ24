@@ -7,6 +7,7 @@ var id := 1
 @onready var HurtBox := $Hurtbox
 @onready var Hitbox := $Hitbox
 @onready var Sprite := $Body
+@onready var Ray := $Ray
 
 var hit_count := 0
 @export_group("Stats")
@@ -24,10 +25,14 @@ var hit_count := 0
 @export var height := Vector2(0, -20)
 ## Flying ignores terrain
 @export var flying := false
+## You can guess what this does
+@export var attack_through_walls := false
 @export var knockback_speed := 20
+@export var attack_range := 25
 
 @export_group("Nodes")
 @export var Animator: AnimationPlayer
+@export var Attacker: Node2D
 
 enum { CHASE, ATTACK, DIE }
 
@@ -38,6 +43,7 @@ var direction := Vector2.ZERO
 signal died
 
 func _ready():
+	attack_range *= attack_range
 	set_process(false)
 	HurtBox.area_entered.connect(_on_hurtbox_entered)
 	Hitbox.area_entered.connect(_on_hitbox_entered)
@@ -55,16 +61,20 @@ func begin(player_node: CharacterBody2D, new_id: int):
 func _physics_process(_delta):
 	match state:
 		CHASE:
-			chase()
+			if Engine.get_physics_frames() % 5 == id and can_attack():
+				attack()
+			elif flying:
+				fly()
+			else:
+				chase()
 			flip_sprite()
+		ATTACK:
+			pass
 		DIE:
 			die()
 
 
 func chase() -> void:
-	if flying:
-		return fly()
-	
 	direction = to_local(Navigator.get_next_path_position()).normalized()
 	var intended_velocity: Vector2 = direction * speed
 	
@@ -80,6 +90,22 @@ func fly() -> void:
 	velocity = direction.normalized() * speed
 	move_and_slide()
 
+
+func can_attack() -> bool:
+	Ray.target_position = to_local(Player.global_position)
+	if global_position.distance_squared_to(Player.global_position) > attack_range:
+		return false
+	elif attack_through_walls:
+		return true
+	var collider: Object = Ray.get_collider()
+	if !collider or collider is not PhysicsBody2D:
+		return false
+	return true
+
+
+func attack() -> void:
+	state = ATTACK
+	Attacker.attack()
 
 func die() -> void:
 	velocity = knockback_speed * direction
@@ -120,7 +146,10 @@ func hurt_animation():
 
 
 func finished_animation(anim_name: String) -> void:
-	if anim_name == "death":
+	if anim_name == "attack":
+		state = CHASE
+		Animator.play("chase")
+	elif anim_name == "death":
 		died.emit()
 		queue_free()
 

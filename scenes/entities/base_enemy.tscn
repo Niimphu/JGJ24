@@ -4,8 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://2r441fbxdbkp" path="res://assets/images/Shadow.png" id="2_1rki4"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_31lw8"]
-radius = 2.2845
-height = 12.9434
+radius = 1.7963
+height = 9.04612
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7a8j7"]
 size = Vector2(16.0919, 15.9805)
@@ -51,3 +51,7 @@ collision_mask = 4
 [node name="HitboxShape" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2(0.191149, -6.86955)
 shape = SubResource("RectangleShape2D_7a8j7")
+disabled = true
+
+[node name="Ray" type="RayCast2D" parent="."]
+collision_mask = 3

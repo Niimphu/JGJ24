@@ -26,7 +26,7 @@ enum {
 @onready var dust_scene := preload("res://scenes/entities/roll_dust.tscn")
 
 
-const ROLL_MULT := 3
+const ROLL_MULT := 3.5
 const ROLL_FRICTION := 800
 var speed := 120
 var state := IDLE
@@ -132,7 +132,6 @@ func roll(delta) -> void:
 	else:
 		sprite_flip(true)
 	Jacket.visible = false
-	Hurtbox.monitoring = false
 	velocity = velocity.move_toward(Vector2.ZERO, ROLL_FRICTION * delta)
 	move_and_slide()
 
@@ -155,7 +154,6 @@ func finished_animation(anim_name: String) -> void:
 		Jacket.visible = true
 		state = IDLE
 		Animator.play("idle")
-		Hurtbox.monitoring = true
 
 
 func sprite_flip(flip: bool) -> void:
