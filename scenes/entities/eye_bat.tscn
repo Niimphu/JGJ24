@@ -235,6 +235,7 @@ _data = {
 }
 
 [node name="EyeBat" node_paths=PackedStringArray("Animator", "Attacker") instance=ExtResource("1_ddtt4")]
+speed = 100
 height = Vector2(0, -55)
 flying = true
 Animator = NodePath("AnimationPlayer")
