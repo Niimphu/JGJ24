@@ -132,7 +132,7 @@ func roll(delta) -> void:
 	else:
 		sprite_flip(true)
 	Jacket.visible = false
-	#turn off hurtbox for i frames
+	Hurtbox.monitoring = false
 	velocity = velocity.move_toward(Vector2.ZERO, ROLL_FRICTION * delta)
 	move_and_slide()
 
@@ -154,8 +154,8 @@ func finished_animation(anim_name: String) -> void:
 	if anim_name == "roll":
 		Jacket.visible = true
 		state = IDLE
-		#turn hurbox back on
 		Animator.play("idle")
+		Hurtbox.monitoring = true
 
 
 func sprite_flip(flip: bool) -> void:
@@ -239,8 +239,10 @@ func reload_bullet() -> void:
 func popup_pos() -> Vector2:
 	return global_position + Vector2(randi() % 15 - 6, -25)
 
+
 func _on_hurtbox_entered(_area: Area2D) -> void:
 	pass   #could add grace period i-frames or knockback
+
 
 func resume() -> void:
 	resuming = true
