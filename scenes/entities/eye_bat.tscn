@@ -273,6 +273,8 @@ autoplay = "chase"
 [node name="Flap" type="AudioStreamPlayer2D" parent="AnimationPlayer" index="0"]
 stream = ExtResource("4_fh5b7")
 volume_db = -15.0
+bus = &"SFX"
 
 [node name="Attack" type="AudioStreamPlayer2D" parent="AnimationPlayer" index="1"]
 stream = ExtResource("5_dxdlq")
+bus = &"SFX"

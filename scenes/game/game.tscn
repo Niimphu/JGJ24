@@ -1,7 +1,8 @@
-[gd_scene load_steps=32 format=4 uid="uid://w736c3ga5g46"]
+[gd_scene load_steps=33 format=4 uid="uid://w736c3ga5g46"]
 
 [ext_resource type="Script" path="res://scenes/game/game.gd" id="1_crdur"]
 [ext_resource type="Texture2D" uid="uid://bp8yl752pbjii" path="res://assets/art/tilemaps/tilemap_ground.png" id="2_dyyk8"]
+[ext_resource type="AudioStream" uid="uid://y0i1vnnajevi" path="res://assets/sounds/title screen arthouse.mp3" id="2_vmjlm"]
 [ext_resource type="PackedScene" uid="uid://cgwpb6lgfpnat" path="res://scenes/entities/player.tscn" id="3_4nq4m"]
 [ext_resource type="Script" path="res://scenes/game/wave_manager.gd" id="3_gjyh1"]
 [ext_resource type="Script" path="res://scenes/game/upgrade_manager.gd" id="3_vaf8l"]
@@ -228,6 +229,14 @@ CoinCount = NodePath("CanvasLayer/UI/MarginContainer/HBoxContainer/CoinCount")
 UpgradeMenu = NodePath("CanvasLayer/UpgradeMenu")
 Player = NodePath("Entities/Player")
 Crosshair = NodePath("Crosshair")
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("2_vmjlm")
+volume_db = -3.0
+autoplay = true
+bus = &"Music"
+parameters/looping = true
 
 [node name="Earth" type="TileMapLayer" parent="."]
 z_index = -2

@@ -420,6 +420,7 @@ script = ExtResource("2_jn3ri")
 
 [node name="Shoot" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("3_8n1mq")
+volume_db = -5.0
 bus = &"SFX"
 
 [node name="Empty" type="AudioStreamPlayer" parent="Sound"]
@@ -484,10 +485,12 @@ autoplay = "idle"
 
 [node name="Step" type="AudioStreamPlayer" parent="AnimationPlayer"]
 stream = ExtResource("11_u1akm")
+bus = &"SFX"
 
 [node name="Roll" type="AudioStreamPlayer" parent="AnimationPlayer"]
 stream = ExtResource("12_6oe3g")
 volume_db = -5.0
+bus = &"SFX"
 
 [node name="Ouch" type="AnimationPlayer" parent="."]
 process_mode = 3
