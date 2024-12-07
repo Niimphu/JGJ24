@@ -64,7 +64,10 @@ func new_upgrades() -> void:
 	current_upgrade = upgrades[randi() % upgrades.size()]
 	Upgrade1.text = current_upgrade["title"] + "\n\n" + current_upgrade["description"] + "\n\n" + str(current_upgrade["cost"]) + " coins"
 	
-	current_freebie = freebies[randi() % freebies.size()]
+	if Game.current_wave < 5:
+		current_freebie = freebies[0]
+	else:
+		current_freebie = freebies[randi() % freebies.size()]
 	Upgrade2.text = current_freebie["title"] + "\n\n" + current_freebie["description"] + "\n\n" + current_freebie["cost_string"] + " coins"
 
 
