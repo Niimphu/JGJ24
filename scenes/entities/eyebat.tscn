@@ -1,8 +1,11 @@
 [gd_scene load_steps=9 format=3 uid="uid://cayyc56ofirnm"]
 
-[ext_resource type="Texture2D" path="res://scenes/entities/eyebat.png" id="1_0bo0l"]
+[ext_resource type="Texture2D" uid="uid://bdr681afo5f1y" path="res://assets/art/Sprites/eyebat.png" id="1_yx10y"]
 
-[sub_resource type="Animation" id="Animation_7ubm7"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_p0qeu"]
+radius = 24.0832
+
+[sub_resource type="Animation" id="Animation_ic3qr"]
 length = 0.1
 loop_mode = 1
 tracks/0/type = "value"
@@ -18,7 +21,7 @@ tracks/0/keys = {
 "values": [8]
 }
 
-[sub_resource type="Animation" id="Animation_57csu"]
+[sub_resource type="Animation" id="Animation_t1f2j"]
 length = 0.7
 loop_mode = 1
 tracks/0/type = "value"
@@ -34,7 +37,7 @@ tracks/0/keys = {
 "values": [9, 10, 11, 12, 13, 14, 15]
 }
 
-[sub_resource type="Animation" id="Animation_6b4y3"]
+[sub_resource type="Animation" id="Animation_7ha8k"]
 length = 0.1
 loop_mode = 1
 tracks/0/type = "value"
@@ -50,7 +53,7 @@ tracks/0/keys = {
 "values": [8]
 }
 
-[sub_resource type="Animation" id="Animation_tncph"]
+[sub_resource type="Animation" id="Animation_iiy3p"]
 length = 0.1
 loop_mode = 1
 tracks/0/type = "value"
@@ -66,7 +69,7 @@ tracks/0/keys = {
 "values": [7]
 }
 
-[sub_resource type="Animation" id="Animation_30rlu"]
+[sub_resource type="Animation" id="Animation_uluir"]
 length = 0.6
 loop_mode = 1
 tracks/0/type = "value"
@@ -82,26 +85,26 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3, 4, 5]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_i0aa1"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_cy4lp"]
 _data = {
-"base": SubResource("Animation_7ubm7"),
-"death": SubResource("Animation_57csu"),
-"diving": SubResource("Animation_6b4y3"),
-"hurt": SubResource("Animation_tncph"),
-"moving": SubResource("Animation_30rlu")
+"base": SubResource("Animation_ic3qr"),
+"death": SubResource("Animation_t1f2j"),
+"diving": SubResource("Animation_7ha8k"),
+"hurt": SubResource("Animation_iiy3p"),
+"moving": SubResource("Animation_uluir")
 }
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_sbsqn"]
-radius = 25.0799
+[node name="CharacterBody2D" type="CharacterBody2D"]
 
-[node name="eyebat" type="CharacterBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_p0qeu")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
 texture_filter = 1
-texture = ExtResource("1_0bo0l")
+texture = ExtResource("1_yx10y")
 hframes = 4
 vframes = 4
-frame = 8
+frame = 2
 metadata/_aseprite_wizard_interface_config_ = {
 "pending_changes": {}
 }
@@ -113,16 +116,13 @@ metadata/_aseprite_wizard_config_ = {
 "o_folder": "",
 "o_name": "",
 "only_visible": false,
-"player": "Sprite2D/AnimationPlayer",
+"player": "CollisionShape2D/Sprite2D/AnimationPlayer",
 "slice": "",
 "source": "C:/Asesprite/Projects/jinglejam/eyebat.aseprite"
 }
 metadata/_aseprite_wizard_source_file_hash_ = "4c1fa94d90feb95ad169a44c65dec7b1"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CollisionShape2D/Sprite2D"]
 libraries = {
-"": SubResource("AnimationLibrary_i0aa1")
+"": SubResource("AnimationLibrary_cy4lp")
 }
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_sbsqn")

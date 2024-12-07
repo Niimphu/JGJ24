@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bdr681afo5f1y"
-path="res://.godot/imported/eyebat.png-ab12077e7809a4fe0273b8306b4c78d4.ctex"
+uid="uid://cwrl2if8mvpig"
+path="res://.godot/imported/attack.png-2c8cadf1130210005e1f4b0479b601bf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/Sprites/eyebat.png"
-dest_files=["res://.godot/imported/eyebat.png-ab12077e7809a4fe0273b8306b4c78d4.ctex"]
+source_file="res://assets/art/VFX/attack.png"
+dest_files=["res://.godot/imported/attack.png-2c8cadf1130210005e1f4b0479b601bf.ctex"]
 
 [params]
 

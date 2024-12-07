@@ -119,7 +119,7 @@ texture_filter = 1
 texture = ExtResource("1_bjh6b")
 hframes = 6
 vframes = 6
-frame = 11
+frame = 7
 metadata/_aseprite_wizard_interface_config_ = {
 "pending_changes": {}
 }

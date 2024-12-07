@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://tn2egbhs4vde"]
 
-[ext_resource type="Texture2D" uid="uid://cwrl2if8mvpig" path="res://scenes/entities/attack.png" id="1_kkvrr"]
+[ext_resource type="Texture2D" uid="uid://cwrl2if8mvpig" path="res://assets/art/VFX/attack.png" id="1_kkvrr"]
 
 [sub_resource type="Animation" id="Animation_1hjhp"]
 length = 1.1

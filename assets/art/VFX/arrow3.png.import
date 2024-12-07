@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cwrl2if8mvpig"
-path="res://.godot/imported/attack.png-bc8798455c22d30793d3bf117ca5b251.ctex"
+uid="uid://br45dbf3fbkav"
+path="res://.godot/imported/arrow3.png-dc5fc0101bf41221079b8607f068ce6b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/entities/attack.png"
-dest_files=["res://.godot/imported/attack.png-bc8798455c22d30793d3bf117ca5b251.ctex"]
+source_file="res://assets/art/VFX/arrow3.png"
+dest_files=["res://.godot/imported/arrow3.png-dc5fc0101bf41221079b8607f068ce6b.ctex"]
 
 [params]
 
