@@ -185,14 +185,8 @@ func shoot() -> void:
 	bullet.position = muzzle_pos
 	bullet.set_parameters((position - mouse_pos).normalized(), piercing_level)
 	BulletManager.add_child(bullet)
-	bullet.connect("two_enemies_hit", Callable(self, "_on_two_enemies_hit")) #check if signal has been emitted to update max_ammo
 	GunAnimator.play("shoot")
 
-
-func _on_two_enemies_hit():
-	return
-	current_ammo += 1
-	AmmoCount.value = current_ammo
 
 
 func reload(full := false) -> void:
@@ -245,7 +239,7 @@ func reload_bullet() -> void:
 func popup_pos() -> Vector2:
 	return global_position + Vector2(randi() % 15 - 6, -25)
 
-func _on_hurtbox_entered(area: Area2D) -> void:
+func _on_hurtbox_entered(_area: Area2D) -> void:
 	pass   #could add grace period i-frames or knockback
 
 func resume() -> void:

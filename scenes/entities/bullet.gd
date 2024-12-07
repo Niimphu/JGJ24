@@ -6,7 +6,6 @@ var shoot := false
 var count := 0
 var enemies_hit := 0
 var piercing_level := 2
-signal two_enemies_hit
 
 
 func _ready():
@@ -37,5 +36,4 @@ func _on_area_entered(area: Area2D):
 	else:
 		enemies_hit += 1
 		if enemies_hit >= piercing_level:
-			emit_signal("two_enemies_hit")
 			queue_free()

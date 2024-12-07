@@ -50,13 +50,15 @@ func wave_complete() -> void:
 
 
 func update_coins(amount: int, location: Vector2, is_damage: bool = false) -> bool:
-	if coins + amount < 0:
-		#EventBus.player_death.emit()
+	if coins + amount < 0 and not is_damage:
 		popup(0, location)
-		return false #emit death signal
+		return false
 	coins += amount
 	CoinCount.text = str(coins)
 	popup(amount, location)
+	if coins < 0:
+		#EventBus.player_death.emit()
+		pass
 	return true
 
 
