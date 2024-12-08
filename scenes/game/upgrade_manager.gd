@@ -10,25 +10,60 @@ extends Node2D
 
 var upgrades := [
 	{
-		"title": "Pointier Bullets",
+		"title": "Two Birds...",
 		"description": "+1 bullet piercing",
-		"cost": -15,
-		"action": Callable(self, "pointer_bullets"),
+		"cost": -10,
+		"action": Callable(self, "two_birds"),
 		"amount": 3, # number of times this upgrade can be bought
-		"inflation": -5 # price increase for subsequent purchases
+		"inflation": -4 # price increase for subsequent purchases
 	},
 	{
 		"title": "Speeding Fine",
-		"description": "+30% movespeed, +2 roll cost",
-		"cost": -20,
+		"description": "+30% movespeed\n +2 roll cost",
+		"cost": -15,
 		"action": Callable(self, "speeding"),
 		"amount": 2,
-		"inflation": -10
+		"inflation": -6
 	},
 	{
 		"title": "Disposable Cylinders",
 		"description": "-1 max ammo\nreloading from empty fully reloads ammo and is 20% faster",
 		"cost": -25,
+		"action": Callable(self, "disposable_cylinders"),
+		"amount": 1,
+	},
+	{
+		"title": "One Eye Open",
+		"description": "shoot again, backwards\n uses ammo",
+		"cost": -15,
+		"action": Callable(self, "one_eye_open"),
+		"amount": 1,
+	},
+	{
+		"title": "Buy 2 Get 1 Free",
+		"description": "shoot 3 bullets at once",
+		"cost": -25,
+		"action": Callable(self, "number_1_fan"),
+		"amount": 1,
+	},
+	{
+		"title": "Guardian Angel",
+		"description": "on death: revive with 1 bullet and 0 coins",
+		"cost": -25,
+		"action": Callable(self, "disposable_cylinders"),
+		"amount": 1,
+	},
+	{
+		"title": "Spring-Loaded",
+		"description": "+50% roll distance",
+		"cost": -15,
+		"action": Callable(self, "disposable_cylinders"),
+		"amount": 1,
+	},
+	{
+		"title": "Instant Returns",
+		"description": "+5 coins when shooting a thrown coin",
+		"cost": -20,
 		"action": Callable(self, "disposable_cylinders"),
 		"amount": 1,
 	}
@@ -113,7 +148,7 @@ func can_afford(coin_balance: int):
 	return coin_balance > current_upgrade["cost"]
 
 
-func pointer_bullets():
+func two_birds():
 	Player.piercing_level += 1
 
 

@@ -90,6 +90,8 @@ func chase() -> void:
 
 
 func fly() -> void:
+	if global_position.distance_squared_to(Player.global_position) < attack_range:
+		return
 	direction = Player.global_position - global_position
 	velocity = direction.normalized() * speed
 	move_and_slide()
@@ -162,12 +164,12 @@ func finished_animation(anim_name: String) -> void:
 		queue_free()
 
 
-func _on_hurtbox_entered(bullet: Area2D) -> void:
+func _on_hurtbox_entered(killer: Area2D) -> void:
 	health -= 1
 	if health <= 0:
-		death(bullet)
+		death(killer)
 	else:
-		hurt_animation()
+		Animator.play("hurt")
 
 
 func _on_hitbox_entered(_area: Area2D) -> void:

@@ -61,7 +61,7 @@ func update_coins(amount: int, location: Vector2, is_damage: bool = false) -> bo
 	CoinCount.text = str(coins)
 	popup(amount, location)
 	if coins < 0:
-		#EventBus.player_death.emit()
+		EventBus.player_death.emit()
 		pass
 	return true
 
@@ -80,7 +80,7 @@ func popup(amount: int, location: Vector2) -> void:
 func pause() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	get_tree().paused = true
-	Player.reloading = false
+	Player.gun_state = Player.READY
 	Player.set_process(false)
 
 
@@ -92,6 +92,7 @@ func resume() -> void:
 
 func _on_enemy_died(amount: int, location: Vector2): #works but does not visually affect counter until roll used
 	update_coins(amount, location)
-	
+
+
 func _on_player_hit(damage: int, location: Vector2):
-	update_coins(damage, location)
+	update_coins(damage, location, true)

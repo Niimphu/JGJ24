@@ -4,7 +4,7 @@ extends Node2D
 @export var Player: Node2D
 
 @onready var Bat := preload("res://scenes/entities/eye_bat.tscn")
-@onready var Imp := preload("res://scenes/entities/imp_inherited.tscn")
+@onready var Imp := preload("res://scenes/entities/impling.tscn")
 
 
 @onready var spawn_points := get_children().map(func(point: Node2D): return point.global_position)

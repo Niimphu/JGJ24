@@ -1,10 +1,10 @@
 [gd_scene load_steps=12 format=3 uid="uid://nh4c5hiwuttp"]
 
-[ext_resource type="PackedScene" uid="uid://lo6v7voiebej" path="res://scenes/entities/base_enemy.tscn" id="1_55f7r"]
-[ext_resource type="Texture2D" uid="uid://cto02yng6vgya" path="res://assets/art/Sprites/imp.png" id="2_562hu"]
-[ext_resource type="AudioStream" uid="uid://bstegxpvvcph1" path="res://assets/sounds/step.wav" id="2_ojf6w"]
-[ext_resource type="AudioStream" uid="uid://ddyfsw3hiuoou" path="res://assets/sounds/fwoosh.wav" id="3_fqs6x"]
-[ext_resource type="Script" path="res://scenes/entities/imp_atttack.gd" id="3_mgx4e"]
+[ext_resource type="PackedScene" uid="uid://lo6v7voiebej" path="res://scenes/entities/base_enemy.tscn" id="1_remn4"]
+[ext_resource type="Texture2D" uid="uid://cto02yng6vgya" path="res://assets/art/Sprites/imp.png" id="2_mlb2x"]
+[ext_resource type="AudioStream" uid="uid://bstegxpvvcph1" path="res://assets/sounds/step.wav" id="3_6qa5n"]
+[ext_resource type="AudioStream" uid="uid://ddyfsw3hiuoou" path="res://assets/sounds/fwoosh.wav" id="4_tbebp"]
+[ext_resource type="Script" path="res://scenes/entities/imp_atttack.gd" id="5_uq7x4"]
 
 [sub_resource type="Animation" id="Animation_1uuue"]
 length = 0.001
@@ -116,7 +116,7 @@ tracks/1/path = NodePath("Body:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.4, 0.5, 0.6),
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.4, 0.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
 "values": [7, 8, 9, 10, 11]
@@ -128,7 +128,7 @@ tracks/2/path = NodePath("Hitbox/HitboxShape:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.3, 0.7),
+"times": PackedFloat32Array(0.2, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
@@ -140,7 +140,7 @@ tracks/3/path = NodePath("AnimationPlayer/Attack:playing")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0.3),
+"times": PackedFloat32Array(0.2),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
@@ -190,7 +190,6 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_xjj5c"]
 resource_name = "death"
-length = 1.1
 step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -199,7 +198,7 @@ tracks/0/path = NodePath("Body:frame_coords")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [Vector2i(40, 0), Vector2i(41, 0), Vector2i(42, 0), Vector2i(43, 0), Vector2i(44, 0), Vector2i(45, 0), Vector2i(46, 0), Vector2i(47, 0), Vector2i(48, 0), Vector2i(49, 0)]
@@ -211,10 +210,10 @@ tracks/1/path = NodePath("Shadow:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 1.1),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.9, 1.1),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -231,7 +230,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_cv455"]
 resource_name = "hurt"
-length = 0.15
+length = 0.1
 step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -240,10 +239,10 @@ tracks/0/path = NodePath("Body:frame_coords")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2i(41, 0), Vector2i(41, 0)]
+"values": [Vector2i(41, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6el0f"]
@@ -255,23 +254,22 @@ _data = {
 "hurt": SubResource("Animation_cv455")
 }
 
-[node name="ImpInherited" node_paths=PackedStringArray("Animator", "Attacker") instance=ExtResource("1_55f7r")]
-speed = 120
+[node name="Impling" node_paths=PackedStringArray("Animator", "Attacker") instance=ExtResource("1_remn4")]
+speed = 205
 knockback_speed = 15
-attack_range = 35
 Animator = NodePath("AnimationPlayer")
 Attacker = NodePath("ImpAtttack")
 
 [node name="Body" parent="." index="1"]
 position = Vector2(0, -16)
-texture = ExtResource("2_562hu")
+texture = ExtResource("2_mlb2x")
 hframes = 61
 
 [node name="HurtboxShape" parent="Hurtbox" index="0"]
 position = Vector2(-0.479978, -8.64929)
 
 [node name="HitboxShape" type="CollisionPolygon2D" parent="Hitbox" index="0"]
-polygon = PackedVector2Array(-19, -38, 13, -21, 6, 7, -24, -3, -10, 13, 26, 9, 25, -28, 5, -37)
+polygon = PackedVector2Array(-19, -38, -4.057, -23.226, -7.56469, -9.47584, -28.8915, -5.40692, -24.121, 3.8534, -10, 13, 4.36147, 16.2005, 16.007, 13.8152, 25.2673, 6.94017, 28.2138, -1.33799, 29.8975, -13.2642, 26.1092, -28.5577, 16.7085, -35.7134, -0.970226, -41.3257)
 disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="8"]
@@ -281,10 +279,10 @@ libraries = {
 autoplay = "chase"
 
 [node name="Walk" type="AudioStreamPlayer2D" parent="AnimationPlayer" index="0"]
-stream = ExtResource("2_ojf6w")
+stream = ExtResource("3_6qa5n")
 
 [node name="Attack" type="AudioStreamPlayer2D" parent="AnimationPlayer" index="1"]
-stream = ExtResource("3_fqs6x")
+stream = ExtResource("4_tbebp")
 
 [node name="ImpAtttack" type="Node2D" parent="." index="9"]
-script = ExtResource("3_mgx4e")
+script = ExtResource("5_uq7x4")

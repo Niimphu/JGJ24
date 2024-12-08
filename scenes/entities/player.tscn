@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://cgwpb6lgfpnat"]
+[gd_scene load_steps=38 format=3 uid="uid://cgwpb6lgfpnat"]
 
 [ext_resource type="Script" path="res://scenes/entities/player.gd" id="1_jpnwn"]
 [ext_resource type="Texture2D" uid="uid://dhomffrdjpyiv" path="res://assets/images/HatsuneWick.png" id="2_1x5ry"]
@@ -12,6 +12,7 @@
 [ext_resource type="AudioStream" uid="uid://2fpurky0xkj5" path="res://assets/sounds/fullreload.wav" id="6_lg8fc"]
 [ext_resource type="AudioStream" uid="uid://bstegxpvvcph1" path="res://assets/sounds/step.wav" id="11_u1akm"]
 [ext_resource type="AudioStream" uid="uid://cehmqj0srpb" path="res://assets/sounds/roll.wav" id="12_6oe3g"]
+[ext_resource type="AudioStream" uid="uid://e70sgujrkvv" path="res://assets/sounds/hitHurt.wav" id="13_j6s7u"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m6q6f"]
 radius = 3.53651
@@ -387,7 +388,8 @@ _data = {
 }
 
 [sub_resource type="Animation" id="Animation_hqasp"]
-length = 0.001
+length = 0.3
+step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -517,6 +519,9 @@ process_mode = 3
 libraries = {
 "": SubResource("AnimationLibrary_fbrr3")
 }
+
+[node name="Ouchie" type="AudioStreamPlayer" parent="Ouch"]
+stream = ExtResource("13_j6s7u")
 
 [node name="PlayerHurtbox" type="Area2D" parent="."]
 collision_layer = 4
