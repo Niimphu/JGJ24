@@ -1,7 +1,7 @@
 extends Area2D
 
 var direction := Vector2.ZERO
-var speed := 260
+var speed := 365
 
 
 
@@ -16,5 +16,7 @@ func set_parameters(new_direction: Vector2):
 	queue_free()
 
 
-func _on_area_entered(_area):
+func _on_area_entered(area: Node2D):
+	if area.name == "PlayerHurtbox":
+		EventBus.player_hit.emit(-4, global_position + Vector2(2, -10))
 	queue_free()

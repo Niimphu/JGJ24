@@ -15,7 +15,7 @@ extends Node2D
 @onready var Music := $Music
 ##Change for starting coin value
 @export var coins := 10
-var current_wave := 0
+var current_wave := 1
 var current_wave_enemy_count := 0
 var wave_spawning := false
 var add_coin := false
