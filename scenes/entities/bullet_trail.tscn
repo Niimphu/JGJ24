@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://dmp5ptht75dwb"]
+
+[ext_resource type="Script" path="res://scenes/entities/bullet_trail.gd" id="1_5tbtj"]
+
+[sub_resource type="Curve" id="Curve_vaelt"]
+_data = [Vector2(0.00495049, 0.021978), 0.0, 0.0, 0, 0, Vector2(0.520588, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_8ef2s"]
+offsets = PackedFloat32Array(0, 0.666667, 1)
+colors = PackedColorArray(0.96, 0.368, 0, 0, 0.95, 0.838533, 0.114, 0.988235, 1, 0.956667, 0.8, 1)
+
+[node name="BulletTrail" type="Line2D"]
+texture_filter = 2
+width = 1.0
+width_curve = SubResource("Curve_vaelt")
+default_color = Color(1, 0.996, 0.88, 0.372549)
+gradient = SubResource("Gradient_8ef2s")
+script = ExtResource("1_5tbtj")

@@ -10,7 +10,7 @@
 radius = 19.4589
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ducrx"]
-radius = 28.0793
+radius = 33.556
 
 [sub_resource type="Animation" id="Animation_wodbu"]
 length = 0.001
@@ -249,9 +249,10 @@ _data = {
 }
 
 [node name="EyeBat" node_paths=PackedStringArray("Animator", "Attacker") instance=ExtResource("1_ddtt4")]
-speed = 100
+speed = 110
 height = Vector2(0, -55)
 flying = true
+attack_range = 15
 Animator = NodePath("AnimationPlayer")
 Attacker = NodePath("BatAttack")
 
@@ -294,3 +295,6 @@ bus = &"SFX"
 [node name="Attack" type="AudioStreamPlayer2D" parent="AnimationPlayer" index="1"]
 stream = ExtResource("5_dxdlq")
 bus = &"SFX"
+
+[node name="Ray" parent="." index="8"]
+position = Vector2(-0.264862, -30.4596)

@@ -254,11 +254,13 @@ _data = {
 "hurt": SubResource("Animation_cv455")
 }
 
-[node name="Impling" node_paths=PackedStringArray("Animator", "Attacker") instance=ExtResource("1_remn4")]
-speed = 205
+[node name="Impling" node_paths=PackedStringArray("Animator", "Attacker", "AdditionalFlippers") instance=ExtResource("1_remn4")]
+speed = 135
 knockback_speed = 15
+attack_range = 24
 Animator = NodePath("AnimationPlayer")
 Attacker = NodePath("ImpAtttack")
+AdditionalFlippers = [NodePath("Hitbox")]
 
 [node name="Body" parent="." index="1"]
 position = Vector2(0, -16)
@@ -272,6 +274,12 @@ position = Vector2(-0.479978, -8.64929)
 polygon = PackedVector2Array(-19, -38, -4.057, -23.226, -7.56469, -9.47584, -28.8915, -5.40692, -24.121, 3.8534, -10, 13, 4.36147, 16.2005, 16.007, 13.8152, 25.2673, 6.94017, 28.2138, -1.33799, 29.8975, -13.2642, 26.1092, -28.5577, 16.7085, -35.7134, -0.970226, -41.3257)
 disabled = true
 
+[node name="Ray" parent="." index="6"]
+position = Vector2(-0.264862, -15.0974)
+
+[node name="DeathSound" parent="." index="7"]
+bus = &"SFX"
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="8"]
 libraries = {
 "": SubResource("AnimationLibrary_6el0f")
@@ -280,9 +288,11 @@ autoplay = "chase"
 
 [node name="Walk" type="AudioStreamPlayer2D" parent="AnimationPlayer" index="0"]
 stream = ExtResource("3_6qa5n")
+bus = &"SFX"
 
 [node name="Attack" type="AudioStreamPlayer2D" parent="AnimationPlayer" index="1"]
 stream = ExtResource("4_tbebp")
+bus = &"SFX"
 
 [node name="ImpAtttack" type="Node2D" parent="." index="9"]
 script = ExtResource("5_uq7x4")

@@ -1,6 +1,6 @@
 extends Line2D
 
-@export var trail_length := 15
+@export var trail_length := 25
 var point := Vector2()
 
 func _process(_delta):

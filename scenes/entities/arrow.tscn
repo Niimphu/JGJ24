@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://wbs5dsvm1pj0"]
+
+[ext_resource type="Script" path="res://scenes/entities/arrow.gd" id="1_nw4xq"]
+[ext_resource type="Texture2D" uid="uid://bee1hcyd3bkot" path="res://assets/images/Bullet.png" id="2_oy237"]
+[ext_resource type="PackedScene" uid="uid://dmp5ptht75dwb" path="res://scenes/entities/bullet_trail.tscn" id="3_307of"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hgle0"]
+radius = 4.25
+
+[node name="Arrow" type="Area2D"]
+collision_layer = 64
+collision_mask = 132
+script = ExtResource("1_nw4xq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_hgle0")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-6.07619, -0.530928)
+texture = ExtResource("2_oy237")
+
+[node name="BulletTrail" parent="Sprite2D" instance=ExtResource("3_307of")]
+trail_length = 20
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

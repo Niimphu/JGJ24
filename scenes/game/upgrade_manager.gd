@@ -1,70 +1,71 @@
 extends Node2D
 
-@export var Upgrade1: Button
-@export var Upgrade2: Button
+@export var Upgrade: Button
+@export var Freebie: Button
 @export var Game: Node2D
 @export var Player: CharacterBody2D
 @export var UpgradeMenuFader: AnimationPlayer
 
 @onready var NoSound := $No
 
+var inflation := 0
+var pay_raise := 0
+
 var upgrades := [
 	{
 		"title": "Two Birds...",
 		"description": "+1 bullet piercing",
-		"cost": -10,
+		"cost": -8,
 		"action": Callable(self, "two_birds"),
-		"amount": 3, # number of times this upgrade can be bought
-		"inflation": -4 # price increase for subsequent purchases
+		"amount": 3 # number of times this upgrade can be bought
 	},
 	{
 		"title": "Speeding Fine",
-		"description": "+30% movespeed\n +2 roll cost",
-		"cost": -15,
+		"description": "+30% movespeed\n rolls are 2 coins more expensive",
+		"cost": -12,
 		"action": Callable(self, "speeding"),
-		"amount": 2,
-		"inflation": -6
+		"amount": 2
 	},
 	{
 		"title": "Disposable Cylinders",
-		"description": "-1 max ammo\nreloading from empty fully reloads ammo and is 20% faster",
-		"cost": -25,
-		"action": Callable(self, "disposable_cylinders"),
-		"amount": 1,
-	},
-	{
-		"title": "One Eye Open",
-		"description": "shoot again, backwards\n uses ammo",
+		"description": "-1 max ammo\nreloading from empty fully reloads ammo and is 50% cheaper",
 		"cost": -15,
-		"action": Callable(self, "one_eye_open"),
-		"amount": 1,
-	},
-	{
-		"title": "Buy 2 Get 1 Free",
-		"description": "shoot 3 bullets at once",
-		"cost": -25,
-		"action": Callable(self, "number_1_fan"),
-		"amount": 1,
-	},
-	{
-		"title": "Guardian Angel",
-		"description": "on death: revive with 1 bullet and 0 coins",
-		"cost": -25,
 		"action": Callable(self, "disposable_cylinders"),
 		"amount": 1,
+	},
+	{
+		"title": "Double-Ended Bullets",
+		"description": "fire an additional shot backwards\n backwards bullet does not consume ammo",
+		"cost": -6,
+		"action": Callable(self, "double_ended_bullets"),
+		"amount": 1,
+	},
+	{
+		"title": "Buckshot",
+		"description": "fire additional shots in a cone\n non-piercing\n extra bullets not consume ammo",
+		"cost": -11,
+		"action": Callable(self, "buckshot"),
+		"amount": 2
 	},
 	{
 		"title": "Spring-Loaded",
 		"description": "+50% roll distance",
-		"cost": -15,
-		"action": Callable(self, "disposable_cylinders"),
+		"cost": -6,
+		"action": Callable(self, "spring_loaded"),
 		"amount": 1,
 	},
 	{
-		"title": "Instant Returns",
-		"description": "+5 coins when shooting a thrown coin",
-		"cost": -20,
-		"action": Callable(self, "disposable_cylinders"),
+		"title": "Pinching Pennies",
+		"description": "+3 coins if coin shower kills at least 1 enemy",
+		"cost": -15,
+		"action": Callable(self, "scraping_pennies"),
+		"amount": 1,
+	},
+	{
+		"title": "BIG Money",
+		"description": "coin shower now throws one coin\n +100% explosion size",
+		"cost": -14,
+		"action": Callable(self, "big_money"),
 		"amount": 1,
 	}
 ]
@@ -74,13 +75,15 @@ var freebies := [
 		"title": "Payday",
 		"description": "",
 		"action": Callable(self, "payday"),
-		"cost_string": "+20"
+		"cost": +5,
+		"cost_string": ""
 	},
 	{
 		"title": "Interesting",
 		"description": "",
 		"action": Callable(self, "interesting"),
-		"cost_string": "+20%"
+		"cost": 0,
+		"cost_string": "+50%"
 	}
 ]
 
@@ -90,35 +93,36 @@ var current_freebie: Dictionary
 signal upgrade_selected
 
 func _ready():
-	Upgrade1.button_down.connect(option_1)
-	Upgrade2.button_down.connect(option_2)
+	Upgrade.button_down.connect(option_1)
+	Freebie.button_down.connect(option_2)
 	new_upgrades()
 
 
 func new_upgrades() -> void:
 	current_upgrade = upgrades[RNG.random_int(upgrades.size())]
-	Upgrade1.text = current_upgrade["title"] + "\n\n" + current_upgrade["description"] + "\n\n" + str(current_upgrade["cost"]) + " coins"
+	Upgrade.text = current_upgrade["title"] + "\n\n" + current_upgrade["description"] + "\n\n" + "Costs " + str(current_upgrade["cost"] + inflation) + " coins"
 	
-	if Game.current_wave < 5:
+	if Game.current_wave < 3:
 		current_freebie = freebies[0]
 	else:
 		current_freebie = freebies[RNG.random_int(freebies.size())]
-	Upgrade2.text = current_freebie["title"] + "\n\n" + current_freebie["description"] + "\n\n" + current_freebie["cost_string"] + " coins"
+	if current_freebie == freebies[0]:
+		Freebie.text = current_freebie["title"] + "\n\n" + current_freebie["description"] + "\n\n" + "Gain " + str(current_freebie["cost"] + pay_raise) + " coins"
+	else:
+		Freebie.text = current_freebie["title"] + "\n\n" + current_freebie["description"] + "\n\n" + "Gain " + current_freebie["cost_string"] + " coins"
 
 
 func apply_upgrade() -> bool:
 	var upgrade_action = current_upgrade["action"]
 	if !upgrade_action.is_valid():
 		return false
-	if !Game.update_coins(current_upgrade["cost"], popup_pos()):
+	if !Game.update_coins(current_upgrade["cost"] + inflation, popup_pos()):
 		NoSound.play()
 		return false
 	upgrade_action.call()
 	current_upgrade["amount"] -= 1
 	if current_upgrade["amount"] <= 0:
 		upgrades.erase(current_upgrade)
-	else:
-		current_upgrade["cost"] += current_upgrade["inflation"]
 	
 	UpgradeMenuFader.play("fade")
 	return true
@@ -136,6 +140,7 @@ func option_1():
 	if apply_upgrade():
 		await get_tree().create_timer(1).timeout
 		upgrade_selected.emit()
+		inflation -= 2
 
 
 func option_2():
@@ -158,16 +163,38 @@ func speeding():
 
 
 func payday():
-	Game.update_coins(int(current_freebie["cost_string"]), popup_pos())
+	Game.update_coins(current_freebie["cost"] + pay_raise, popup_pos())
+	pay_raise += 2
 
 
 func interesting():
-	Game.update_coins(ceil(float(Game.coins) * 0.2), popup_pos())
+	Game.update_coins(ceil(float(Game.coins) * 0.5), popup_pos())
 
 
 func disposable_cylinders():
 	Player.max_ammo -= 1
 	Player.fully_reloadable = true
+
+
+func double_ended_bullets():
+	Player.reverse_shot = true
+
+
+func buckshot():
+	Player.buckshot += 2
+
+
+func spring_loaded():
+	Player.roll_multiplier = 6
+
+
+func scraping_pennies():
+	Player.returns = true
+
+
+func big_money():
+	Player.big_coin = true
+	Player.coin_throw_count = 1
 
 
 func popup_pos() -> Vector2:

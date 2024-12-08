@@ -8,12 +8,12 @@
 [ext_resource type="AudioStream" uid="uid://bslnl2omhcatg" path="res://assets/sounds/boom.wav" id="6_sk0nl"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6vkv4"]
-radius = 5.25851
-height = 15.8685
+radius = 2.29854
+height = 6.44244
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vnweq"]
-radius = 22.25
-height = 92.0
+radius = 19.0558
+height = 71.2145
 
 [sub_resource type="Animation" id="Animation_cb4t4"]
 length = 0.001
@@ -204,8 +204,8 @@ _data = {
 }
 
 [node name="Coin" type="Area2D"]
-collision_layer = 32
-collision_mask = 8
+collision_layer = 0
+collision_mask = 32
 script = ExtResource("1_fkree")
 
 [node name="Shadow" type="Sprite2D" parent="."]
@@ -220,7 +220,7 @@ texture = ExtResource("1_0bqvw")
 
 [node name="Hitbox" type="Area2D" parent="."]
 collision_layer = 8
-collision_mask = 32
+collision_mask = 48
 script = ExtResource("4_6b06s")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]

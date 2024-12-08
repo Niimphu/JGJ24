@@ -5,34 +5,83 @@ extends Node2D
 
 @onready var Bat := preload("res://scenes/entities/eye_bat.tscn")
 @onready var Imp := preload("res://scenes/entities/impling.tscn")
+@onready var Skeleton := preload("res://scenes/entities/skeleton.tscn")
 
 
 @onready var spawn_points := get_children().map(func(point: Node2D): return point.global_position)
 
 @onready var waves = [
 	[ # Wave 1
+		{ "type": Bat, "count": 3 },
+		{ "type": Bat, "count": 4 },
+		{ "type": Bat, "count": 5 },
+		{ "type": Bat, "count": 6 },
+	],
+	[ # 2
+		{ "type": Skeleton, "count": 2 },
+		{ "type": Skeleton, "count": 2 },
+		{ "type": Skeleton, "count": 3 },
+		{ "type": Skeleton, "count": 3 },
+		{ "type": Skeleton, "count": 2 }
+	],
+	[ # 3
+		{ "type": Bat, "count": 1 },
+		{ "type": Bat, "count": 2, "type2": Skeleton, "count2": 1 },
+		{ "type": Skeleton, "count": 3 },
+		{ "type": Bat, "count": 2, "type2": Skeleton, "count2": 2 },
+		{ "type": Bat, "count": 2 },
+		{ "type": Bat, "count": 3, "type2": Skeleton, "count2": 2 },
+		{ "type": Imp, "count": 2 }
+	],
+	[ # 4
+		{ "type": Bat, "count": 2 },
 		{ "type": Imp, "count": 2 },
-		{ "type": Bat, "count": 3 },
-		{ "type": Bat, "count": 4 }
+		{ "type": Bat, "count": 2 },
+		{ "type": Imp, "count": 3 },
+		{ "type": Imp, "count": 3, "type2": Bat, "count2": 1 },
+		{ "type": Imp, "count": 4 },
+		{ "type": Imp, "count": 2 }
 	],
-	[ # Wave 2
-		{ "type": Bat, "count": 3 },
-		{ "type": Bat, "count": 5 },
-		{ "type": Bat, "count": 7 }
-		#{ "type": Bat, "count": 2, "type2": EnemyC, "count2": 1 }
+	[ # 5
+		{ "type": Imp, "count": 5 },
+		{ "type": Imp, "count": 2, "type2": Skeleton, "count2": 2  },
+		{ "type": Skeleton, "count": 3 },
+		{ "type": Imp, "count": 3 },
+		{ "type": Imp, "count": 5, "type2": Skeleton, "count2": 2 },
+		{ "type": Imp, "count": 2, "type2": Skeleton, "count2": 3 }
 	],
-	[ # Wave 3
-		{ "type": Bat, "count": 5 },
-		{ "type": Bat, "count": 5 },
-		{ "type": Bat, "count": 5 },
-		{ "type": Bat, "count": 5 },
-		{ "type": Bat, "count": 5 }
+	[ # 6
+		{ "type": Bat, "count": 5, "type2": Imp, "count2": 3 },
+		{ "type": Skeleton, "count": 2 },
+		{ "type": Bat, "count": 4 },
+		{ "type": Imp, "count": 2, "type2": Skeleton, "count2": 2 },
+		{ "type": Bat, "count": 5, "type2": Skeleton, "count2":2 },
+		{ "type": Imp, "count": 4 }
+	],
+	[ # 7
+		{ "type": Imp, "count": 1, "type2": Skeleton, "count2": 1 },
+		{ "type": Imp, "count": 2, "type2": Skeleton, "count2": 2 },
+		{ "type": Imp, "count": 3, "type2": Skeleton, "count2": 2 },
+		{ "type": Imp, "count": 3, "type2": Skeleton, "count2": 3 },
+		{ "type": Imp, "count": 4, "type2": Skeleton, "count2": 3 },
+		{ "type": Imp, "count": 5, "type2": Skeleton, "count2": 2 }
+	],
+	[ # 8
+		{ "type": Bat, "count": 1, "type2": Imp, "count2": 1, "type3": Skeleton, "count3": 1},
+		{ "type": Bat, "count": 3 },
+		{ "type": Bat, "count": 2, "type2": Imp, "count2": 2, "type3": Skeleton, "count3": 2},
+		{ "type": Bat, "count": 3 },
+		{ "type": Bat, "count": 3 , "type2": Imp, "count2": 2},
+		{ "type": Imp, "count": 3, "type2": Skeleton, "count2": 2 },
+		{ "type": Imp, "count": 3, "type2": Skeleton, "count2": 2 },
+		{ "type": Bat, "count": 2 },
+		{ "type": Bat, "count": 3, "type2": Imp, "count2": 3, "type3": Skeleton, "count3": 3},
 	]
 ]
 
 var enemies_spawned := 0
 var enemies_killed := 0
-var burst_delay := 4 # time between bursts during wave
+var burst_delay := 5 # time between bursts during wave
 var spawning := true
 
 signal wave_complete
@@ -50,7 +99,7 @@ func spawn_wave(wave_number: int):
 
 
 func spawn_burst(burst: Dictionary):
-	var valid_spawns := get_furthest_points(10)
+	var valid_spawns := get_furthest_points(13)
 	
 	for i in range(burst["count"]):
 		spawn_enemy(burst["type"], valid_spawns)
@@ -60,6 +109,22 @@ func spawn_burst(burst: Dictionary):
 		for i in range(burst["count2"]):
 			spawn_enemy(burst["type2"], valid_spawns)
 			await get_tree().create_timer(0.15).timeout
+	else:
+		return
+	
+	if burst.has("type3"):
+		for i in range(burst["count3"]):
+			spawn_enemy(burst["type3"], valid_spawns)
+			await get_tree().create_timer(0.15).timeout
+	else:
+		return
+	
+	if burst.has("type4"):
+		for i in range(burst["count4"]):
+			spawn_enemy(burst["type4"], valid_spawns)
+			await get_tree().create_timer(0.15).timeout
+	else:
+		return
 
 
 func spawn_enemy(enemy: PackedScene, valid_spawns: Array) -> void:

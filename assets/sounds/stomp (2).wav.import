@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://7yugh8vvh417"
+path="res://.godot/imported/stomp (2).wav-10154fa3d317be2c7e8986a1c884500c.sample"
+
+[deps]
+
+source_file="res://assets/sounds/stomp (2).wav"
+dest_files=["res://.godot/imported/stomp (2).wav-10154fa3d317be2c7e8986a1c884500c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

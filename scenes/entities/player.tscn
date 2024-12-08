@@ -427,8 +427,8 @@ _data = {
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kor3d"]
-radius = 4.0
-height = 16.0
+radius = 5.94079
+height = 26.1243
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
@@ -522,11 +522,12 @@ libraries = {
 
 [node name="Ouchie" type="AudioStreamPlayer" parent="Ouch"]
 stream = ExtResource("13_j6s7u")
+bus = &"SFX"
 
 [node name="PlayerHurtbox" type="Area2D" parent="."]
+position = Vector2(0, -11)
 collision_layer = 4
 collision_mask = 64
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerHurtbox"]
-position = Vector2(0.0662155, -9.64866)
 shape = SubResource("CapsuleShape2D_kor3d")

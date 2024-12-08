@@ -13,6 +13,12 @@ enum {
 	RELOAD
 }
 
+enum {
+	NORMAL,
+	REVERSE,
+	BUCKSHOT
+}
+
 @export var BulletManager: Node2D
 @export var Game: Node2D
 @export var AmmoCount: TextureProgressBar
@@ -38,7 +44,7 @@ enum {
 @onready var popup_scene := preload("res://scenes/ui/popup.tscn")
 
 
-const ROLL_MULT := 3.5
+var roll_multiplier := 3.5
 const ROLL_FRICTION := 800
 var speed := 100.0
 var state := IDLE
@@ -52,8 +58,12 @@ var current_ammo := 6
 var reload_cost := -2
 var roll_cost := -3
 var piercing_level := 2
-var coin_throw_count := 3
-var ability_cost := 3
+var coin_throw_count := 5
+var big_coin := false
+var ability_cost := 5
+var reverse_shot := false
+var buckshot := 0
+var returns := false
 
 # this is fine & whatever
 var roll_direction := Vector2.RIGHT
@@ -66,7 +76,8 @@ func _ready():
 	Hurtbox.area_entered.connect(_on_hurtbox_entered)
 	Animator.animation_finished.connect(finished_animation)
 	Ouch.animation_finished.connect(hurtbox_on)
-	set_process(true)
+	await get_tree().physics_frame
+	set_physics_process(true)
 	EventBus.player_death.connect(die)
 
 
@@ -96,7 +107,7 @@ func _physics_process(delta: float) -> void:
 
 func gun_input() -> void:
 	if Input.is_action_just_pressed("fire"):
-		shoot()
+		shoot(reverse_shot)
 	elif Input.is_action_just_pressed("reload"):
 		if current_ammo == 0:
 			reload(fully_reloadable)
@@ -133,7 +144,7 @@ func move() -> void:
 
 func roll_pressed() -> void:
 	state = ROLL
-	velocity = roll_direction * speed * ROLL_MULT
+	velocity = roll_direction * speed * roll_multiplier
 	Animator.play("roll")
 	
 	var dust_instance := dust_scene.instantiate()
@@ -180,10 +191,13 @@ func sprite_flip(flip: bool) -> void:
 		Body.position.x = 5
 
 
-func shoot() -> void:
+func shoot(reverse := false) -> void:
 	if current_ammo == 0:
 		Sound.empty()
 		popup("No ammo!")
+		return
+	
+	if gun_state == SHOOT and not reverse_shot:
 		return
 	
 	gun_state = SHOOT
@@ -191,19 +205,35 @@ func shoot() -> void:
 		await ReloadTimer.timeout
 	elif !FullReloadTimer.is_stopped() and FullReloadTimer.time_left < 0.1:
 		await FullReloadTimer.timeout
-	Sound.shoot()
+	
+	shoot_bullet(NORMAL)
+	for i in buckshot:
+		shoot_bullet(BUCKSHOT, i + 1)
+	if reverse:
+		shoot_bullet(REVERSE)
+	
 	current_ammo -= 1
 	AmmoCount.value = current_ammo
-
 	
+	await get_tree().create_timer(0.05).timeout
+	gun_state = READY
+
+
+func shoot_bullet(type, n: int = 0) -> void:
 	var bullet := bullet_scene.instantiate()
 	bullet.position = muzzle_pos
-	bullet.set_parameters((muzzle_pos - mouse_pos).normalized(), piercing_level)
-	BulletManager.add_child(bullet)
-	GunAnimator.play("shoot")
 	
-	await get_tree().create_timer(0.1).timeout
-	gun_state = READY
+	var bullet_direction := (muzzle_pos - mouse_pos).normalized()
+	if type == REVERSE:
+		bullet_direction *= Vector2(-1, -1)
+	
+	var piercing := 1 if type == BUCKSHOT else piercing_level
+	
+	bullet.set_parameters(bullet_direction, piercing, n)
+	BulletManager.add_child(bullet)
+	
+	GunAnimator.play("shoot")
+	Sound.shoot(false if type == NORMAL else true)
 
 
 func throw_coins() -> void:
@@ -213,7 +243,7 @@ func throw_coins() -> void:
 		var coin := coin_scene.instantiate()
 		coin.global_position = global_position + coin_origin
 		Entities.add_child(coin)
-		coin.set_parameters(mouse_pos, i)
+		coin.set_parameters(mouse_pos, i, returns, big_coin)
 
 
 func reload(full := false) -> void:
@@ -233,8 +263,11 @@ func full_reload() -> void:
 	
 	GunAnimator.play("full_reload")
 	Sound.full_reload()
-	if state == ROLL or Game.update_coins((max_ammo - current_ammo) * reload_cost, popup_pos()) == false:
+	if state == ROLL:
 		gun_state = READY
+		return
+	if Game.update_coins((max_ammo - current_ammo) * reload_cost, popup_pos()) == false:
+		reload_bullet()
 		return
 	
 	current_ammo = max_ammo
@@ -245,7 +278,7 @@ func full_reload() -> void:
 
 
 func reload_bullet() -> void:
-	if current_ammo >= max_ammo or not is_processing():
+	if current_ammo >= max_ammo or not is_physics_processing():
 		gun_state = READY
 		return
 	
@@ -268,15 +301,16 @@ func popup_pos() -> Vector2:
 
 
 func _on_hurtbox_entered(_area: Area2D) -> void:
+	HurtboxShape.set_deferred("disabled", true)
 	if state == DEAD:
 		return
-	HurtboxShape.set_deferred("disabled", true)
 	Ouch.play("ouch")
 	$Ouch/Ouchie.play()
 
 
 func hurtbox_on(_anim_name: String) -> void:
-	HurtboxShape.disabled = false
+	if state != DEAD:
+		HurtboxShape.disabled = false
 
 
 func speedup(multiplier: float) -> void:
@@ -287,7 +321,7 @@ func speedup(multiplier: float) -> void:
 func resume() -> void:
 	await get_tree().physics_frame
 	state = IDLE
-	set_process(true)
+	set_physics_process(true)
 	if current_ammo < max_ammo:
 		popup("Reloading")
 	await get_tree().create_timer(0.1).timeout
@@ -304,6 +338,7 @@ func popup(message: String) -> void:
 
 
 func die() -> void:
+	HurtboxShape.set_deferred("disabled", true)
 	if state == DEAD:
 		return
 	state = DEAD

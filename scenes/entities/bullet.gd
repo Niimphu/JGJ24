@@ -1,5 +1,7 @@
 extends Area2D
 
+@onready var Trail := $BulletTrail
+
 var speed := 850
 var bullet_direction: Vector2
 var shoot := false
@@ -7,7 +9,8 @@ var count := 0
 var hit_count := 0
 var piercing_level := 2
 var enemies_hit: Array
-var multiplier:= 0
+var multiplier := 0
+var rotateness := 0.08
 
 
 func _ready():
@@ -16,9 +19,14 @@ func _ready():
 	EventBus.up_mult.connect(_up_mult)
 
 
-func set_parameters(direction: Vector2, piercing: int = 2) -> void:
+func set_parameters(direction: Vector2, piercing: int, n: int) -> void:
 	await ready
 	bullet_direction = direction
+	if n > 0:
+		var rotate_factor := rotateness if n % 2 else -rotateness
+		bullet_direction = direction.rotated(n * (rotate_factor + RNG.random_weight() / 20))
+		Trail.trail_length = 10
+		Trail.gradient = null
 	piercing_level = piercing
 	shoot = true
 

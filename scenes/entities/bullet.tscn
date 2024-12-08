@@ -2,35 +2,50 @@
 
 [ext_resource type="Script" path="res://scenes/entities/bullet.gd" id="1_xge4w"]
 [ext_resource type="Texture2D" uid="uid://bee1hcyd3bkot" path="res://assets/images/Bullet.png" id="2_xgkfh"]
-[ext_resource type="Script" path="res://scenes/entities/bullet_trail.gd" id="3_jd2ex"]
+[ext_resource type="PackedScene" uid="uid://dmp5ptht75dwb" path="res://scenes/entities/bullet_trail.tscn" id="3_6onbn"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nydbx"]
 radius = 4.0
 
-[sub_resource type="Curve" id="Curve_clybt"]
-_data = [Vector2(0.00495049, 0.021978), 0.0, 0.0, 0, 0, Vector2(0.990099, 0.978022), 0.0, 0.0, 0, 0]
-point_count = 2
+[sub_resource type="GDScript" id="GDScript_av0n5"]
+script/source = "extends CollisionShape2D
+
+var shoot := false
+var speed := 0
+var bullet_direction := Vector2.ZERO
+var piercing_level := 2
+
+var hit_count := 0
+var enemies_hit: Array
+
+func _physics_process(delta: float) -> void:
+	if !shoot:
+		return
+	position -= bullet_direction * speed * delta
+
+func set_parameters(direction: Vector2, _piercing := 2):
+	bullet_direction = direction
+	
+"
 
 [node name="Bullet" type="Area2D"]
 collision_layer = 8
 collision_mask = 160
 script = ExtResource("1_xge4w")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_xgkfh")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_nydbx")
+script = SubResource("GDScript_av0n5")
+
+[node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
+texture = ExtResource("2_xgkfh")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(-0.499999, 0.5)
 scale = Vector2(1.75, 1.75)
 
-[node name="BulletTrail" type="Line2D" parent="."]
-texture_filter = 2
-width = 1.0
-width_curve = SubResource("Curve_clybt")
-default_color = Color(0.95, 0.9025, 0, 1)
-script = ExtResource("3_jd2ex")
+[node name="BulletTrail" parent="." instance=ExtResource("3_6onbn")]
+
+[node name="Node2D" type="Node2D" parent="."]
 
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
