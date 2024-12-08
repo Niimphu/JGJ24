@@ -1,16 +1,54 @@
-[gd_scene load_steps=8 format=3 uid="uid://ebtks0qctycu"]
+[gd_scene load_steps=29 format=3 uid="uid://ebtks0qctycu"]
 
 [ext_resource type="Theme" uid="uid://bux7k08p0mmee" path="res://scenes/game.tres" id="1_hrb3f"]
 [ext_resource type="Script" path="res://scenes/menu/main_menu.gd" id="2_3hfmb"]
+[ext_resource type="Texture2D" uid="uid://d01fhtcp5ufe3" path="res://assets/images/title_screen.png" id="3_4fc3c"]
 
-[sub_resource type="Gradient" id="Gradient_kgv3y"]
-colors = PackedColorArray(0.255426, 0.0398709, 0.130348, 1, 0, 0.0443334, 0.14, 1)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1j5hi"]
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_vjv3t"]
-gradient = SubResource("Gradient_kgv3y")
-fill = 1
-fill_from = Vector2(0.692661, 0.541284)
-fill_to = Vector2(0.100917, 0.0825688)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qjl2k"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ov0u8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5g0qy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a4d53"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qehwo"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hkwtc"]
+bg_color = Color(0, 0, 0, 0.403922)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_aqryw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kyb3g"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ifp3l"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ul2xw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mjlnr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_og3g6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_05rue"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lkg4l"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w8bxv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wnv1p"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_160dk"]
+bg_color = Color(0, 0, 0, 0.403922)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l54ub"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qvdq0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_buiti"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5p26l"]
 
 [sub_resource type="Animation" id="Animation_vbost"]
 length = 0.001
@@ -68,7 +106,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = SubResource("GradientTexture2D_vjv3t")
+texture = ExtResource("3_4fc3c")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -77,47 +115,55 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 30
+theme_override_constants/margin_left = 60
 theme_override_constants/margin_top = 30
 theme_override_constants/margin_right = 30
 theme_override_constants/margin_bottom = 30
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-size_flags_horizontal = 0
-
-[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 80
-
-[node name="Title" type="Label" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 32
-text = "Avarice
-"
-
-[node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 10
+size_flags_horizontal = 8
 
 [node name="Play" type="Button" parent="MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(80, 0)
+custom_minimum_size = Vector2(40, 20)
 layout_mode = 2
-size_flags_horizontal = 0
+size_flags_horizontal = 8
+size_flags_vertical = 10
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1j5hi")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qjl2k")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_ov0u8")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_5g0qy")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_a4d53")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_qehwo")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hkwtc")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_aqryw")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_kyb3g")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_ifp3l")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ul2xw")
 text = "Play"
 
-[node name="Settings" type="Button" parent="MarginContainer/VBoxContainer"]
-visible = false
-custom_minimum_size = Vector2(80, 0)
-layout_mode = 2
-size_flags_horizontal = 0
-text = "Settings"
-
 [node name="Quit" type="Button" parent="MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(80, 0)
+custom_minimum_size = Vector2(40, 20)
 layout_mode = 2
-size_flags_horizontal = 0
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_styles/focus = SubResource("StyleBoxEmpty_mjlnr")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_og3g6")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_05rue")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_lkg4l")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_w8bxv")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_wnv1p")
+theme_override_styles/hover = SubResource("StyleBoxFlat_160dk")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_l54ub")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_qvdq0")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_buiti")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_5p26l")
 text = "Quit"
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 6
+text = "Quick tutorial in description"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -136,6 +182,5 @@ color = Color(0, 0, 0, 0)
 metadata/_edit_lock_ = true
 
 [connection signal="button_down" from="MarginContainer/VBoxContainer/Play" to="." method="_on_play_button_down"]
-[connection signal="button_down" from="MarginContainer/VBoxContainer/Settings" to="." method="_on_settings_button_down"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

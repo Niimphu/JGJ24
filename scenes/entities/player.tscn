@@ -459,7 +459,7 @@ volume_db = -5.0
 pitch_scale = 1.14
 bus = &"SFX"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Shape" type="CollisionShape2D" parent="."]
 position = Vector2(0.0100327, 0.0670777)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_m6q6f")

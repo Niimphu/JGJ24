@@ -30,7 +30,7 @@ enum {
 @onready var Arm := $Gun
 @onready var Jacket := $Jacket
 @onready var Shadow := $Shadow
-@onready var Collider := $CollisionShape2D
+@onready var Collider := $Shape
 @onready var Sound := $Sound
 @onready var Hurtbox := $PlayerHurtbox
 @onready var HurtboxShape := $PlayerHurtbox/CollisionShape2D
@@ -266,7 +266,7 @@ func full_reload() -> void:
 	if state == ROLL:
 		gun_state = READY
 		return
-	if Game.update_coins((max_ammo - current_ammo) * reload_cost, popup_pos()) == false:
+	if Game.update_coins((max_ammo - current_ammo) * reload_cost * 0.5, popup_pos()) == false:
 		reload_bullet()
 		return
 	

@@ -5,8 +5,8 @@
 [ext_resource type="AudioStream" uid="uid://da0n05bvsg7yv" path="res://assets/sounds/disappear.wav" id="3_wtaf3"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_31lw8"]
-radius = 1.7963
-height = 9.04612
+radius = 3.07549
+height = 16.9161
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7a8j7"]
 size = Vector2(17.0459, 32.9902)

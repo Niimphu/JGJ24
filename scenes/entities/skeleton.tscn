@@ -1,9 +1,10 @@
-[gd_scene load_steps=19 format=3 uid="uid://devyjnrtqhq25"]
+[gd_scene load_steps=20 format=3 uid="uid://devyjnrtqhq25"]
 
 [ext_resource type="PackedScene" uid="uid://lo6v7voiebej" path="res://scenes/entities/base_enemy.tscn" id="1_fyuhy"]
 [ext_resource type="Texture2D" uid="uid://c07iurqwjh0wq" path="res://assets/images/skeleton_body.png" id="2_4q4ui"]
 [ext_resource type="Texture2D" uid="uid://ddm2wttmjytch" path="res://assets/art/Sprites/skeleton_archer.png" id="2_kese5"]
 [ext_resource type="Script" path="res://scenes/entities/skeleton_attack.gd" id="3_koe84"]
+[ext_resource type="AudioStream" uid="uid://bstegxpvvcph1" path="res://assets/sounds/step.wav" id="4_n0fgw"]
 [ext_resource type="Texture2D" uid="uid://b34rffo3xway8" path="res://assets/images/skeleton_arms.png" id="5_tdy48"]
 [ext_resource type="AudioStream" uid="uid://bubnplhl8v8ov" path="res://assets/sounds/draw.wav" id="6_plwuk"]
 [ext_resource type="AudioStream" uid="uid://d3vrf4hrh5e37" path="res://assets/sounds/pew.wav" id="7_k1c0u"]
@@ -74,6 +75,18 @@ tracks/4/keys = {
 "update": 1,
 "values": [35]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AnimationPlayer/Step:playing")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_8wlvc"]
 resource_name = "attack"
@@ -122,6 +135,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimationPlayer/Step:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, true]
 }
 
 [sub_resource type="Animation" id="Animation_775bs"]
@@ -363,6 +388,13 @@ libraries = {
 "": SubResource("AnimationLibrary_vbx0u")
 }
 autoplay = "chase"
+
+[node name="Step" type="AudioStreamPlayer2D" parent="AnimationPlayer" index="0"]
+stream = ExtResource("4_n0fgw")
+volume_db = 20.0
+pitch_scale = 5.0
+max_distance = 600.0
+bus = &"SFX"
 
 [node name="Attack" type="Node2D" parent="." index="7" node_paths=PackedStringArray("Skeleton", "Animator")]
 script = ExtResource("3_koe84")

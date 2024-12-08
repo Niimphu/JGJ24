@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://nh4c5hiwuttp"]
+[gd_scene load_steps=13 format=3 uid="uid://nh4c5hiwuttp"]
 
 [ext_resource type="PackedScene" uid="uid://lo6v7voiebej" path="res://scenes/entities/base_enemy.tscn" id="1_remn4"]
 [ext_resource type="Texture2D" uid="uid://cto02yng6vgya" path="res://assets/art/Sprites/imp.png" id="2_mlb2x"]
 [ext_resource type="AudioStream" uid="uid://bstegxpvvcph1" path="res://assets/sounds/step.wav" id="3_6qa5n"]
 [ext_resource type="AudioStream" uid="uid://ddyfsw3hiuoou" path="res://assets/sounds/fwoosh.wav" id="4_tbebp"]
+[ext_resource type="AudioStream" uid="uid://da0n05bvsg7yv" path="res://assets/sounds/disappear.wav" id="5_mcbuj"]
 [ext_resource type="Script" path="res://scenes/entities/imp_atttack.gd" id="5_uq7x4"]
 
 [sub_resource type="Animation" id="Animation_1uuue"]
@@ -288,10 +289,16 @@ autoplay = "chase"
 
 [node name="Walk" type="AudioStreamPlayer2D" parent="AnimationPlayer" index="0"]
 stream = ExtResource("3_6qa5n")
+volume_db = 5.0
+max_distance = 600.0
 bus = &"SFX"
 
 [node name="Attack" type="AudioStreamPlayer2D" parent="AnimationPlayer" index="1"]
 stream = ExtResource("4_tbebp")
+bus = &"SFX"
+
+[node name="Death" type="AudioStreamPlayer2D" parent="AnimationPlayer" index="2"]
+stream = ExtResource("5_mcbuj")
 bus = &"SFX"
 
 [node name="ImpAtttack" type="Node2D" parent="." index="9"]
