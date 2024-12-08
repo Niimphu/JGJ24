@@ -280,7 +280,7 @@ _data = {
 "fade": SubResource("Animation_wkpao")
 }
 
-[node name="Game" type="Node2D" node_paths=PackedStringArray("WaveManager", "UpgradeManager", "CoinCount", "UpgradeMenu", "Player", "Crosshair", "GGAnimator", "GGLabel")]
+[node name="Game" type="Node2D" node_paths=PackedStringArray("WaveManager", "UpgradeManager", "CoinCount", "UpgradeMenu", "Player", "Crosshair", "GGAnimator", "GGLabel", "WaveCount")]
 process_mode = 1
 script = ExtResource("1_crdur")
 WaveManager = NodePath("WaveManager")
@@ -291,6 +291,7 @@ Player = NodePath("Entities/Player")
 Crosshair = NodePath("Crosshair")
 GGAnimator = NodePath("CanvasLayer/GameOver/AnimationPlayer")
 GGLabel = NodePath("CanvasLayer/GameOver/MarginContainer/VBoxContainer/GGLabel")
+WaveCount = NodePath("CanvasLayer/UI/MarginContainer/Wave")
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 process_mode = 3
@@ -754,6 +755,12 @@ theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
+
+[node name="Wave" type="Label" parent="CanvasLayer/UI/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Wave 1"
+horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/UI/MarginContainer"]
 custom_minimum_size = Vector2(68.165, 0)

@@ -65,7 +65,7 @@ extends Node2D
 		{ "type": Imp, "count": 2, "type2": Skeleton, "count2": 3 },
 		{ "type": Imp, "count": 1, "type2": Skeleton, "count2": 4 },
 		{ "type": Imp, "count": 3, "type2": Skeleton, "count2": 3 },
-		{ "type": Globber, "count": 4 }
+		{ "type": Globber, "count": 1 }
 	],
 	[ # 8
 		{ "type": Bat, "count": 4, "type2": Imp, "count2": 3 },
@@ -76,14 +76,15 @@ extends Node2D
 	],
 	[ # 9
 		{ "type": Bat, "count": 1, "type2": Imp, "count2": 1, "type3": Skeleton, "count3": 1 },
-		{ "type": Bat, "count": 3 },
+		{ "type": Globber, "count": 2 },
 		{ "type": Bat, "count": 2, "type2": Imp, "count2": 2, "type3": Skeleton, "count3": 2 },
-		{ "type": Bat, "count": 3 },
 		{ "type": Bat, "count": 3 , "type2": Imp, "count2": 2},
+		{ "type": Globber, "count": 2 },
 		{ "type": Imp, "count": 3, "type2": Skeleton, "count2": 2 },
 		{ "type": Imp, "count": 3, "type2": Skeleton, "count2": 2 },
-		{ "type": Bat, "count": 2 },
+		{ "type": Globber, "count": 2 },
 		{ "type": Bat, "count": 3, "type2": Imp, "count2": 3, "type3": Skeleton, "count3": 3},
+		{ "type": Globber, "count": 2 },
 	]
 ]
 

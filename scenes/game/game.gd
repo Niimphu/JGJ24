@@ -8,6 +8,7 @@ extends Node2D
 @export var Crosshair: Node2D
 @export var GGAnimator: AnimationPlayer
 @export var GGLabel: Label
+@export var WaveCount: Label
 
 @onready var popup_scene := preload("res://scenes/ui/popup.tscn")
 
@@ -49,6 +50,7 @@ func _process(_delta):
 
 func spawn_next_wave():
 	resume()
+	WaveCount.text = "Wave " + str(current_wave + 1)
 	UpgradeMenu.visible = false
 	current_wave_enemy_count = 0
 	wave_spawning = true
